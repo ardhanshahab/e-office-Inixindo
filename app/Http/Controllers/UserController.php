@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 class UserController extends Controller
 {
     public function index()
@@ -25,6 +26,12 @@ class UserController extends Controller
         return view('user.edit', compact('users'));
     }
 
+    public function editPassword($id)
+    {
+        $users = User::findOrFail($id);
+        return view('user.editpassword', compact('users'));
+    }
+
     public function updateData(Request $request, $id)
     {
         $users = User::findOrFail($id);
@@ -38,22 +45,23 @@ class UserController extends Controller
             'tempat_lahir'=>['required'],
             'tanggal_lahir'=>['required'],
         ]);
+        $data['tanggal_lahir'] = Carbon::createFromFormat('Y-m-d', $data['tanggal_lahir'])->format('Y-m-d');
         $users->update($data);
-        return redirect('/user')->with('success', 'Data Berhasil Diubah');
+        return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
     }
 
     public function updatePassword(Request $request, $id)
     {
         $users = User::findOrFail($id);
         $data = $request->validate([
-            'password' => ['required'],
-            'confirm_password' => ['same:password']
+            'password' => ['required', 'min:8'],
+            'password_confirmation' => ['same:password']
         ]);
         if ($request->password != ""){
             $data['password']=Hash::make($request->password);
         }
         $users->update($data);
-        return back()->with('success', 'Password Berhasil Diubah');
+        return redirect('/profile/'. $id)->with('success', 'Password Berhasil Diubah');
     }
 
     public function destroy($id)
@@ -62,6 +70,4 @@ class UserController extends Controller
         $users->delete();
         return redirect('/user')->with('success', 'User Berhasil Dihapus');
     }
-
-
 }
