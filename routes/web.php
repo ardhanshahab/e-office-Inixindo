@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes(['password.request' => false, 'password.email' =>  false, 'password.reset' =>  false, 'password.update' => false]);
+Auth::routes(['Register'=> false, 'password.request' => false, 'password.email' =>  false, 'password.reset' =>  false, 'password.update' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
@@ -29,7 +29,7 @@ Route::get('/user/{id}/password', [App\Http\Controllers\UserController::class, '
 Route::put('/user/{id}/password', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.updatePassword');
 Route::post('/user/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 
-Route::group(['middleware' => ['auth', 'Admin']], function () {
+Route::group(['middleware'=>'Admin'],function(){
     Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class,'showRegistrationForm'])->name('register');
     Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register']);
 });
