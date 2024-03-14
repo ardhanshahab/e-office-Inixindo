@@ -34,17 +34,17 @@
                                 @enderror
                             </div>
                         </div>
-                        {{-- <div class="row">
+                        <div class="row">
                             <div class="col-md-3"><p>Password Sebelumnya</p></div>
                             <div class="col-md-1"><p>:</p></div>
-                            <div class="col-md-8"><input id="expassword" type="password" class="form-control @error('password') is-invalid @enderror" name="expassword" required autocomplete="ex-password">
+                            <div class="col-md-8"><input id="expassword" type="password" class="form-control @error('expassword') is-invalid @enderror" name="expassword" required autocomplete="ex-password">
                                 @error('expassword')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="row">
                             <div class="col-md-3"><p>Password</p></div>
                             <div class="col-md-1"><p>:</p></div>
@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="col-md-3"><p>Confirm Password</p></div>
                             <div class="col-md-1"><p>:</p></div>
-                            <div class="col-md-8"><input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <div class="col-md-8"><input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 @error('password_confirmation')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

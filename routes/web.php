@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes(['password.request' => false, 'password.email' =>  false, 'password.reset' =>  false, 'password.update' => false]);
@@ -27,3 +27,4 @@ Route::put('/user/{id}', [App\Http\Controllers\UserController::class, 'updateDat
 Route::get('/profile/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('user.show');
 Route::get('/user/{id}/password', [App\Http\Controllers\UserController::class, 'editPassword'])->name('user.editPassword');
 Route::put('/user/{id}/password', [App\Http\Controllers\UserController::class, 'updatePassword'])->name('user.updatePassword');
+Route::post('/user/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Exception;
 class UserController extends Controller
 {
     public function index()
@@ -54,13 +55,20 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         $data = $request->validate([
-            'password' => ['required', 'min:8'],
-            'password_confirmation' => ['same:password']
+            'expassword' => ['required', 'min:8'],
+            'password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:8'
         ]);
-        if ($request->password != ""){
-            $data['password']=Hash::make($request->password);
-        }
-        $users->update($data);
+
+
+        if ($users->password == $data[ 'expassword']) {
+                $users->update($data);
+                // dd($data['password'],$data['password_confirmation']);
+            }else{
+                return back()->with('error', 'Password Lama Anda Salah');
+            }
+
+        // dd($users->update($data));
         return redirect('/profile/'. $id)->with('success', 'Password Berhasil Diubah');
     }
 
