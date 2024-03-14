@@ -5,10 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card m-4">
+                <div class="card-header" style="background: #A0C0E0">
+                    <h3 class="text-center my-1">{{ __('Change Password') }}</h3>
+                </div>
                 <div class="card-body table-responsive">
                     <div class="row">
-                        <h3 class="text-center text-muted my-2">{{ __('My Profile') }}</h3>
-
                         <form action="{{ route('user.updatePassword', $users->id) }}" method="post">
                             @csrf
                             @method('PUT')
@@ -57,7 +58,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3"><p>Confirm Password</p></div>
+                            <div class="col-md-3"><p>Konfirmasi Password</p></div>
                             <div class="col-md-1"><p>:</p></div>
                             <div class="col-md-8"><input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 @error('password_confirmation')

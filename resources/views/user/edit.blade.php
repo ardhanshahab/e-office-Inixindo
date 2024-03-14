@@ -5,9 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-7 col-sm-7 col-xs-7">
             <div class="card m-4">
+                <div class="card-header" style="background: #A0C0E0">
+                    <h3 class="text-center my-1">{{ __('My Profile') }}</h3>
+                </div>
                 <div class="card-body table-responsive">
                     <div class="row">
-                        <h3 class="text-center text-muted my-2">{{ __('My Profile') }}</h3>
                         {{-- foto --}}
                         <form action="{{ route('user.update', $users->id) }}" method="post">
                             @csrf

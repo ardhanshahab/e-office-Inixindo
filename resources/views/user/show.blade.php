@@ -9,8 +9,10 @@
                 <a href="/user/{{ auth()->user()->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
             </div>
             <div class="card m-4">
+                <div class="card-header" style="background: #A0C0E0">
+                    <h3 class="text-center my-1">{{ __('My Profile') }}</h3>
+                </div>
                 <div class="card-body">
-                    <h3 class="text-center text-muted my-2">{{ __('My Profile') }}</h3>
                     {{-- foto --}}
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Lengkap</p></div>

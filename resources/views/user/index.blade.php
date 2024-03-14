@@ -4,9 +4,9 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            {{-- @if ( auth()->user()->role == 'Admin' ) --}}
-            <a href="route()" class="btn btn-md btn-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><i class="fa fa-plus fa-fw"></i> Tambah User</a>
-            {{-- @endif --}}
+            @if ( auth()->user()->role == 'Admin' )
+            <a href="/register" class="btn btn-md btn-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><i class="fa fa-plus fa-fw"></i> Tambah User</a>
+            @endif
             <div class="card m-4">
                 <div class="card-body table-responsive">
                     <table class="table table-striped">
