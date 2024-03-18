@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-7 col-sm-7 col-xs-7">
-            @if ( auth()->user()->role == "Admin" )
+            @if ( auth()->user()->role == "HRD" )
             <div class="d-flex flex-row-reverse">
                 <a href="/user/{{ $users->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
             </div>

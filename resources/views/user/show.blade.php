@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="d-flex flex-row-reverse">
                 <a href="/user/{{ $users->id }}/edit" class="btn btn-md btn-primary mx-1"><i class="fa fa-pencil-square-o fa-fw"></i> Edit Profile</a>
-            @if ( auth()->user()->role != "Admin" )
+            @if ( auth()->user()->role != "HRD" )
                 <a href="/user/{{ $users->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
             @endif
             </div>

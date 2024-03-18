@@ -6,11 +6,11 @@
         <div class="container d-flex justify-content-around my-4">
             <div class="mx-1" style="color: #182F51">
                 <h5 class="card-title text-center">Total Karyawan</h5>
-                <h4 class="text-center">100</h4>
+                <h4 class="text-center">{{ $totalkaryawan }}</h4>
             </div>
             <div class="mx-1" style="color: #962D2D">
                 <h5 class="card-title text-center">Karyawan Aktif</h5>
-                <h4 class="text-center">100</h4>
+                <h4 class="text-center">{{ $karyawanaktif }}</h4>
             </div>
             <div class="mx-1" style="color: #A0C0E0">
                 <h5 class="card-title text-center">Peserta Aktif</h5>

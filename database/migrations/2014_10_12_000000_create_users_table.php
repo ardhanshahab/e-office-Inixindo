@@ -18,6 +18,7 @@ return new class extends Migration
             // $table->string('email')->unique();
             $table->string('role');
             $table->string('nip');
+            $table->string('status');
             // $table->string('alamat');
             // $table->string('jabatan');
             // $table->string('divisi');
