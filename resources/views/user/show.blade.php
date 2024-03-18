@@ -5,12 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="d-flex flex-row-reverse">
-                <a href="/user/{{ auth()->user()->id }}/edit" class="btn btn-md btn-primary mx-1"><i class="fa fa-pencil-square-o fa-fw"></i> Edit Profile</a>
-                <a href="/user/{{ auth()->user()->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
+                <a href="/user/{{ $users->id }}/edit" class="btn btn-md btn-primary mx-1"><i class="fa fa-pencil-square-o fa-fw"></i> Edit Profile</a>
+            @if ( auth()->user()->role != "Admin" )
+                <a href="/user/{{ $users->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
+            @endif
             </div>
             <div class="card m-4">
                 <div class="card-header" style="background: #A0C0E0">
-                    <h3 class="text-center my-1">{{ __('My Profile') }}</h3>
+                    <h3 class="text-center my-1">{{ __('Profil Saya') }}</h3>
                 </div>
                 <div class="card-body">
                     {{-- foto --}}

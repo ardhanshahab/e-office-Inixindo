@@ -4,9 +4,14 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-7 col-sm-7 col-xs-7">
+            @if ( auth()->user()->role == "Admin" )
+            <div class="d-flex flex-row-reverse">
+                <a href="/user/{{ $users->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
+            </div>
+            @endif
             <div class="card m-4">
                 <div class="card-header" style="background: #A0C0E0">
-                    <h3 class="text-center my-1">{{ __('My Profile') }}</h3>
+                    <h3 class="text-center my-1">{{ __('Profil Saya') }}</h3>
                 </div>
                 <div class="card-body table-responsive">
                     <div class="row">

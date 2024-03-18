@@ -20,22 +20,10 @@
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     <style>
-        .link {
-        color: black;
-        background-color: transparent;
-        text-decoration: none;
-        }
-        .link:hover {
-        color: #182F51;
-        background-color: transparent;
-        text-decoration: none;
-        }
-        .link:active     {
-        color: black;
-        background-color: transparent;
-        text-decoration: none;
-        }
+        body{
+            background: #3595F9
 
+        }
     </style>
 </head>
 <body>
@@ -52,39 +40,7 @@
     </div>
     @endif
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-            <div class="container-fluid">
-                <!-- Home -->
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/home') }}"><i class="fa fa-home fa-lg" aria-hidden="true"></i></a>
-                    </li>
-                </ul>
-
-                <!-- Logo dan Judul -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{url('/css/logo2.jpeg')}}" class="img-responsive" style="width: 40px;">
-                    <span class="ms-2">INIXoffice</span>
-                </a>
-
-                <!-- Logout -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-
-
-        <main class="py-2" style="height: 100vh" id="bgsvg">
+               <main class="py-2" style="height: 100vh" id="bgsvg">
             @yield('content')
         </main>
     </div>

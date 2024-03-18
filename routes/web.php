@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
+Route::redirect('/', '/login');
 
 Auth::routes(['Register'=> false, 'password.request' => false, 'password.email' =>  false, 'password.reset' =>  false, 'password.update' => false]);
 

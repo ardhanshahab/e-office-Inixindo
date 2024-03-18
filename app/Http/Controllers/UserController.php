@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function index()
@@ -48,7 +49,16 @@ class UserController extends Controller
         ]);
         $data['tanggal_lahir'] = Carbon::createFromFormat('Y-m-d', $data['tanggal_lahir'])->format('Y-m-d');
         $users->update($data);
+        if (Auth::User()->role == "Admin"){
+            return redirect('/user')->with('success', 'Data Berhasil Diubah');
+        }
+        elseif (Auth::User()->role == "Admin" &&  Auth::User()->id = $users->id){
+            return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
+        }
+        else{
         return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
+
+        }
     }
 
     public function updatePassword(Request $request, $id)
@@ -60,13 +70,16 @@ class UserController extends Controller
             'password_confirmation' => 'min:8'
         ]);
 
-
-        if ($users->password == $data[ 'expassword']) {
-                $users->update($data);
-                // dd($data['password'],$data['password_confirmation']);
-            }else{
-                return back()->with('error', 'Password Lama Anda Salah');
-            }
+        if(password_verify($data['expassword'], $users->password)) {
+            $data[ 'password']= Hash::make($data['password']);
+            unset ($data['expassword']);
+            $users->update($data);
+        }else{
+            return back()->with('error', 'Password Lama Anda Salah');
+            // $test = 'gagal';
+            // dd($data['password'],$data['password_confirmation']);
+            // dd($test);
+        }
 
         // dd($users->update($data));
         return redirect('/profile/'. $id)->with('success', 'Password Berhasil Diubah');

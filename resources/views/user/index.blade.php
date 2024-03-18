@@ -9,6 +9,7 @@
             @endif
             <div class="card m-4">
                 <div class="card-body table-responsive">
+                    <h3 class="card-title text-center my-1">{{ __('Data Karyawan') }}</h3>
                     <table class="table table-striped">
                         <thead>
                           <tr>
@@ -43,7 +44,7 @@
                             <td>
                                 <div class="d-flex">
                                     @if ( auth()->user()->role == 'Admin' )
-                                    <a href="/user/{{$user->id}}/edit" class="btn btn-warning mx-1" data-toggle="tooltip" data-placement="top" title="Hapus User"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
+                                    <a href="/user/{{$user->id}}/edit" class="btn btn-warning mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
                                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
