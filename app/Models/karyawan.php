@@ -9,6 +9,7 @@ class karyawan extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'foto',
         'nip',
         'nama_lengkap',
         'divisi',

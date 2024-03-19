@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-7 col-sm-7 col-xs-7">
-            <div class="card m-4">
+            <div id="card" class="card m-4">
                 <div class="card-header" style="background: #A0C0E0">
                     <h3 class="text-center my-1">{{ __('Ganti Password') }}</h3>
                 </div>
@@ -100,5 +100,15 @@
             text-align: left;
         }
     }
+        body.light-theme #card {
+            background-color: #fff; /* Warna latar belakang default saat tema terang */
+            color: #000
+        }
+
+        body.dark-theme #card {
+            background-color: #000; /* Warna latar belakang saat tema gelap */
+            color: #fff; /* Warna teks untuk tema gelap */
+        }
+
 </style>
 @endsection

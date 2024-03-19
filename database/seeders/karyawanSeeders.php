@@ -15,6 +15,7 @@ class karyawanSeeders extends Seeder
     public function run(): void
     {
         DB::table('karyawans')->insert([
+            'foto' => null,
             'nip' => '1234567890',
             'nama_lengkap' => 'Ardhan',
             'divisi' => 'Educational',

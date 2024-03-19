@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
+            $table->string('foto')->nullable();
             $table->string('nip');
             $table->string('nama_lengkap');
             $table->string('divisi');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->date('awal_tetap')->nullable();
             $table->date('akhir_tetap')->nullable();
             $table->string('keterangan')->nullable();
+            $table->timestamps();
         });
 
     }

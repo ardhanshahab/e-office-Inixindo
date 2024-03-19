@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid" style="background: ">
-    <h5>Selamat Datang, {{ auth()->user()->name }}</h5>
+    <h5>Selamat Datang, {{ auth()->user()->username }}</h5>
 @if (auth()->user()->role == 'HRD')
     <div class="row justify-content-between">
         <div class="container d-flex justify-content-around my-4">

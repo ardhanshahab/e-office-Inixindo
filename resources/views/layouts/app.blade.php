@@ -75,15 +75,6 @@
             display: block;
         }
 
-        body.card-body.bg-light {
-            background-color: #fff; /* Warna latar belakang default saat tema terang */
-        }
-
-        body.card-body.bg-dark {
-            background-color: #000; /* Warna latar belakang saat tema gelap */
-            color: #fff; /* Warna teks untuk tema gelap */
-        }
-
 
     </style>
 </head>
@@ -101,13 +92,15 @@
     </div>
     @endif
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm ">
+            <div class="container-fluid">
                 <!-- Tombol Home -->
                 <ul class="navbar-nav me-auto ">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/home') }}"><i class="fa fa-home" aria-hidden="true"></i></a>
                     </li>
+                </ul>
+                <ul class="navbar-nav me-auto ">
                     <li class="nav-item" style="margin-left: 50px">
                         <a class="navbar-brand" href="{{ url('/') }}">
                             <img src="https://inixindobdg.co.id/images/logoinix.png" class="img-responsive" style="width: 40px;">
@@ -118,19 +111,23 @@
 
 
                 <!-- Tombol Logout -->
-                <ul class="navbar-nav ms-auto">
-                    {{-- <li class="nav-item dropdown">
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item dropdown">
                         <button class="btn nav-link dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-moon-o" aria-hidden="true"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
-                            <li><button class="dropdown-item" type="button" data-theme-value="light">Light</button></li>
-                            <li><button class="dropdown-item" type="button" data-theme-value="dark">Dark</button></li>
-                            <li><button class="dropdown-item" type="button" data-theme-value="auto">Auto</button></li>
+                            <li>
+                                <button class="btn" onclick="setTheme('dark')">Dark Theme</button>
+                            </li>
+                            <li>
+                                <button class="btn" onclick="setTheme('light')">Light Theme</button>
+                            </li>
+
                         </ul>
-                    </li> --}}
-                    <button onclick="setTheme('dark')">Dark Theme</button>
-                    <button onclick="setTheme('light')">Light Theme</button>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-right">
                     <li class="nav-item mx-1">
                         <a class="nav-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

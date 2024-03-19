@@ -25,43 +25,11 @@ class UserController extends Controller
         return view('user.show', compact('users'));
     }
 
-    public function edit($id)
-    {
-        $users = User::findOrFail($id);
-        return view('user.edit', compact('users'));
-    }
 
     public function editPassword($id)
     {
         $users = User::findOrFail($id);
         return view('user.editpassword', compact('users'));
-    }
-
-    public function updateData(Request $request, $id)
-    {
-        $users = User::findOrFail($id);
-        $data = $request->validate([
-            'name' => ['required'],
-            'nip' =>  ['nullable','numeric'],
-            'role'=>['required'],
-            'alamat'=>['required'],
-            'jabatan'=>['required'],
-            'divisi'=>['required'],
-            'tempat_lahir'=>['required'],
-            'tanggal_lahir'=>['required'],
-        ]);
-        $data['tanggal_lahir'] = Carbon::createFromFormat('Y-m-d', $data['tanggal_lahir'])->format('Y-m-d');
-        $users->update($data);
-        if (Auth::User()->role == "Admin"){
-            return redirect('/user')->with('success', 'Data Berhasil Diubah');
-        }
-        elseif (Auth::User()->role == "Admin" &&  Auth::User()->id = $users->id){
-            return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
-        }
-        else{
-        return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
-
-        }
     }
 
     public function updatePassword(Request $request, $id)
