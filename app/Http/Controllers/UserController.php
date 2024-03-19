@@ -18,7 +18,10 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $users = User::findOrFail($id);
+        $users = User::with('karyawan')->findOrFail($id);
+        $json = response()->json($users);
+        // dd($json);
+        // return $json;
         return view('user.show', compact('users'));
     }
 

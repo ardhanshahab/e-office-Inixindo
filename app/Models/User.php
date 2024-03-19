@@ -18,13 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
         'role',
-        'nip',
         'status',
         'username',
         'password',
+        'karyawan_id',
     ];
 
     /**
@@ -45,6 +43,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function karyawan() {
+        return $this->belongsTo(karyawan::class);
+    }
 
     public function isAdmin()
 {

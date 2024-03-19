@@ -27,8 +27,24 @@
                             <div class="col-md-6">
                                 <select class="form-select @error('role') is-invalid @enderror" name="role" aria-label="Default select example">
                                     <option selected>Pilih Role</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Pegawai">Pegawai</option>
+                                    <option value="Direktur Utama">Direktur Utama</option>
+                                    <option value="Direktur">Direktur</option>
+                                    <option value="Education Manager">Education Manager</option>
+                                    <option value="Instruktur">Instruktur</option>
+                                    <option value="Technical Support">Technical Support</option>
+                                    <option value="General Manager">General Manager</option>
+                                    <option value="SPV Sales">SPV Sales</option>
+                                    <option value="Admin Sales">Admin Sales</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Tim Digital">Tim Digital</option>
+                                    <option value="Accounting">Accounting</option>
+                                    <option value="Finance & Accounting">Finance & Accounting</option>
+                                    <option value="HRD">HRD</option>
+                                    <option value="Admin Holding">Admin Holding</option>
+                                    <option value="Customer Care">Customer Care</option>
+                                    <option value="Programmer">Programmer</option>
+                                    <option value="Office Boy">Office Boy</option>
+
                                     {{-- <option value="3">Three</option> --}}
                                   </select>
                                 @error('role')

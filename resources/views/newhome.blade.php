@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container-fluid" style="background: ">
+    <h5>Selamat Datang, {{ auth()->user()->name }}</h5>
+@if (auth()->user()->role == 'HRD')
     <div class="row justify-content-between">
         <div class="container d-flex justify-content-around my-4">
             <div class="mx-1" style="color: #182F51">
@@ -16,8 +18,30 @@
                 <h5 class="card-title text-center">Peserta Aktif</h5>
                 <h4 class="text-center">100</h4>
             </div>
-
         </div>
+@endif
+@if (auth()->user()->role == 'Instruktur')
+    <div class="row justify-content-between">
+        <div class="container d-flex justify-content-around my-4">
+            <div class="mx-1" style="color: #182F51">
+                <h5 class="card-title text-center">Kelas anda minggu ini</h5>
+                <h4 class="text-center">{{ $totalkaryawan }}</h4>
+            </div>
+            <div class="mx-1" style="color: #962D2D">
+                <h5 class="card-title text-center">Running Class</h5>
+                <h4 class="text-center">{{ $karyawanaktif }}</h4>
+            </div>
+            <div class="mx-1" style="color: #A0C0E0">
+                <h5 class="card-title text-center">Jumlah Mengajar</h5>
+                <h4 class="text-center">100</h4>
+            </div>
+            <div class="mx-1" style="color: #182F51">
+                <h5 class="card-title text-center">Jumlah Peserta anda</h5>
+                <h4 class="text-center">{{ $totalkaryawan }}</h4>
+            </div>
+        </div>
+@endif
+
     <div class="row justify-content-between">
         {{-- karyawan --}}
         <div class="col-md-6 my-1">
@@ -35,7 +59,7 @@
                                     <div class="col-md-10" style="margin-left: 10px">
                                         {{-- <h5 class="card-title">Profil Saya</h5> --}}
                                         <a href="/profile/{{ auth()->user()->id }}" class="link stretched-link text-decoration-none"><h5 class="card-title">Profil Saya</h5></a>
-                                        <p class="card-text">Profil para Pegawai.</p>
+                                        <p class="card-text">Profil saya sebagai karyawan INIXINDO Bandung.</p>
                                     </div>
                                 </div>
                             </div>
