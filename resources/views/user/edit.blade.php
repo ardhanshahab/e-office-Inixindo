@@ -42,8 +42,31 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Jabatan</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="jabatan" type="text" class="form-control @error('jabatan') is-invalid @enderror" name="jabatan" value="{{ old('jabatan', $users->jabatan ) }}" required autocomplete="jabatan">
-                            @error('jabatan')
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" value="{{ old('jabatan', $users->jabatan ) }}" required autocomplete="jabatan">
+                                    <option selected>Pilih Jabatan</option>
+                                    <option value="Komisaris">Komisaris</option>
+                                    <option value="Direktur Utama">Direktur Utama</option>
+                                    <option value="Direktur">Direktur</option>
+                                    <option value="Education Manager">Education Manager</option>
+                                    <option value="Instruktur">Instruktur</option>
+                                    <option value="Technical Support">Technical Support</option>
+                                    <option value="General Manager">General Manager</option>
+                                    <option value="SPV Sales">SPV Sales</option>
+                                    <option value="Admin Sales">Admin Sales</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Tim Digital">Tim Digital</option>
+                                    <option value="Accounting">Accounting</option>
+                                    <option value="Finance & Accounting">Finance & Accounting</option>
+                                    <option value="HRD">HRD</option>
+                                    {{-- <option value="Admin Holding">Admin Holding</option> --}}
+                                    <option value="Customer Care">Customer Care</option>
+                                    <option value="Customer Service">Customer Service</option>
+                                    <option value="Programmer">Programmer</option>
+                                    <option value="Driver">Driver</option>
+                                    <option value="Office Boy">Office Boy</option>
+                                </select>
+                                @error('jabatan')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -53,8 +76,15 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Divisi</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="divisi" type="text" class="form-control @error('divisi') is-invalid @enderror" name="divisi" value="{{ old('divisi', $users->divisi ) }}" required autocomplete="divisi">
-                            @error('divisi')
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <select class="form-select @error('divisi') is-invalid @enderror" name="divisi" value="{{ old('divisi', $users->divisi ) }}" required autocomplete="divisi">
+                                    <option selected>Pilih Divisi</option>
+                                    <option value="Direksi">Direksi</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Sales & Marketing">Sales & Marketing</option>
+                                    <option value="Office">Office</option>
+                                    </select>
+                                @error('divisi')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -64,7 +94,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Rekening Maybank</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="rekening_maybank" type="text" class="form-control @error('rekening_maybank') is-invalid @enderror" name="rekening_maybank" value="{{ old('rekening_maybank', $users->rekening_maybank ) }}" required autocomplete="rekening_maybank">
+                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="rekening_maybank" type="text" class="form-control @error('rekening_maybank') is-invalid @enderror" name="rekening_maybank" value="{{ old('rekening_maybank', $users->rekening_maybank ) }}" autocomplete="rekening_maybank">
                             @error('rekening_maybank')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -75,7 +105,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Rekening BCA</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="rekening_bca" type="text" class="form-control @error('rekening_bca') is-invalid @enderror" name="rekening_bca" value="{{ old('rekening_bca', $users->rekening_bca ) }}" required autocomplete="rekening_bca">
+                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="rekening_bca" type="text" class="form-control @error('rekening_bca') is-invalid @enderror" name="rekening_bca" value="{{ old('rekening_bca', $users->rekening_bca ) }}" autocomplete="rekening_bca">
                             @error('rekening_bca')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -176,7 +206,7 @@
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Keterangan</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                             <div class="col-md-7 col-sm-7 col-xs-7">
-                                <input id="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" value="{{ old('keterangan', $users->keterangan ) }}" required autocomplete="keterangan">
+                                <input id="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" value="{{ old('keterangan', $users->keterangan ) }}" autocomplete="keterangan">
                                 @error('keterangan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

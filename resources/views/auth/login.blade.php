@@ -11,7 +11,7 @@
                                 style="width:100px">
                         </div>
                         <h1 class="text-center text-white">INIXINDO BANDUNG</h1>
-                        <h5 class="text-center text-white">Keep Learning, </h5>
+                        <h5 class="text-center text-white">Keep Learning, Stay Uptodate </h5>
                     </div>
                 </div>
                 {{-- <hr> --}}

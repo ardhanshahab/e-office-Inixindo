@@ -97,7 +97,7 @@
                 <!-- Tombol Home -->
                 <ul class="navbar-nav me-auto ">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/home') }}"><i class="fa fa-home" aria-hidden="true"></i></a>
+                        <a class="nav-link" href="{{ url('/home') }}"><img src="{{ asset('icon/home.svg') }}" class="img-responsive" width="30px"></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav me-auto ">
@@ -114,7 +114,7 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item dropdown">
                         <button class="btn nav-link dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-moon-o" aria-hidden="true"></i>
+                            <img src="{{ asset('icon/moon.svg') }}" class="img-responsive" width="30px">
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
                             <li>
@@ -131,7 +131,7 @@
                     <li class="nav-item mx-1">
                         <a class="nav-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                           <i class="fa fa-power-off" aria-hidden="true"></i>
+                           <img src="{{ asset('icon/power.svg') }}" class="img-responsive" width="30px">
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf

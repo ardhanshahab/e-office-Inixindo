@@ -16,8 +16,8 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Lengkap</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $users->name ) }}" required autocomplete="name" disabled>
-                                @error('name')
+                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="nama_lengkap" type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" name="nama_lengkap" value="{{ old('nama_lengkap', $karyawan->nama_lengkap ) }}" required autocomplete="nama_lengkap" disabled>
+                                @error('nama_lengkap')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -25,10 +25,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 col-sm-4 col-xs-4"><p>Email</p></div>
+                            <div class="col-md-4 col-sm-4 col-xs-4"><p>Username</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $users->email ) }}" required autocomplete="email" disabled>
-                                @error('email')
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username', $users->username ) }}" required autocomplete="username" disabled>
+                                @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

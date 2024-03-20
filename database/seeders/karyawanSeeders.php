@@ -16,20 +16,14 @@ class karyawanSeeders extends Seeder
     {
         DB::table('karyawans')->insert([
             'foto' => null,
-            'nip' => '1234567890',
-            'nama_lengkap' => 'Ardhan',
-            'divisi' => 'Educational',
-            'jabatan' => 'Programmer',
-            'rekening_maybank' => '112345678',
-            'rekening_bca' => '112345654',
+            'nip' => '01000000',
+            'nama_lengkap' => 'Ifik Arifin',
+            'divisi' => 'Direksi',
+            'jabatan' => 'Komisaris',
+
             'status_aktif' => '1',
-            'awal_probation' => null,
-            'akhir_probation' => null,
-            'awal_kontrak' => '2022-12-12',
-            'akhir_kontrak' => '2029-12-12',
-            'awal_tetap' => null,
-            'akhir_tetap' => null,
-            'keterangan' => Str::random(10),
+
+            'keterangan' => 'Komisaris',
             ]);
     }
 }

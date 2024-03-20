@@ -14,10 +14,10 @@
 
             <div class="card-group m-1">
                 <div class="col-md-4">
-                    <div class="card" style="background: #962D2D">
+                    <div class="card shadow-sm">
                         <div class="card m-2 align-self-center">
                             <div class="card-body text-center" id="card">
-                                <img src="{{ asset('storage/posts/'.$users->karyawan->foto) }}" class="rounded" style="width:auto;height:auto;">
+                                <img src="{{ asset('storage/posts/'.$users->karyawan->foto) }}" class="rounded" style="width:100px;height:100px;">
                                 <div class="m-4 row align-items-center text-center">
                                     <p>{{ $users->karyawan->nama_lengkap }}</p>
                                     <p>{{ $users->karyawan->jabatan }}</p>
@@ -45,8 +45,8 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card" id="card">
-                        <div class="card-body" id="card" style="background: #182F51">
+                    <div class="card shadow-sm" id="card">
+                        <div class="card-body " id="card">
                             <div class="card my-1">
                                 <div class="card-body" id="card">
                                     <h5 class="card-title">Personal Detail</h5>
@@ -81,10 +81,13 @@
                                         <div class="col-md-5 col-sm-5 col-xs-5"><p>Maybank</p></div>
                                         <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->karyawan->rekening_maybank }}</p></div>
                                     </div>
+                                    @if ($users->karyawan->rekening_bca)
                                     <div class="row">
-                                        <div class="col-md-5 col-sm-5 col-xs-5"><p>Bca</p></div>
+                                        <div class="col-md-5 col-sm-5 col-xs-5"><p>BCA</p></div>
                                         <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->karyawan->rekening_bca }}</p></div>
                                     </div>
+                                    @endif
+
 
                                 </div>
                             </div>
@@ -98,7 +101,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-5 col-sm-5 col-xs-5"><p>Sampai Tanggal</p></div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ \Carbon\Carbon::parse($users->karyawan->akhir_probation)->translatedFormat('d F Y') }}}</p></div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ \Carbon\Carbon::parse($users->karyawan->akhir_probation)->translatedFormat('d F Y') }}</p></div>
                                     </div>
                                     @endif
                                     @if ($users->karyawan->awal_kontrak)
@@ -120,7 +123,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-5 col-sm-5 col-xs-5"><p>Sampai Tanggal</p></div>
+                                        @if ($users->karyawan->akhir_tetap)
                                         <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ \Carbon\Carbon::parse($users->karyawan->akhir_tetap)->translatedFormat('d F Y') }}</p></div>
+                                        @endif
                                     </div>
                                     @endif
                                 </div>

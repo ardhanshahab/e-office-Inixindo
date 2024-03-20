@@ -36,7 +36,7 @@ class userSeeders extends Seeder
     //         ]);
 
     DB::table('users')->insert([
-        'username' => 'Admin',
+        'username' => 'ifik',
         'role' => 'HRD',
         'status' => 'Aktif',
         'karyawan_id' => '1',

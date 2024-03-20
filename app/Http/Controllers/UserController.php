@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\karyawan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::latest()->paginate(5);
+        $users = User::with('karyawan')->paginate(5);
         return view('user.index', compact('users'));
     }
 
@@ -29,7 +30,9 @@ class UserController extends Controller
     public function editPassword($id)
     {
         $users = User::findOrFail($id);
-        return view('user.editpassword', compact('users'));
+        $karyawan = karyawan::findOrFail($id);
+
+        return view('user.editpassword', compact('users', 'karyawan'));
     }
 
     public function updatePassword(Request $request, $id)

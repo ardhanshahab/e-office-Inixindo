@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
             $table->string('foto')->nullable();
-            $table->string('nip');
+            $table->string('nip')->nullable();
             $table->string('nama_lengkap');
-            $table->string('divisi');
-            $table->string('jabatan');
+            $table->string('divisi')->nullable();
+            $table->string('jabatan')->nullable();
             $table->string('rekening_maybank')->nullable();
             $table->string('rekening_bca')->nullable();
             $table->enum('status_aktif', ['0', '1']);

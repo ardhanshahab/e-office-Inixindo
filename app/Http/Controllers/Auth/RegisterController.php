@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\karyawan;
 
 class RegisterController extends Controller
 {
@@ -49,12 +50,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'max:255'],
             'status' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'karyawan_id' => ['required', 'string'],
         ]);
     }
 
@@ -65,14 +66,22 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'role' => $data['role'],
-            'nip' => $data['nip'],
-            'status' => $data['status'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+{
+    // Membuat data user
+    $user = User::create([
+        'username' => $data['username'],
+        'role' => $data['role'],
+        'status' => $data['status'],
+        'karyawan_id' => $data['karyawan_id'],
+        'password' => Hash::make($data['password']),
+    ]);
+
+    // Membuat data karyawan terkait
+    Karyawan::create([
+        'nama_lengkap' => $data['nama_lengkap'],
+        'status_aktif' => '1',
+    ]);
+
+    return $user;
+}
 }

@@ -5,16 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" id="card">
                 <h5 class="card-title text-center mb-4">{{ __('Registrasi Karyawan Baru') }}</h5>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-start">{{ __('Nama') }}</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                                @error('name')
+                                <input id="nama_lengkap" type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" name="nama_lengkap" value="{{ old('nama_lengkap') }}" required autocomplete="nama_lengkap" autofocus>
+                                @error('nama_lengkap')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -48,18 +47,6 @@
                                     {{-- <option value="3">Three</option> --}}
                                   </select>
                                 @error('role')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="nip" class="col-md-4 col-form-label text-md-start">{{ __('Nomor Induk Pegawai') }}</label>
-                            <div class="col-md-6">
-                                <input id="nip" type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" value="{{ old('nip') }}" required autocomplete="nip" autofocus>
-                                @error('nip')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -114,6 +101,8 @@
                                 @enderror
                             </div>
                         </div>
+                        <input id="karyawan_id" type="text" class="form-control @error('karyawan_id') is-invalid @enderror" name="karyawan_id" hidden value="{{ $countuser }}" required autocomplete="karyawan_id">
+
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -128,4 +117,15 @@
         </div>
     </div>
 </div>
+<style>
+        body.light-theme #card {
+            background-color: #fff; /* Warna latar belakang default saat tema terang */
+            color: #000
+        }
+
+        body.dark-theme #card {
+            background-color: #000; /* Warna latar belakang saat tema gelap */
+            color: #fff; /* Warna teks untuk tema gelap */
+        }
+</style>
 @endsection
