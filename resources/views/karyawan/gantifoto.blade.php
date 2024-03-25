@@ -12,7 +12,7 @@
                         @method('PUT')
 
                         <div class="form-group">
-                            <label class="font-weight-bold">GAMBAR</label>
+                            <label class="font-weight-bold">Foto Profil</label>
                             <input type="file" class="form-control @error('foto') is-invalid @enderror" name="foto">
 
                             <!-- error message untuk title -->

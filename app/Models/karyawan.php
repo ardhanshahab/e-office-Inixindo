@@ -31,4 +31,9 @@ class karyawan extends Model
         return $this->hasOne(User::class, 'karyawan_id');
     }
 
+    public function perusahaan()
+    {
+        return $this->hasOne(Perusahaan::class, 'karyawan_key', 'id');
+    }
+
 }

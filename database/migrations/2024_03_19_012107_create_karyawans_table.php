@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('nip')->nullable();
             $table->string('nama_lengkap');
-            $table->string('email')->nullable();
+            // $table->string('email')->nullable();
             $table->string('divisi')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('rekening_maybank')->nullable();
             $table->string('rekening_bca')->nullable();
-            $table->string('notelp')->nullable();
+            // $table->string('notelp')->nullable();
             $table->enum('status_aktif', ['0', '1']);
             $table->date('awal_probation')->nullable();
             $table->date('akhir_probation')->nullable();
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->date('awal_tetap')->nullable();
             $table->date('akhir_tetap')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('kode_karyawan')->nullable();
             $table->timestamps();
         });
 

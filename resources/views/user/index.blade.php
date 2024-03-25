@@ -29,7 +29,11 @@
                             @foreach ( $users as $user )
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
+                            @if (!$user->karyawan->nip)
+                                <td>-</td>
+                            @else
                             <td>{{ $user->karyawan->nip }}</td>
+                            @endif
                             <td>{{ $user->karyawan->nama_lengkap }}</td>
                             <td>{{ $user->karyawan->jabatan }}</td>
                             <td>{{ $user->karyawan->divisi }}</td>

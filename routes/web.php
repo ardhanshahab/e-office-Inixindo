@@ -36,7 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/registrasi', [App\Http\Controllers\UserController::class, 'regist'])->name('user.regist');
 });
 
+Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'joinPerusahaanKaryawan']);
 
+
+Route::resource('/perusahaan', \App\Http\Controllers\PerusahaanController::class);
 Route::group(['middleware'=>'Admin'],function(){
     Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('user.register');
 });
