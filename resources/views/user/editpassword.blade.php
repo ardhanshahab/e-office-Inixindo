@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-7 col-sm-7 col-xs-7">
             <div id="card" class="card m-4">
-                <div class="card-header" style="background: #A0C0E0">
+                <div class="card-title">
                     <h3 class="text-center my-1">{{ __('Ganti Password') }}</h3>
                 </div>
                 <div class="card-body table-responsive">
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end my-3">
-                            <button type="submit" class="btn btn-md btn-primary mx-4">Simpan</button>
+                            <button type="submit" class="btn click-primary mx-4">Simpan</button>
                         </div>
                     </form>
                     </div>
@@ -101,15 +101,6 @@
             text-align: left;
         }
     }
-        body.light-theme #card {
-            background-color: #fff; /* Warna latar belakang default saat tema terang */
-            color: #000
-        }
-
-        body.dark-theme #card {
-            background-color: #000; /* Warna latar belakang saat tema gelap */
-            color: #fff; /* Warna teks untuk tema gelap */
-        }
 
 </style>
 @endsection

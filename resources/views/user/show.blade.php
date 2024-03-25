@@ -5,23 +5,37 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="d-flex flex-row-reverse">
-                <a href="/karyawan/{{ $users->id }}/edit" class="btn btn-md btn-primary mx-1"><i class="fa fa-pencil-square-o fa-fw"></i> Edit Profile</a>
-            @if ( auth()->user()->role != "HRD" )
-                <a href="/user/{{ $users->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
-            @endif
+            <div class="d-flex justify-content-end">
+                <a href="/karyawan/{{ $users->id }}/edit" class="btn btn-md click-primary mx-1">
+                    <img src="{{ asset('icon/edit.svg') }}" class="mr-1" width="25px">
+                    <span>Edit Profile</span>
+                </a>
+                @if (auth()->user()->jabatan != "HRD")
+                    <a href="/user/{{ $users->id }}/password" class="btn btn-md click-warning mx-1">
+                        <img src="{{ asset('icon/lock.svg') }}" class="mr-1" width="25px">
+                        <span>Ganti Password</span>
+                    </a>
+                @endif
             </div>
-
             <div class="card-group m-1">
                 <div class="col-md-4">
-                    <div class="card shadow-sm">
+                    <div class="card">
                         <div class="card m-2 align-self-center">
                             <div class="card-body text-center" id="card">
-                                <img src="{{ asset('storage/posts/'.$users->karyawan->foto) }}" class="rounded" style="width:100px;height:100px;">
-                                <div class="m-4 row align-items-center text-center">
-                                    <p>{{ $users->karyawan->nama_lengkap }}</p>
+                                @if ($users->karyawan->foto)
+                                    <div class="" style="max-width: 500px; max-height:500px">
+                                        <img src="{{ asset('storage/posts/'.$users->karyawan->foto) }}" class="rounded" style="width:200px;height:auto  ;">
+                                    </div>
+                                @endif
+                                <div class="m-4 row cardname text-center">
+                                    <p style="text-transform: capitalize;">{{ $users->karyawan->nama_lengkap }}</p>
                                     <p>{{ $users->karyawan->jabatan }}</p>
-                                    <a href="/gantifoto/{{ $users->id }}" class="btn btn-md btn-success"><i class="fa fa-picture-o fa-fw"></i> Ganti Foto Profil</a>
+                                        @if ($users->karyawan->foto)
+                                        <a href="/gantifoto/{{ $users->id }}" class="btn btn-md click-secondary-icon" data-toggle="tooltip" data-placement="top" title="Ganti Foto Profil"><img src="{{ asset('icon/image.svg') }}" class="" width="30px"></i>
+                                        @else
+                                        <a href="/gantifoto/{{ $users->id }}" class="btn btn-md click-secondary-icon" data-toggle="tooltip" data-placement="top" title="Tambahkan Foto Profil"><img src="{{ asset('icon/image.svg') }}" class="" width="30px"></i>
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7 mx-4">
                     <div class="card shadow-sm" id="card">
                         <div class="card-body " id="card">
                             <div class="card my-1">
@@ -60,7 +74,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5 col-sm-5 col-xs-5"><p>Role</p></div>
-                                            <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->role }}</p></div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->jabatan }}</p></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-5 col-sm-5 col-xs-5"><p>Status</p></div>
@@ -72,8 +86,13 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-5 col-xs-5"><p>Nomor HP</p></div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->karyawan->notelp }}</p></div>
+                                        </div>
                                 </div>
                             </div>
+                            @if ($users->karyawan->rekening_bca || $users->karyawan->rekening_maybank)
                             <div class="card my-1">
                                 <div class="card-body" id="card">
                                     <h5 class="card-title">Rekening</h5>
@@ -91,6 +110,8 @@
 
                                 </div>
                             </div>
+                            @endif
+                            @if ($users->karyawan->awal_probation || $users->karyawan->awal_kontrak || $users->karyawan->awal_tetap)
                             <div class="card my-1">
                                 <div class="card-body" id="card">
                                     @if ($users->karyawan->awal_probation)
@@ -130,6 +151,7 @@
                                     @endif
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -159,20 +181,82 @@
             text-align: left;
         }
     }
-        body.light-theme #card {
-            background-color: #fff; /* Warna latar belakang default saat tema terang */
+        /* body.light-theme #card {
+            background-color: #fff;
             color: #000
         }
 
         body.dark-theme #card {
-            background-color: #000; /* Warna latar belakang saat tema gelap */
-            color: #fff; /* Warna teks untuk tema gelap */
+            background-color: #000;
+            color: #fff;
+            #
+        } */
+        .cardname {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-</style>
-@push('js')
-    <script>
+        .click-secondary-icon {
+            background:    #355C7C;
+            border-radius: 1000px;
+            width:         45px;
+            height:        45px;
+            color:         #ffffff;
+            display:       flex;
+            justify-content: center;
+            align-items:   center;
+            text-align:    center;
+            text-decoration: none;
+        }
+        .click-secondary-icon i {
+            line-height: 45px;
+        }
 
-    </script>
-@endpush
+        .click-secondary {
+            background:    #355C7C;
+            border-radius: 1000px;
+            padding:       10px 25px;
+            color:         #ffffff;
+            display:       inline-block;
+            font:          normal bold 18px/1 "Open Sans", sans-serif;
+            text-align:    center;
+            transition:    color 0.1s linear, background-color 0.2s linear;
+        }
+
+        .click-secondary:hover {
+            color:         #A5C7EF;
+            transition:    color 0.1s linear, background-color 0.2s linear;
+        }
+        .click-warning {
+            background:    #f8be00;
+            border-radius: 1000px;
+            padding:       10px 20px;
+            color:         #000000;
+            display:       inline-block;
+            font:          normal bold 18px/1 "Open Sans", sans-serif;
+            text-align:    center;
+            transition:    color 0.1s linear, background-color 0.2s linear; /
+        }
+
+        .click-warning:hover {
+            background:         #A5C7EF;
+            transition:    color 0.1s linear, background-color 0.2s linear;
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: auto;
+            height: auto;
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.45);
+            box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(2px);
+            }
+
+</style>
+
 @endsection

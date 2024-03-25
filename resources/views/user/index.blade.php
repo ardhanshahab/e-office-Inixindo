@@ -4,21 +4,23 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @if ( auth()->user()->role == 'HRD' )
-            <a href="/register" class="btn btn-md btn-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><i class="fa fa-plus fa-fw"></i> Tambah User</a>
-            @endif
+            <div class="d-flex justify-content-end">
+                @if ( auth()->user()->jabatan == 'HRD' )
+                    <a href="/user/register" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/user-plus.svg') }}" class="" width="30px"> Tambah User</a>
+                @endif
+            </div>
             <div class="card m-4">
                 <div class="card-body table-responsive">
                     <h3 class="card-title text-center my-1">{{ __('Data Karyawan') }}</h3>
                     <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">No</th>
                             <th scope="col">NIP</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Role</th>
-                            {{-- <th scope="col">NIP</th> --}}
-                            @if ( auth()->user()->role == 'HRD' )
+                            <th scope="col">Nama Lengkap</th>
+                            <th scope="col">Jabatan</th>
+                            <th scope="col">Divisi</th>
+                            @if ( auth()->user()->jabatan == 'HRD' )
                             <th scope="col">Aksi</th>
                             @endif
                           </tr>
@@ -28,16 +30,18 @@
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $user->karyawan->nip }}</td>
-                            <td>{{ $user->username }}</td>
-                            <td>{{ $user->role }}</td>
+                            <td>{{ $user->karyawan->nama_lengkap }}</td>
+                            <td>{{ $user->karyawan->jabatan }}</td>
+                            <td>{{ $user->karyawan->divisi }}</td>
                             <td>
                                 <div class="d-flex">
-                                    @if ( auth()->user()->role == 'HRD' )
-                                    <a href="/karyawan/{{$user->id}}/edit" class="btn btn-warning mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i></a>
+                                    @if ( auth()->user()->jabatan == 'HRD' )
+                                    <a href="/karyawan/{{$user->id}}/edit" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
+                                    <a href="/profile/{{$user->id}}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
                                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mx-1" data-toggle="tooltip" data-placement="top" title="Hapus User"><i class="fa fa-trash fa-fw" aria-hidden="true"></i></button>
+                                        <button type="submit" class="btn click-danger-icon mx-1" data-toggle="tooltip" data-placement="top" title="Hapus User"><img src="{{ asset('icon/trash.svg') }}" class="" width="30px"></button>
                                     </form>
                                     @endif
                                 </div>
@@ -54,4 +58,12 @@
         </div>
     </div>
 </div>
+<style>
+
+</style>
+@push('js')
+    <script>
+
+    </script>
+@endpush
 @endsection

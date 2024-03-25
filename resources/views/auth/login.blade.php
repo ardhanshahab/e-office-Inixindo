@@ -6,12 +6,11 @@
             <div class="col-md-6">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="circle">
-                            <img src="https://inixindobdg.co.id/images/logoinix.png" class="circle-content"
-                                style="width:100px">
+                        <div class="d-flex mt-4">
+                            <img src="https://inixindobdg.co.id/images/logoinix.png" class="mx-2" style="width:50px;">
+                            <h1 class="text-center mx-2">INIXINDO BANDUNG</h1>
                         </div>
-                        <h1 class="text-center text-white">INIXINDO BANDUNG</h1>
-                        <h5 class="text-center text-white">Keep Learning, Stay Uptodate </h5>
+                        <h5 class="text-center">"Continous Learning, Keep Up to date" </h5>
                     </div>
                 </div>
                 {{-- <hr> --}}
@@ -19,7 +18,7 @@
         </div>
         <div class="row align-self-center justify-content-center my-4">
             <div class="col-md-6">
-                <div class="card my-4 ">
+                <div class="card my-4">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-center" style="background: transparant">
                             <div>
@@ -33,17 +32,17 @@
                                     class="col-md-2 col-form-label text-md-end">{{ __('') }}</label>
                                 <div class="col-md-8">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="username">@</span>
+                                        <span class="input-group-text" id="username"><img src="{{ asset('icon/a.svg') }}" class="" width="25px"></span>
                                         <input type="text" class="form-control @error('username') is-invalid @enderror" placeholder="Username"
                                         name="username"
                                         required autocomplete="username"
                                         aria-label="Username" aria-describedby="username">
-                                    </div>
                                     @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    </div>
                                 </div>
                             </div>
 
@@ -52,14 +51,14 @@
                                     class="col-md-2 col-form-label text-md-end">{{ __('') }}</label>
                                 <div class="col-md-8">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="username"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                        <span class="input-group-text" id="password"><img src="{{ asset('icon/lock.svg') }}" class="" width="25px"></span>
                                         <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
-                                    </div>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    </div>
                                 </div>
                             </div>
 
@@ -75,13 +74,14 @@
                                 </div>
                             </div> --}}
 
-                            <div class="row mb-0">
-                                <div class="col-md-10 offset-md-1" style="">
-                                    <button type="submit" class="btn btn-primary" style="width: 320px">
+                            <div class="row mb-0 align-items-center">
+                                <div class="col-md-10 offset-md-4">
+                                    <button type="submit" class="btn click-primary" style="max-width: 320px">
                                         {{ __('Login') }}
                                     </button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -89,43 +89,5 @@
         </div>
     </div>
     <style>
-        .background {
-            /* background-color: green;  */
-            /* height: 150px;  */
-            /* padding: 10px;  */
-        }
-
-        .card {
-            margin-right: auto;
-            margin-left: auto;
-            width: auto;
-            box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2);
-            height: auto;
-            border-radius: 5px;
-            backdrop-filter: blur(10px);
-            background-color: #ffffff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .card img {
-            height: 60%;
-        }
-
-        .circle {
-            background: #ffffff;
-            border-radius: 60%;
-            color: #fff;
-            height: 8.7em;
-            position: relative;
-            /* margin-bottom: 10px; */
-            width: 8.7em;
-        }
-
-        .circle-content {
-            hyphens: auto;
-            margin: 0.75em;
-            text-align: center;
-        }
     </style>
 @endsection

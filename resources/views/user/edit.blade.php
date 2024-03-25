@@ -4,9 +4,10 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-7 col-sm-7 col-xs-7">
-            @if ( auth()->user()->role == "HRD" )
+            @if ( auth()->user()->jabatan == "HRD" )
             <div class="d-flex flex-row-reverse">
-                <a href="/user/{{ $users->id }}/password" class="btn btn-md btn-warning mx-1"><i class="fa fa-lock fa-fw"></i> Ganti Password</a>
+                <a href="/user/{{ $users->id }}/password" class="btn click-warning"><img src="{{ asset('icon/lock.svg') }}" class="mr-1" width="25px">
+                    <span>Ganti Password</span></a>
             </div>
             @endif
             <div class="card m-4" id="card">
@@ -31,7 +32,8 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Nomor Induk Pegawai</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="nip" type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" value="{{ old('nip', $users->nip ) }}" required autocomplete="nip">
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <input id="nip" type="text" placeholder="Masukan Nomor Induk Pegawai Anda" class="form-control @error('nip') is-invalid @enderror" name="nip" value="{{ old('nip', $users->nip ) }}" required autocomplete="nip">
                                 @error('nip')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -94,7 +96,8 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Rekening Maybank</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="rekening_maybank" type="text" class="form-control @error('rekening_maybank') is-invalid @enderror" name="rekening_maybank" value="{{ old('rekening_maybank', $users->rekening_maybank ) }}" autocomplete="rekening_maybank">
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <input id="rekening_maybank" placeholder="Masukan Rekening Maybank Anda" type="text" class="form-control @error('rekening_maybank') is-invalid @enderror" name="rekening_maybank" value="{{ old('rekening_maybank', $users->rekening_maybank ) }}" autocomplete="rekening_maybank">
                             @error('rekening_maybank')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -105,8 +108,21 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Rekening BCA</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                            <div class="col-md-7 col-sm-7 col-xs-7"><input id="rekening_bca" type="text" class="form-control @error('rekening_bca') is-invalid @enderror" name="rekening_bca" value="{{ old('rekening_bca', $users->rekening_bca ) }}" autocomplete="rekening_bca">
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <input id="rekening_bca" placeholder="Masukan Rekening BCA Anda" type="text" class="form-control @error('rekening_bca') is-invalid @enderror" name="rekening_bca" value="{{ old('rekening_bca', $users->rekening_bca ) }}" autocomplete="rekening_bca">
                             @error('rekening_bca')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-4"><p>Nomor Handphone</p></div>
+                            <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <input id="notelp" placeholder="Masukan Nomor HP Anda" type="text" class="form-control @error('notelp') is-invalid @enderror" name="notelp" value="{{ old('notelp', $users->notelp ) }}" autocomplete="notelp">
+                            @error('notelp')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -206,7 +222,7 @@
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Keterangan</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                             <div class="col-md-7 col-sm-7 col-xs-7">
-                                <input id="keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" value="{{ old('keterangan', $users->keterangan ) }}" autocomplete="keterangan">
+                                <input id="keterangan" placeholder="Keterangan" type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" value="{{ old('keterangan', $users->keterangan ) }}" autocomplete="keterangan">
                                 @error('keterangan')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -215,8 +231,8 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-end my-3">
-                            <button type="submit" class="btn btn-md btn-primary mx-4">Simpan</button>
+                        <div class="d-flex justify-content-center my-3">
+                            <button type="submit" class="btn click-primary">Simpan</button>
                         </div>
                     </form>
                     </div>
@@ -246,14 +262,6 @@
             text-align: left;
         }
     }
-        body.light-theme #card {
-            background-color: #fff; /* Warna latar belakang default saat tema terang */
-            color: #000
-        }
 
-        body.dark-theme #card {
-            background-color: #000; /* Warna latar belakang saat tema gelap */
-            color: #fff; /* Warna teks untuk tema gelap */
-        }
 </style>
 @endsection

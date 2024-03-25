@@ -17,13 +17,11 @@ class karyawanSeeders extends Seeder
         DB::table('karyawans')->insert([
             'foto' => null,
             'nip' => '01000000',
-            'nama_lengkap' => 'Ifik Arifin',
+            'nama_lengkap' => 'Muhamad Ardhan Hadaina',
             'divisi' => 'Direksi',
-            'jabatan' => 'Komisaris',
-
+            'jabatan' => 'HRD',
             'status_aktif' => '1',
-
-            'keterangan' => 'Komisaris',
+            'keterangan' => '',
             ]);
     }
 }

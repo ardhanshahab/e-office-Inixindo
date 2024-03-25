@@ -24,8 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $totalkaryawan = User::count();
-        $karyawanaktif = User::where('status', 'Aktif')->count();
-        return view('newhome', compact('totalkaryawan', 'karyawanaktif'));
+            $totalkaryawan = User::count();
+            $karyawanaktif = User::where('status_akun', 'Aktif')->count();
+            return view('newhome', compact('totalkaryawan', 'karyawanaktif'));
+        // return view('homeway');
+
     }
 }

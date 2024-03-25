@@ -23,7 +23,7 @@
                             @enderror
                         </div>
                         <div class="d-flex justify-content-end my-3">
-                            <button type="submit" class="btn btn-md btn-primary mx-4">Simpan</button>
+                            <button type="submit" class="btn click-primary mx-4">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -31,4 +31,7 @@
         </div>
     </div>
 </div>
+<style>
+
+</style>
 @endsection

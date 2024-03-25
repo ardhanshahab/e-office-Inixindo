@@ -21,8 +21,56 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     <style>
         body{
-            background: #3595F9
+            background-image: url('/css/background inix office-01.svg');
+            background-position: center;
+            background-size: cover;
+            background-repeat:no-repeat;
+        }
+        .card {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: auto;
+            height: auto;
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.45);
+            box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(2px);
+            }
 
+        .card img {
+            height: 60%;
+        }
+
+        .circle {
+            background: #ffffff;
+            border-radius: 60%;
+            color: #fff;
+            height: 8.7em;
+            position: relative;
+            width: 8.7em;
+        }
+
+        .circle-content {
+            hyphens: auto;
+            margin: 0.75em;
+            text-align: center;
+        }
+        .click-primary {
+            background:    #182f51;
+            border-radius: 10px;
+            padding:       10px 25px;
+            color:         #ffffff;
+            display:       inline-block;
+            font:          normal bold 18px/1 "Open Sans", sans-serif;
+            text-align:    center;
+            transition:    color 0.1s linear, background-color 0.2s linear;
+        }
+
+        .click-primary:hover {
+            background:         #A5C7EF;
+            transition:    color 0.1s linear, background-color 0.2s linear;
         }
     </style>
 </head>

@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid" style="background: ">
-    <h5>Selamat Datang, {{ auth()->user()->username }}</h5>
-@if (auth()->user()->role == 'HRD')
+    <h5 style="text-transform: capitalize; color:#000;">Selamat Datang, {{ auth()->user()->username }}</h5>
+@if (auth()->user()->jabatan == 'HRD')
     <div class="row justify-content-between">
         <div class="container d-flex justify-content-around my-4">
             <div class="mx-1" id="hero1">
@@ -20,7 +20,7 @@
             </div>
         </div>
 @endif
-@if (auth()->user()->role == 'Instruktur')
+@if (auth()->user()->jabatan == 'Instruktur')
     <div class="row justify-content-between">
         <div class="container d-flex justify-content-around my-4">
             <div class="mx-1" id="hero1">
@@ -51,7 +51,7 @@
                     <div class="row">
                     <h5 class="text-center card-title">Karyawan</h5>
                         <div class="col-sm-6 my-1">
-                            <div class="card">
+                            <div class="card" id="card-hover">
                                 <div class="card-body d-flex">
                                     <div class="col-md-2">
                                         <img src="{{ asset('icon/credit-card.svg') }}" class="img-responsive" width="30px">
@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="col-sm-6 my-1">
-                            <div class="card">
+                            <div class="card shadow-sm"  id="card-hover">
                                 <div class="card-body d-flex">
                                     <div class="col-md-2">
                                         <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-md-10" style="margin-left: 10px">
                                         <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Karyawan</h5></a>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <p class="card-text">Data lengkap semua karyawan.</p>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                     <div class="row">
                     <h5 class="text-center">Rencana Kelas Mingguan</h5>
                         <div class="col-sm-6">
-                            <div class="card">
+                            <div class="card" id="card-hover">
                                 <div class="card-body d-flex">
                                     <div class="col-md-2">
                                         <img src="{{ asset('icon/book-open.svg') }}" class="img-responsive" width="30px">
@@ -107,7 +107,7 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <div class="card">
+                            <div class="card" id="card-hover">
                                 <div class="card-body d-flex">
                                     <div class="col-md-2">
                                         <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
@@ -134,7 +134,7 @@
                     <div class="row">
                     <h5 class="text-center">Peserta</h5>
                         <div class="col-sm-6">
-                            <div class="card">
+                            <div class="card" id="card-hover">
                                 <div class="card-body d-flex">
                                     <div class="col-md-2">
                                         <img src="{{ asset('icon/table.svg') }}" class="img-responsive" width="30px">
@@ -148,12 +148,12 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <div class="card">
+                            <div class="card" id="card-hover">
                                 <div class="card-body d-flex">
                                     <div class="col-md-2">
                                         <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="30px">
                                     </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
+                                    <div class="col-md-10" style="margin-left: 10px" id="">
                                         <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Histori Peserta</h5></a>
                                         <p class="card-text">Data peserta yang pernah mengikuti kelas.</p>
                                     </div>
@@ -176,27 +176,16 @@
             width: auto;
             max-width: 100%;
         }
-        .card {
-            overflow: scroll;
-        }
+
     }
     body.dark-theme #hero1 {
-            color: #A0C0E0
+            color: #ffffff
         }
 
     body.light-theme #hero1 {
-            color: #962D2D
+            color: #000000
         }
 
-    .card {
-        width: auto;
-        box-shadow: 0 15px 25px rgba(129, 124, 124, 0.2);
-        height: auto;
-        border-radius: 5px;
-        backdrop-filter: blur(10px);
-        background-color: rgba(255, 255, 255, 0.13);
-        padding: 10px;
-        text-align: left;
-    }
+
 </style>
 @endsection

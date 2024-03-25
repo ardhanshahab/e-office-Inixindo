@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\karyawan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -25,44 +26,32 @@ class KaryawanController extends Controller
 
     public function updateData(Request $request, $id)
     {
-        $users = karyawan::findOrFail($id);
+        $karyawan = Karyawan::findOrFail($id);
+        $user = User::findOrFail($id);
+
         $data = $request->validate([
             'nama_lengkap' => ['required'],
-            'nip' =>  ['nullable','numeric'],
-            'jabatan'=>['required'],
-            'divisi'=>['required'],
-            'status_aktif'=>['required'],
-
+            'nip' => ['nullable', 'numeric'],
+            'jabatan' => ['required'],
+            'divisi' => ['required'],
+            'status_aktif' => ['required'],
         ]);
-        $datas = $request->all();
-        if (isset($data['awal_probation'])) {
-            $datas['awal_probation'] = Carbon::createFromFormat('Y-m-d', $data['awal_probation'])->translatedFormat('d F Y');
-            $datas['akhir_probation'] = Carbon::createFromFormat('Y-m-d', $data['akhir_probation'])->translatedFormat('d F Y');
-        }
-        if (isset($data['awal_kontrak'])) {
-            $datas['awal_kontrak'] = Carbon::createFromFormat('Y-m-d', $datas['awal_probation'])->isoFormat('D MMMM Y');
-            $datas['akhir_kontrak'] = Carbon::createFromFormat('Y-m-d', $data['akhir_kontrak'])->translatedFormat('d F Y');
-        }
-        if (isset($data['awal_tetap'])) {
-            $datas['awal_tetap'] = Carbon::createFromFormat('Y-m-d', $data['awal_tetap'])->translatedFormat('d F Y');
-            $datas['akhir_tetap'] = Carbon::createFromFormat('Y-m-d', $data['akhir_tetap'])->translatedFormat('d F Y');
-        }
 
-        // dd($datas);
+        $karyawan->jabatan = $data['jabatan'];
+        $karyawan->update($request->all());
 
-        $users->update($request->all());
+        $user->jabatan = $data['jabatan'];
+        $user->save();
 
-        if (Auth::User()->role == "Admin"){
+        if (Auth::user()->role == "Admin") {
             return redirect('/user')->with('success', 'Data Berhasil Diubah');
-        }
-            elseif (Auth::User()->role == "Admin" &&  Auth::User()->id = $users->id){
-            return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
-        }
-        else{
-        return redirect('/profile/'. $id)->with('success', 'Data Berhasil Diubah');
-
+        } elseif (Auth::user()->role == "Admin" && Auth::user()->id == $user->id) {
+            return redirect('/profile/' . $id)->with('success', 'Data Berhasil Diubah');
+        } else {
+            return redirect('/profile/' . $id)->with('success', 'Data Berhasil Diubah');
         }
     }
+
 
     public function updateFoto(Request $request, $id): RedirectResponse
     {

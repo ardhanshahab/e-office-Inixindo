@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     public function index()
@@ -16,6 +17,58 @@ class UserController extends Controller
         $users = User::with('karyawan')->paginate(5);
         return view('user.index', compact('users'));
     }
+
+    public function create()
+    {
+        $user = User::count();
+        $countuser = $user + 1;
+
+        return view('user.register', compact('countuser'));
+    }
+
+    public function regist(Request $request)
+    {
+
+        $data = $request->validate([
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
+            'jabatan' => ['required', 'string', 'max:255'],
+            'status_akun' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'karyawan_id' => ['required', 'string'],
+        ]);
+        // dd($data);
+
+
+        try {
+            DB::beginTransaction();
+
+            User::create([
+                'username' => $data['username'],
+                'jabatan' => $data['jabatan'],
+                'status_akun' => $data['status_akun'],
+                'karyawan_id' => $data['karyawan_id'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            Karyawan::create([
+                'nama_lengkap' => $data['nama_lengkap'],
+                'status_aktif' => $data['status_akun'],
+                'jabatan' => $data['jabatan'],
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('user.index')->with('success', 'Akun Karyawan telah Ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Gagal menambahkan akun karyawan. Silakan coba lagi. Error: ' . $e->getMessage());
+        }
+
+    }
+
+
+
 
     public function show($id)
     {
