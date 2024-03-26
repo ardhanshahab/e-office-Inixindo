@@ -42,7 +42,7 @@
                                                 <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $rkm->materi->nama_materi }}</td>
                                                 {{-- <td>{{ $rkm->tanggal_awal }}</td>
-                                                <td>{{ $rkm->tanggal_akhir }}</td> --}}
+                                                <td>{{ p $rkm->tanggal_akhir }}</td> --}}
                                                 <td>{{ $rkm->perusahaan->nama_perusahaan }}</td>
                                                 <td>{{ $rkm->sales_key }}</td>
                                                 <td>{{ $rkm->instruktur_key }}</td>
