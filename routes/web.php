@@ -37,7 +37,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'joinPerusahaanKaryawan']);
+Route::get('/test/{years}/{month}', [App\Http\Controllers\PerusahaanController::class, 'generateWeeks']);
 
+Route::resource('/comment', \App\Http\Controllers\CommentController::class);
 
 Route::resource('/perusahaan', \App\Http\Controllers\PerusahaanController::class);
 Route::resource('/materi', \App\Http\Controllers\MateriController::class);

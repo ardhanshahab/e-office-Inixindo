@@ -10,6 +10,7 @@ use App\Models\Perusahaan;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use App\Models\RKM;
+use generateWeeks;
 
 class PerusahaanController extends Controller
 {
@@ -191,33 +192,49 @@ class PerusahaanController extends Controller
         return redirect()->route('perusahaan.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 
+
+
+
+    public function generateWeeks($year, $month)
+    {
+        $weeks = [];
+        $startOfMonth = CarbonImmutable::create($year, $month, 1);
+        $endOfMonth = $startOfMonth->endOfMonth();
+
+        $date = $startOfMonth->startOfWeek();
+        while ($date->lte($endOfMonth)) {
+            $startOfWeek = $date->format('d-m-Y');
+            $endOfWeek = $date->addDays(6)->format('d-m-Y');
+            $weeks[] = [
+                'start' => $startOfWeek,
+                'end' => $endOfWeek,
+            ];
+            $date->addDay(); // Move to next day to start next week
+        }
+
+        return $weeks;
+    }
+
     public function joinPerusahaanKaryawan()
     {
-        $now = CarbonImmutable::now()->locale('id_ID');
-            $startOfMonth = $now->startOfMonth();
-            $endOfMonth = $now->endOfMonth();
-
-            $weekRanges = [];
-            $date = $startOfMonth;
-
-            while ($date->lte($endOfMonth)) {
-                $startOfWeek = $date->startOfWeek()->format('Y-m-d');
-                $endOfWeek = $date->endOfWeek()->format('Y-m-d');
-                $weekRanges[] = ['start' => $startOfWeek, 'end' => $endOfWeek];
-
-                $date = $date->addWeek();
+        $years = [];
+        for ($i = 2024; $i <= 2024; $i++) {
+            $months = [];
+            for ($j = 1; $j <= 12; $j++) {
+                $monthName = CarbonImmutable::createFromDate($i, $j, 1)->translatedFormat('F');
+                $weeks = $this->generateWeeks($i, $j);
+                $months[] = [
+                    'name' => $monthName,
+                    'weeks' => $weeks,
+                ];
             }
+            $years[] = [
+                'year' => $i,
+                'months' => $months,
+            ];
+        }
 
-            $json = json_encode($weekRanges, JSON_PRETTY_PRINT);
-
-            $rkmsByWeek = [];
-            foreach ($weekRanges as $weekRange) {
-                $rkms = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-                    ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
-                    ->get();
-
-                $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rkms];
-            }
-        return $rkmsByWeek;
+        return response()->json($years, 200, [], JSON_PRETTY_PRINT);
     }
+
 }

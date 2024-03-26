@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RKM extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'sales_key',
         'materi_key',
@@ -41,4 +42,10 @@ class RKM extends Model
     {
         return $this->belongsTo(Perusahaan::class, 'perusahaan_key', 'id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'rkm_key', 'id');
+    }
+
 }

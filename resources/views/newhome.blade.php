@@ -19,6 +19,7 @@
                 <h4 class="text-center">100</h4>
             </div>
         </div>
+    </div>
 @endif
 @if (auth()->user()->jabatan == 'Instruktur')
     <div class="row justify-content-between">
@@ -40,163 +41,171 @@
                 <h4 class="text-center">{{ $totalkaryawan }}</h4>
             </div>
         </div>
+    </div>
 @endif
 
     <div class="row justify-content-between">
-        {{-- karyawan --}}
-        <div class="col-md-6 my-1">
-            {{-- content --}}
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                    <h5 class="text-center card-title">Karyawan</h5>
-                        <div class="col-sm-6 my-1">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/credit-card.svg') }}" class="img-responsive" width="30px">
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        {{-- <h5 class="card-title">Profil Saya</h5> --}}
-                                        <a href="/profile/{{ auth()->user()->id }}" class="link stretched-link text-decoration-none"><h5 class="card-title">Profil Saya</h5></a>
-                                        <p class="card-text">Profil saya sebagai karyawan INIXINDO Bandung.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 my-1">
-                            <div class="card shadow-sm"  id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
-
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Karyawan</h5></a>
-                                        <p class="card-text">Data lengkap semua karyawan.</p>
+        <div class="col-md-6">
+            <div class="row">
+                {{-- karyawan --}}
+                <div class="col-md-12 my-1">
+                    {{-- content --}}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                            <h5 class="text-center card-title">Karyawan</h5>
+                                <div class="col-sm-6 my-1">
+                                    <div class="card" id="card-hover">
+                                        <div class="card-body d-flex">
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('icon/credit-card.svg') }}" class="img-responsive" width="30px">
+                                            </div>
+                                            <div class="col-md-10" style="margin-left: 10px">
+                                                {{-- <h5 class="card-title">Profil Saya</h5> --}}
+                                                <a href="/profile/{{ auth()->user()->id }}" class="link stretched-link text-decoration-none"><h5 class="card-title">Profil Saya</h5></a>
+                                                <p class="card-text">Profil saya sebagai karyawan INIXINDO Bandung.</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-        {{-- end karyawan --}}
+                                <div class="col-sm-6 my-1">
+                                    <div class="card shadow-sm"  id="card-hover">
+                                        <div class="card-body d-flex">
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
 
-        {{-- RKM --}}
-        <div class="col-md-6 my-1">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                    <h5 class="text-center">Rencana Kelas Mingguan</h5>
-                        <div class="col-sm-6">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/book-open.svg') }}" class="img-responsive" width="30px">
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        <a href="/rkm" class="link stretched-link text-decoration-none"><h5 class="card-title">Rencana Kelas Mingguan</h5></a>
-                                        <p class="card-text">Rencana kelas untuk minggu ini.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
-
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Kalender</h5></a>
-                                        <p class="card-text">Jadwal Rencana Kelas Mingguan.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
-
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        <a href="/perusahaan" class="link stretched-link text-decoration-none"><h5 class="card-title">Perusahaan</h5></a>
-                                        <p class="card-text">Data Perusahaan.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
-
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        <a href="/materi" class="link stretched-link text-decoration-none"><h5 class="card-title">Materi</h5></a>
-                                        <p class="card-text">Data Perusahaan.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        {{-- end RKM --}}
-
-        {{-- peserta --}}
-        <div class="col-md-6 my-1">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                    <h5 class="text-center">Peserta</h5>
-                        <div class="col-sm-6">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/table.svg') }}" class="img-responsive" width="30px">
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px">
-                                        <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Peserta</h5></a>
-                                        <p class="card-text">Data Peserta yang mengikuti kelas.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="card" id="card-hover">
-                                <div class="card-body d-flex">
-                                    <div class="col-md-2">
-                                        <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="30px">
-                                    </div>
-                                    <div class="col-md-10" style="margin-left: 10px" id="">
-                                        <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Histori Peserta</h5></a>
-                                        <p class="card-text">Data peserta yang pernah mengikuti kelas.</p>
+                                            </div>
+                                            <div class="col-md-10" style="margin-left: 10px">
+                                                <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Karyawan</h5></a>
+                                                <p class="card-text">Data lengkap semua karyawan.</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
+                </div>
+                {{-- end karyawan --}}
+                {{-- peserta --}}
+                <div class="col-md-12 my-1">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                            <h5 class="text-center">Peserta</h5>
+                                <div class="col-sm-6">
+                                    <div class="card" id="card-hover">
+                                        <div class="card-body d-flex">
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('icon/table.svg') }}" class="img-responsive" width="30px">
+                                            </div>
+                                            <div class="col-md-10" style="margin-left: 10px">
+                                                <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Peserta</h5></a>
+                                                <p class="card-text">Data Peserta yang mengikuti kelas.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="card" id="card-hover">
+                                        <div class="card-body d-flex">
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="30px">
+                                            </div>
+                                            <div class="col-md-10" style="margin-left: 10px" id="">
+                                                <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Histori Peserta</h5></a>
+                                                <p class="card-text">Data peserta yang pernah mengikuti kelas.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {{-- end peserta --}}
+
+            </div>
         </div>
-        {{-- end peserta --}}
+        <div class="col-md-6">
+            <div class="row">
+                {{-- RKM --}}
+                    <div class="col-md-12 my-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                <h5 class="text-center">Rencana Kelas Mingguan</h5>
+                                    <div class="col-sm-6">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/book-open.svg') }}" class="img-responsive" width="30px">
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px">
+                                                    <a href="/rkm" class="link stretched-link text-decoration-none"><h5 class="card-title">Rencana Kelas Mingguan</h5></a>
+                                                    <p class="card-text">Rencana kelas untuk minggu ini.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
+
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px">
+                                                    <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Kalender</h5></a>
+                                                    <p class="card-text">Jadwal Rencana Kelas Mingguan.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
+
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px">
+                                                    <a href="/perusahaan" class="link stretched-link text-decoration-none"><h5 class="card-title">Perusahaan</h5></a>
+                                                    <p class="card-text">Data Perusahaan.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
+
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px">
+                                                    <a href="/materi" class="link stretched-link text-decoration-none"><h5 class="card-title">Materi</h5></a>
+                                                    <p class="card-text">Data Perusahaan.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{-- end RKM --}}
+            </div>
+        </div>
     </div>
 </div>
 

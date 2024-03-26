@@ -17,33 +17,52 @@ class RKMController extends Controller
 {
     public function index(): View
     {
-            $now = CarbonImmutable::now()->locale('id_ID');
-            $startOfMonth = $now->startOfMonth();
-            $endOfMonth = $now->endOfMonth();
+        $now = CarbonImmutable::now()->locale('id_ID');
+        $startOfMonth = $now->startOfMonth();
+        $endOfMonth = $now->endOfMonth();
+        $startOfYear = $now->startOfYear();
+        $endOfYear = $now->endOfYear();
 
-            $weekRanges = [];
-            $date = $startOfMonth;
+        $weekRanges = [];
+        $date = $startOfMonth;
 
-            while ($date->lte($endOfMonth)) {
-                $startOfWeek = $date->startOfWeek()->format('Y-m-d');
-                $endOfWeek = $date->endOfWeek()->format('Y-m-d');
-                $weekRanges[] = ['start' => $startOfWeek, 'end' => $endOfWeek];
+        // Tambahkan parameter bulan ke penambahan minggu
+        while ($date->lte($endOfMonth) && $date->month == $now->month) {
+            $startOfWeek = $date->startOfWeek()->format('Y-m-d');
+            $endOfWeek = $date->endOfWeek()->format('Y-m-d');
+            $weekRanges[] = ['start' => $startOfWeek, 'end' => $endOfWeek];
 
-                $date = $date->addWeek();
-            }
+            $date = $date->addWeek();
+        }
 
-            $json = json_encode($weekRanges, JSON_PRETTY_PRINT);
+        $json = json_encode($weekRanges, JSON_PRETTY_PRINT);
 
-            $rkmsByWeek = [];
-            foreach ($weekRanges as $weekRange) {
-                $rkms = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-                    ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
-                    ->get();
+        $rkmsByWeek = [];
+        foreach ($weekRanges as $weekRange) {
+            $rkms = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+                ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
+                ->get();
 
-                $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rkms];
-            }
+            $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rkms];
+        }
 
-            return view('rkm.index', compact('rkmsByWeek', 'json'));
+        $years = [];
+        $date = CarbonImmutable::create(2010, 1, 1); // Mulai dari 1 Januari 2010
+
+        while ($date->year <= 2030) { // Selama tahun tidak lebih dari 2030
+            $years[] = $date->year;
+            $date = $date->addYear(); // Tambah satu tahun
+        }
+
+        $months = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $months[] = $now->month($i)->translatedFormat('F');
+        }
+
+        // dd($weekRanges);
+
+        return view('rkm.index', compact('rkmsByWeek', 'json', 'months', 'years', 'now'));
+
     }
 
     /**
@@ -110,11 +129,14 @@ class RKMController extends Controller
      */
     public function show(string $id): View
     {
-        //get post by ID
-        $post = RKM::findOrFail($id);
+        // Get post by ID
+        $post = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
 
-        //render view with post
-        return view('rkm.show', compact('post'));
+        // Get comments related to the post
+        $comments = $post->comments;
+
+        // Render view with post and comments
+        return view('rkm.show', compact('post', 'comments'));
     }
 
     /**

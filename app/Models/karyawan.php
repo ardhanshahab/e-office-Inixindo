@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class karyawan extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'foto',
         'nip',
@@ -24,6 +25,7 @@ class karyawan extends Model
         'awal_tetap',
         'akhir_tetap',
         'keterangan',
+        'kode_karyawan',
     ];
 
     public function user()
@@ -34,6 +36,11 @@ class karyawan extends Model
     public function perusahaan()
     {
         return $this->hasOne(Perusahaan::class, 'karyawan_key', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'karyawan_key', 'id');
     }
 
     public function rkmsSales()
