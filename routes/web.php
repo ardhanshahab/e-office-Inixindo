@@ -40,6 +40,8 @@ Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'join
 
 
 Route::resource('/perusahaan', \App\Http\Controllers\PerusahaanController::class);
+Route::resource('/materi', \App\Http\Controllers\MateriController::class);
+Route::resource('/rkm', \App\Http\Controllers\RKMController::class);
 Route::group(['middleware'=>'Admin'],function(){
     Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('user.register');
 });

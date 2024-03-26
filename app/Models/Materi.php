@@ -13,4 +13,9 @@ class Materi extends Model
         'kategori_materi',
         'vendor',
     ];
+
+    public function rkms()
+    {
+        return $this->hasMany(Rkm::class, 'materi_key', 'id');
+    }
 }

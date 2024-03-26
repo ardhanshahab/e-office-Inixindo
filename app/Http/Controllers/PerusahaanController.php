@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Perusahaan;
 use App\Models\User;
+use Carbon\CarbonImmutable;
+use App\Models\RKM;
 
 class PerusahaanController extends Controller
 {
@@ -101,10 +103,10 @@ class PerusahaanController extends Controller
     public function edit(string $id): View
     {
         //get post by ID
-        $post = Perusahaan::findOrFail($id);
+        $perusahaans = Perusahaan::findOrFail($id);
 
         //render view with post
-        return view('perusahaan.edit', compact('post'));
+        return view('perusahaan.edit', compact('perusahaans'));
     }
 
     /**
@@ -127,7 +129,7 @@ class PerusahaanController extends Controller
             'alamat' => 'nullable',
             'cp' => 'nullable',
             'no_telp' => 'nullable',
-            'foto_npwp' => 'file|mimes:jpeg,jpg,png,pdf|max:5120',
+            'foto_npwp' => 'nullable|file|mimes:jpeg,jpg,png,pdf|max:5120',
         ]);
 
         $post = Perusahaan::findOrFail($id);
@@ -191,8 +193,31 @@ class PerusahaanController extends Controller
 
     public function joinPerusahaanKaryawan()
     {
-        $perusahaans = User::with('karyawan')->get();
+        $now = CarbonImmutable::now()->locale('id_ID');
+            $startOfMonth = $now->startOfMonth();
+            $endOfMonth = $now->endOfMonth();
 
-        return $perusahaans;
+            $weekRanges = [];
+            $date = $startOfMonth;
+
+            while ($date->lte($endOfMonth)) {
+                $startOfWeek = $date->startOfWeek()->format('Y-m-d');
+                $endOfWeek = $date->endOfWeek()->format('Y-m-d');
+                $weekRanges[] = ['start' => $startOfWeek, 'end' => $endOfWeek];
+
+                $date = $date->addWeek();
+            }
+
+            $json = json_encode($weekRanges, JSON_PRETTY_PRINT);
+
+            $rkmsByWeek = [];
+            foreach ($weekRanges as $weekRange) {
+                $rkms = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+                    ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
+                    ->get();
+
+                $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rkms];
+            }
+        return $rkmsByWeek;
     }
 }

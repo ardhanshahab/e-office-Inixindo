@@ -26,4 +26,9 @@ class Perusahaan extends Model
         return $this->belongsTo(Karyawan::class, 'karyawan_key', 'id');
     }
 
+    public function rkms()
+    {
+        return $this->hasMany(Rkm::class, 'nama_perusahaan', 'perusahaan_key    ');
+    }
+
 }

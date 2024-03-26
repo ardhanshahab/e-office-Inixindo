@@ -11,11 +11,9 @@ class MateriController extends Controller
 {
     public function index(): View
     {
-        //get posts
-        $posts = Materi::latest()->paginate(5);
+        $materis = Materi::latest()->paginate(5);
 
-        //render view with posts
-        return view('materi.index', compact('posts'));
+        return view('materi.index', compact('materis'));
     }
 
     /**
@@ -38,23 +36,17 @@ class MateriController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'image'     => 'required|image|mimes:jpeg,jpg,png|max:2048',
-            'title'     => 'required|min:5',
-            'content'   => 'required|min:10'
+            'nama_materi'     => 'required',
+            'kategori_materi'   => 'required',
+            'vendor'   => 'required'
         ]);
 
-        //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
-
-        //create post
         Materi::create([
-            'image'     => $image->hashName(),
-            'title'     => $request->title,
-            'content'   => $request->content
+            'nama_materi'     => $request->nama_materi,
+            'kategori_materi'     => $request->kategori_materi,
+            'vendor'   => $request->vendor
         ]);
 
-        //redirect to index
         return redirect()->route('materi.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
@@ -66,10 +58,8 @@ class MateriController extends Controller
      */
     public function show(string $id): View
     {
-        //get post by ID
         $post = Materi::findOrFail($id);
 
-        //render view with post
         return view('materi.show', compact('post'));
     }
 
@@ -81,11 +71,9 @@ class MateriController extends Controller
      */
     public function edit(string $id): View
     {
-        //get post by ID
-        $post = Materi::findOrFail($id);
+        $materis = Materi::findOrFail($id);
 
-        //render view with post
-        return view('materi.edit', compact('post'));
+        return view('materi.edit', compact('materis'));
     }
 
     /**
@@ -97,43 +85,20 @@ class MateriController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        //validate form
         $this->validate($request, [
-            'image'     => 'image|mimes:jpeg,jpg,png|max:2048',
-            'title'     => 'required|min:5',
-            'content'   => 'required|min:10'
+            'nama_materi'     => 'required',
+            'kategori_materi'   => 'required',
+            'vendor'   => 'required'
         ]);
 
-        //get post by ID
         $post = Materi::findOrFail($id);
 
-        //check if image is uploaded
-        if ($request->hasFile('image')) {
-
-            //upload new image
-            $image = $request->file('image');
-            $image->storeAs('public/posts', $image->hashName());
-
-            //delete old image
-            Storage::delete('public/posts/'.$post->image);
-
-            //update post with new image
             $post->update([
-                'image'     => $image->hashName(),
-                'title'     => $request->title,
-                'content'   => $request->content
+                'nama_materi'     => $request->nama_materi,
+                'kategori_materi'     => $request->kategori_materi,
+                'vendor'   => $request->vendor
             ]);
 
-        } else {
-
-            //update post without image
-            $post->update([
-                'title'     => $request->title,
-                'content'   => $request->content
-            ]);
-        }
-
-        //redirect to index
         return redirect()->route('materi.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
@@ -145,16 +110,10 @@ class MateriController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        //get post by ID
         $post = Materi::findOrFail($id);
 
-        //delete image
-        Storage::delete('public/posts/'. $post->image);
-
-        //delete post
         $post->delete();
 
-        //redirect to index
         return redirect()->route('materi.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

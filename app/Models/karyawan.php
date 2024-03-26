@@ -36,4 +36,14 @@ class karyawan extends Model
         return $this->hasOne(Perusahaan::class, 'karyawan_key', 'id');
     }
 
+    public function rkmsSales()
+    {
+        return $this->hasMany(Rkm::class, 'sales_key', 'kode_karyawan');
+    }
+
+    public function rkmsInstruktur()
+    {
+        return $this->hasMany(Rkm::class, 'instruktur_key', 'kode_karyawan');
+    }
+
 }

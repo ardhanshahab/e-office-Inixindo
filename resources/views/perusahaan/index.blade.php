@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
                 @if ( auth()->user()->jabatan == 'HRD' )
-                    <a href="{{ route('perusahaan.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/user-plus.svg') }}" class="" width="30px"> Data Perusahaan</a>
+                    <a href="{{ route('perusahaan.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah Perusahaan"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Perusahaan</a>
                 @endif
             </div>
             <div class="card m-4">
@@ -51,8 +51,8 @@
                             <td>
                                 <div class="d-flex">
                                     @if ( auth()->user()->jabatan == 'HRD' )
-                                    <a href="/karyawan/{{$perusahaan->id}}/edit" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
-                                    <a href="/profile/{{$perusahaan->id}}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
+                                    <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
+                                    <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
                                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $perusahaan->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
