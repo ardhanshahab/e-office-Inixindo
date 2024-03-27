@@ -10,22 +10,44 @@
                     <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                     <div class="row">
                         <div class="col-md-5">
-                            <p>Materi: {{ $post->materi->nama_materi }}</p>
-                            <p>Tanggal Awal: {{ \Carbon\Carbon::parse($post->tanggal_awal)->translatedFormat('l, d F Y') }}</p>
-                            <p>Tanggal Akhir: {{ \Carbon\Carbon::parse($post->tanggal_akhir)->translatedFormat('l, d F Y') }}</p>
-                            @php
-                                $awal = explode("-",$post->tanggal_awal);
-                                $akhir = explode("-",$post->tanggal_akhir);
-                                $sama = $akhir[2] - $awal[2];
-                                $hari = $sama + 1;
-                            @endphp
-                            <p>Total Hari: {{ $hari }}</p>
-                            <p>Perusahaan: {{ $post->perusahaan->nama_perusahaan }}</p>
-                            <p>Nama Sales: {{ $post->sales->nama_lengkap }}</p>
-                            <p>Nama Instruktur: {{ $post->instruktur->nama_lengkap }}</p>
-                            <p>Metode Kelas: {{ $post->metode_kelas }}</p>
-                            <p>Ruang: {{ $post->ruang }}</p>
-                            <p>Pax: {{ $post->pax }}</p>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Materi</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->materi->nama_materi }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Awal</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_awal)->translatedFormat('l, d F Y') }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Akhir</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_akhir)->translatedFormat('l, d F Y') }}</p></div>
+                                @php
+                                    $awal = explode("-",$post->tanggal_awal);
+                                    $akhir = explode("-",$post->tanggal_akhir);
+                                    $sama = $akhir[2] - $awal[2];
+                                    $hari = $sama + 1;
+                                @endphp
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Total Hari</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $hari }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Perusahaan</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->perusahaan->nama_perusahaan }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Sales</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->sales->nama_lengkap }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Instruktur</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->instruktur->nama_lengkap }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Metode Kelas</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->metode_kelas }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Ruang</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p> {{ $post->ruang }}</p></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Pax</p></div>
+                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->pax }}</p></div>
+                            </div>
                         </div>
                         <div class="col-md-7">
                             <table class="table table-striped text-center" id="tabel">
