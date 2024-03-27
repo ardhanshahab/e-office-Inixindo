@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\RKM;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 
@@ -35,15 +36,31 @@ class RKMController extends Controller
             $date = $date->addWeek();
         }
 
-        $json = json_encode($weekRanges, JSON_PRETTY_PRINT);
-
         $rkmsByWeek = [];
         foreach ($weekRanges as $weekRange) {
-            $rkms = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-                ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
+            $rows = RKM::with(['materi'])
+                ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
+                ->whereBetween('tanggal_awal', [$weekRange['start'],  $weekRange['end']])
+                ->whereBetween('tanggal_akhir', [$weekRange['start'],  $weekRange['end']])
+                ->select('r_k_m_s.materi_key', 'r_k_m_s.ruang','r_k_m_s.metode_kelas','r_k_m_s.event',
+                    DB::raw('GROUP_CONCAT(r_k_m_s.instruktur_key SEPARATOR ", ") AS instruktur_all'),
+                    DB::raw('GROUP_CONCAT(r_k_m_s.perusahaan_key SEPARATOR ", ") AS perusahaan_all'),
+                    DB::raw('GROUP_CONCAT(r_k_m_s.sales_key SEPARATOR ", ") AS sales_all'),
+                    DB::raw('SUM(r_k_m_s.pax) AS total_pax'))
+                ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang','r_k_m_s.metode_kelas','r_k_m_s.event')
                 ->get();
 
-            $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rkms];
+            foreach ($rows as $row) {
+                $instruktur_ids = explode(', ', $row->instruktur_all);
+                $sales_ids = explode(', ', $row->sales_all);
+                $perusahaan_ids = explode(', ', $row->perusahaan_all);
+
+                $row->instruktur = Karyawan::whereIn('kode_karyawan', $instruktur_ids)->get();
+                $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
+                $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
+            }
+            // dd($weekRange);
+            $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rows];
         }
 
         $years = [];
@@ -61,7 +78,7 @@ class RKMController extends Controller
 
         // dd($weekRanges);
 
-        return view('rkm.index', compact('rkmsByWeek', 'json', 'months', 'years', 'now'));
+        return view('rkm.index', compact('rkmsByWeek', 'months', 'years', 'now'));
 
     }
 

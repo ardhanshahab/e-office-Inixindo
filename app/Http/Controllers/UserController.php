@@ -118,4 +118,10 @@ class UserController extends Controller
         $users->delete();
         return redirect('/user')->with('success', 'User Berhasil Dihapus');
     }
+
+    public function datas()
+    {
+        $users = User::with('karyawan')->get();
+        return response()->json($users);
+    }
 }

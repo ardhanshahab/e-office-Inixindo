@@ -12,7 +12,7 @@
             <div class="card m-4">
                 <div class="card-body table-responsive">
                     <h3 class="card-title text-center my-1">{{ __('Data Karyawan') }}</h3>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="userTable">
                         <thead>
                           <tr>
                             <th scope="col">No</th>
@@ -26,7 +26,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $users as $user )
+                            {{-- @foreach ( $users as $user )
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             @if (!$user->karyawan->nip)
@@ -51,11 +51,11 @@
                                 </div>
                             </td>
                           </tr>
-                          @endforeach
+                          @endforeach --}}
                         </tbody>
                       </table>
                       <div class="d-flex">
-                        {{ $users->links() }}
+                        {{-- {{ $users->links() }} --}}
                         </div>
                 </div>
             </div>
@@ -66,8 +66,42 @@
 
 </style>
 @push('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-
+        $(document).ready( function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1:8000/datarkm',
+                dataType: 'json',
+                success: function(data, val) {
+                    console.log(data);
+                }
+            });
+                $('#tableTest').DataTable({
+                    rowGroup: true,
+                    processing: true,
+                    autoWidth: true,
+                    responsive: true,
+                    searching: true,
+                    sort: true,
+                    ajax: {
+                        url: "{{ route('datarkm') }}",
+                        dataSrc: 'data'
+                    },
+                    columns: [
+                        { data: 'id', title:  'No'},
+                        {   data: 'materi_concat',
+                            title: 'Materi',
+                        },
+                        // { data: 'sales.nama_lengkap', title: 'Sales' },
+                        { data: 'instruktur_key', title: 'Instruktur' },
+                        // { data: 'perusahaan.nama_perusahaan', title: 'Perusahaan' }
+                    ],
+                    rowGroup: {
+                        dataSrc: 'materi_concat'
+                    }
+                });
+        });
     </script>
 @endpush
 @endsection

@@ -26,10 +26,20 @@
                             @endforeach
                         </div>
                     </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                        @foreach($months as $index => $month)
-                            <div class="tab-pane fade{{ $index === $now->month - 1 ? ' show active' : '' }}" id="nav-tabContent-{{ $index }}" role="tabpanel" aria-labelledby="nav-month-{{ $index }}">
-                                @foreach($rkmsByWeek as $rkms)
+                    @foreach($months as $index => $month)
+                        <div class="tab-pane fade{{ $index === $now->month - 1 ? ' show active' : '' }}" id="nav-tabContent-{{ $index }}" role="tabpanel" aria-labelledby="nav-month-{{ $index }}">
+                            @php
+                                $selectedMonth = $index + 1; // Bulan dimulai dari 1, sedangkan index dimulai dari 0
+                                $selectedYear = $now->year; // Tahun yang sedang dipilih
+                            @endphp
+                            @foreach($rkmsByWeek as $rkms)
+                                @php
+                                    // Parsing tanggal awal minggu ke dalam format bulan dan tahun
+                                    $weekStart = \Carbon\Carbon::parse($rkms['weekRange']['start']);
+                                    $weekMonth = $weekStart->month;
+                                    $weekYear = $weekStart->year;
+                                @endphp
+                                @if ($weekMonth === $selectedMonth && $weekYear === $selectedYear)
                                     <div class="card m-4">
                                         <div class="card-body table-responsive">
                                             <h3 class="card-title my-1">{{ __('Rencana Kelas Mingguan') }}</h3>
@@ -56,14 +66,26 @@
                                                         <tr>
                                                             <th scope="row">{{ $loop->iteration }}</th>
                                                             <td>{{ $rkm->materi->nama_materi }}</td>
-                                                            <td>{{ $rkm->perusahaan->nama_perusahaan }}</td>
-                                                            <td>{{ $rkm->sales_key }}</td>
-                                                            <td>{{ $rkm->instruktur_key }}</td>
+                                                            <td>
+                                                                @foreach($rkm->perusahaan as $perusahaan)
+                                                                    {{ $perusahaan->nama_perusahaan }}{{ !$loop->last ? ', ' : '' }}
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @foreach($rkm->sales as $sales)
+                                                                    {{ $sales->kode_karyawan }}{{ !$loop->last ? ', ' : '' }}
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @foreach($rkm->instruktur as $instruktur)
+                                                                    {{ $instruktur->kode_karyawan }}{{ !$loop->last ? ', ' : '' }}
+                                                                @endforeach
+                                                            </td>
                                                             <td>{{ $rkm->metode_kelas }}</td>
                                                             <td>{{ $rkm->event }}</td>
                                                             <td>{{ $rkm->ruang }}</td>
-                                                            <td>{{ $rkm->pax }}</td>
-                                                            <td>
+                                                            <td>{{ $rkm->total_pax }}</td>
+                                                            {{-- <td>
                                                                 <div class="d-flex">
                                                                     @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Instruktur' || auth()->user()->jabatan == 'Education Manager')
                                                                         <a href="{{ route('rkm.edit', $rkm->id) }}" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
@@ -75,18 +97,17 @@
                                                                         </form>
                                                                     @endif
                                                                 </div>
-                                                            </td>
+                                                            </td> --}}
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                @endforeach
-                            </div>
-                        @endforeach
-                    </div>
-
+                                @endif
+                            @endforeach
+                        </div>
+                    @endforeach
 
 
                 </div>
@@ -99,9 +120,6 @@
 </style>
 @push('js')
     <script>
-        var weekRanges = {!! $json !!};
-        console.log(weekRanges);
-
         function changeYear(year) {
             document.getElementById('dropdownMenuButton').innerText = year;
         }

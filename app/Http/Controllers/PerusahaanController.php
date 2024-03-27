@@ -7,9 +7,11 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Perusahaan;
+use App\Models\karyawan;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use App\Models\RKM;
+use Illuminate\Support\Facades\DB;
 use generateWeeks;
 
 class PerusahaanController extends Controller
@@ -193,48 +195,87 @@ class PerusahaanController extends Controller
     }
 
 
-
-
-    public function generateWeeks($year, $month)
-    {
-        $weeks = [];
-        $startOfMonth = CarbonImmutable::create($year, $month, 1);
-        $endOfMonth = $startOfMonth->endOfMonth();
-
-        $date = $startOfMonth->startOfWeek();
-        while ($date->lte($endOfMonth)) {
-            $startOfWeek = $date->format('d-m-Y');
-            $endOfWeek = $date->addDays(6)->format('d-m-Y');
-            $weeks[] = [
-                'start' => $startOfWeek,
-                'end' => $endOfWeek,
-            ];
-            $date->addDay(); // Move to next day to start next week
-        }
-
-        return $weeks;
-    }
-
     public function joinPerusahaanKaryawan()
     {
-        $years = [];
-        for ($i = 2024; $i <= 2024; $i++) {
-            $months = [];
-            for ($j = 1; $j <= 12; $j++) {
-                $monthName = CarbonImmutable::createFromDate($i, $j, 1)->translatedFormat('F');
-                $weeks = $this->generateWeeks($i, $j);
-                $months[] = [
-                    'name' => $monthName,
-                    'weeks' => $weeks,
-                ];
+
+        $date = CarbonImmutable::create(2020, 1, 1);
+        $endDate = CarbonImmutable::create(2030, 12, 31);
+        $now = CarbonImmutable::now();
+
+        $monthRanges = [];
+        while ($date->month <= $endDate->month && $date->year <= $endDate->year) {
+            $startOfMonth = $date->startOfMonth();
+            $endOfMonth = $date->endOfMonth();
+
+            $weekRanges = [];
+            $startOfWeek = $startOfMonth->startOfWeek();
+            while ($startOfWeek->lte($endOfMonth)) {
+                $endOfWeek = $startOfWeek->copy()->endOfWeek();
+                $weekRanges[] = ['start' => $startOfWeek->format('Y-m-d'), 'end' => $endOfWeek->format('Y-m-d')];
+                $startOfWeek = $startOfWeek->addWeek();
             }
-            $years[] = [
-                'year' => $i,
-                'months' => $months,
-            ];
+
+            $monthRanges[] = ['month' => $startOfMonth->translatedFormat('m-Y'), 'weeks' => $weekRanges];
+
+            $date = $date->addMonth();
         }
 
-        return response()->json($years, 200, [], JSON_PRETTY_PRINT);
+        $years = [];
+        $date = CarbonImmutable::create(2020, 1, 1); // Start from January 1, 2010
+
+        while ($date->year <= 2030) { // Until the year 2030
+            $years[] = $date->year;
+            $date = $date->addYear(); // Add one year
+        }
+
+        $months = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $months[] = $now->month($i)->translatedFormat('F');
+        }
+
+        if (request()->ajax()) {
+            return response()->json(['monthRanges' => $monthRanges]);
+        }
+
+        $json = $monthRanges;
+
+        return view('homeway', compact('monthRanges', 'now', 'years', 'months'));
+
+
+
+    }
+
+    public function datas($tahun, $bulan){
+        // Perhitungan startDate dan endDate yang benar
+        $startDate = "{$tahun}-{$bulan}-01";
+        $endDate = date('Y-m-t', strtotime($startDate));
+
+        $rkms = RKM::with(['materi'])
+            ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
+            ->whereYear('tanggal_awal', $tahun)
+            ->whereMonth('tanggal_awal', $bulan)
+            ->whereBetween('tanggal_awal', [$startDate, $endDate])
+            ->whereBetween('tanggal_akhir', [$startDate, $endDate])
+            ->select('r_k_m_s.materi_key', 'r_k_m_s.ruang','r_k_m_s.metode_kelas','r_k_m_s.event',
+                DB::raw('GROUP_CONCAT(r_k_m_s.instruktur_key SEPARATOR ", ") AS instruktur_all'),
+                DB::raw('GROUP_CONCAT(r_k_m_s.perusahaan_key SEPARATOR ", ") AS perusahaan_all'),
+                DB::raw('GROUP_CONCAT(r_k_m_s.sales_key SEPARATOR ", ") AS sales_all'),
+                DB::raw('SUM(r_k_m_s.pax) AS total_pax'))
+            ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang','r_k_m_s.metode_kelas','r_k_m_s.event')
+            ->get();
+
+        foreach ($rkms as $row) {
+            $instruktur_ids = explode(', ', $row->instruktur_all);
+            $sales_ids = explode(', ', $row->sales_all);
+            $perusahaan_ids = explode(', ', $row->perusahaan_all);
+
+            $row->instruktur = Karyawan::whereIn('kode_karyawan', $instruktur_ids)->get();
+            $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
+            $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
+        }
+
+        return response()->json(['data' => $rkms]);
+
     }
 
 }

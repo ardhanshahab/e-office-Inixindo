@@ -35,9 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/gantifoto/{id}', [App\Http\Controllers\KaryawanController::class, 'updateFoto'])->name('karyawan.updateFoto');
     Route::post('/registrasi', [App\Http\Controllers\UserController::class, 'regist'])->name('user.regist');
 });
-
-Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'joinPerusahaanKaryawan']);
-Route::get('/test/{years}/{month}', [App\Http\Controllers\PerusahaanController::class, 'generateWeeks']);
+// test
+Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'joinPerusahaanKaryawan'])->name('testdata');
+Route::get('/datas', [App\Http\Controllers\UserController::class, 'datas'])->name('datauser');
+Route::get('/datarkm/{tahun}/{bulan}', [App\Http\Controllers\PerusahaanController::class, 'datas'])->name('datarkm');
+Route::post('/change-year', 'HomeController@changeYear')->name('changeYear');
+// test
 
 Route::resource('/comment', \App\Http\Controllers\CommentController::class);
 

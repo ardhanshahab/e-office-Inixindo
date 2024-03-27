@@ -4,716 +4,117 @@
 <div class="container-fluid" style="background: ">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            {{-- <div class="grid">
-                <div class="card">
-                  <span class="icon">
-                    <i class="fa fa-home fa-fw"></i>
-                  </span>
-                  <h4>Products</h4>
-                  <p>
-                    Standard chunk of Lorem Ipsum used since the 1500s is showed below
-                    for those interested.
-                  </p>
-                  <div class="shine"></div>
-                  <div class="background">
-                    <div class="tiles">
-                      <div class="tile tile-1"></div>
-                      <div class="tile tile-2"></div>
-                      <div class="tile tile-3"></div>
-                      <div class="tile tile-4"></div>
-
-                      <div class="tile tile-5"></div>
-                      <div class="tile tile-6"></div>
-                      <div class="tile tile-7"></div>
-                      <div class="tile tile-8"></div>
-
-                      <div class="tile tile-9"></div>
-                      <div class="tile tile-10"></div>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    @foreach($monthRanges as $index => $monthRange)
+                        <button onclick="handleTabClick('{{ $monthRange['month'] }}')" class="nav-link{{ $index === 0 ? ' active' : '' }}" id="nav-tab-{{ $index }}" data-bs-toggle="tab" data-bs-target="#nav-tabContent-{{ $index }}" type="button" role="tab" aria-controls="nav-tabContent-{{ $index }}" aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
+                            {{ $monthRange['month'] }}
+                        </button>
+                    @endforeach
+                </div>
+            </nav>
+            <div class="tab-content" id="myTabContent">
+                @foreach ($monthRanges as $index => $monthRange)
+                <div class="tab-pane fade{{ $index === 0 ? ' show active' : '' }}" id="nav-tabContent-{{ $index }}" role="tabpanel" aria-labelledby="nav-tab-{{ $index }}">
+                    @foreach ($monthRange['weeks'] as $weekRange)
+                        <div class="card m-4">
+                            <div class="card-body table-responsive">
+                                <h3 class="card-title my-1">{{ __('Rencana Kelas Mingguan') }}</h3>
+                                <p class="card-title my-1">Periode <strong>{{ \Carbon\Carbon::parse($weekRange['start'])->translatedFormat('l, d F Y') }}  - {{ \Carbon\Carbon::parse($weekRange['end'])->translatedFormat('l, d F Y') }}</strong> </p>
+                                <table class="table table-striped" id="tabel">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Materi</th>
+                                            <th scope="col">Perusahaan</th>
+                                            <th scope="col">Kode Sales</th>
+                                            <th scope="col">Instruktur</th>
+                                            <th scope="col">Metode Kelas</th>
+                                            <th scope="col">Event</th>
+                                            <th scope="col">Ruang</th>
+                                            <th scope="col">Pax</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
-
-                    <div class="line line-1"></div>
-                    <div class="line line-2"></div>
-                    <div class="line line-3"></div>
-                  </div>
-                </div>
-                <div class="card">
-                  <span class="icon">
-
-                  </span>
-                  <h4>Categories</h4>
-                  <p>
-                    Standard chunk of Lorem Ipsum used since the 1500s is showed below
-                    for those interested.
-                  </p>
-                  <div class="shine"></div>
-                  <div class="background">
-                    <div class="tiles">
-                      <div class="tile tile-1"></div>
-                      <div class="tile tile-2"></div>
-                      <div class="tile tile-3"></div>
-                      <div class="tile tile-4"></div>
-
-                      <div class="tile tile-5"></div>
-                      <div class="tile tile-6"></div>
-                      <div class="tile tile-7"></div>
-                      <div class="tile tile-8"></div>
-
-                      <div class="tile tile-9"></div>
-                      <div class="tile tile-10"></div>
-                    </div>
-
-                    <div class="line line-1"></div>
-                    <div class="line line-2"></div>
-                    <div class="line line-3"></div>
-                  </div>
-                </div>
-              </div>
-
-              <label class="day-night">
-                <input type="checkbox" checked />
-                <div></div>
-              </label>
-
-              <!-- twitter -->
-              <a class="twitter" target="_top" href="https://twitter.com/aaroniker_me"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><path d="M67.812 16.141a26.246 26.246 0 0 1-7.519 2.06 13.134 13.134 0 0 0 5.756-7.244 26.127 26.127 0 0 1-8.313 3.176A13.075 13.075 0 0 0 48.182 10c-7.229 0-13.092 5.861-13.092 13.093 0 1.026.118 2.021.338 2.981-10.885-.548-20.528-5.757-26.987-13.679a13.048 13.048 0 0 0-1.771 6.581c0 4.542 2.312 8.551 5.824 10.898a13.048 13.048 0 0 1-5.93-1.638c-.002.055-.002.11-.002.162 0 6.345 4.513 11.638 10.504 12.84a13.177 13.177 0 0 1-3.449.457c-.846 0-1.667-.078-2.465-.231 1.667 5.2 6.499 8.986 12.23 9.09a26.276 26.276 0 0 1-16.26 5.606A26.21 26.21 0 0 1 4 55.976a37.036 37.036 0 0 0 20.067 5.882c24.083 0 37.251-19.949 37.251-37.249 0-.566-.014-1.134-.039-1.694a26.597 26.597 0 0 0 6.533-6.774z"></path></svg></a>
-
-        </div> --}}
-
-        <div class="card">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="70px">
-
-                </div>
-                <div class="col-md-8">
-                    <p><strong>Glassmorphism UI design</strong></p>
-                    <p>A glass-like card to demonstrate the <strong>Glassmorphism UI design</strong> trend.</p>
-                </div>
+                @endforeach
             </div>
-            {{-- <p class="card-footer">Created by Rahul C.</p> --}}
-        </div>
-        <div class="card">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="70px">
-
-                </div>
-                <div class="col-md-8">
-                    <p><strong>Glassmorphism UI design</strong></p>
-                    <p>A glass-like card to demonstrate the <strong>Glassmorphism UI design</strong> trend.</p>
-                </div>
-            </div>
-            {{-- <p class="card-footer">Created by Rahul C.</p> --}}
         </div>
     </div>
 </div>
+@push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
 
-{{-- <style>
-    @media screen and (max-width: 768px) {
-        a {
-            width: auto;
-            max-width: 100%;
-        }
-        .card {
-            overflow: scroll;
-        }
-    }
-        body {
-    --background-color: #ffffff;
-    --text-color: #0000;
+    let selectedYear = {{ $now->year }};
+    let selectedMonth = {{ $now->month - 1 }};
 
-    --card-background-color: rgba(255, 255, 255, .015);
-    --card-border-color: rgba(255, 255, 255, 0.1);
-    --card-box-shadow-1: rgba(0, 0, 0, 0.05);
-    --card-box-shadow-1-y: 3px;
-    --card-box-shadow-1-blur: 6px;
-    --card-box-shadow-2: rgba(0, 0, 0, 0.1);
-    --card-box-shadow-2-y: 8px;
-    --card-box-shadow-2-blur: 15px;
-    --card-label-color: #000;
-    --card-icon-color: #D4D4D8;
-    --card-icon-background-color: rgba(255, 255, 255, 0.08);
-    --card-icon-border-color: rgba(255, 255, 255, 0.12);
-    --card-shine-opacity: .1;
-    --card-shine-gradient: conic-gradient(from 205deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, rgba(52, 211, 153, 0.18) 295deg, rgba(16, 185, 129, 0) 360deg);
-    --card-line-color: #2A2B2C;
-    --card-tile-color: rgba(16, 185, 129, 0.05);
-
-    --card-hover-border-color: rgba(255, 255, 255, 0.2);
-    --card-hover-box-shadow-1: rgba(0, 0, 0, 0.04);
-    --card-hover-box-shadow-1-y: 5px;
-    --card-hover-box-shadow-1-blur: 10px;
-    --card-hover-box-shadow-2: rgba(0, 0, 0, 0.3);
-    --card-hover-box-shadow-2-y: 15px;
-    --card-hover-box-shadow-2-blur: 25px;
-    --card-hover-icon-color: #34D399;
-    --card-hover-icon-background-color: rgba(52, 211, 153, 0.1);
-    --card-hover-icon-border-color: rgba(52, 211, 153, 0.2);
-
-    --blur-opacity: .01;
-
-    &.light {
-        --background-color: #FAFAFA;
-        --text-color: #52525B;
-
-        --card-background-color: transparent;
-        --card-border-color: rgba(24, 24, 27, 0.08);
-        --card-box-shadow-1: rgba(24, 24, 27, 0.02);
-        --card-box-shadow-1-y: 3px;
-        --card-box-shadow-1-blur: 6px;
-        --card-box-shadow-2: rgba(24, 24, 27, 0.04);
-        --card-box-shadow-2-y: 2px;
-        --card-box-shadow-2-blur: 7px;
-        --card-label-color: rgba(0,0,0);
-        --card-icon-color: #18181B;
-        --card-icon-background-color: rgba(24, 24, 27, 0.04);
-        --card-icon-border-color: rgba(24, 24, 27, 0.1);
-        --card-shine-opacity: .3;
-        --card-shine-gradient: conic-gradient(from 225deg at 50% 50%, rgba(16, 185, 129, 0) 0deg, #10B981 25deg, #EDFAF6 285deg, #FFFFFF 345deg, rgba(16, 185, 129, 0) 360deg);
-        --card-line-color: #E9E9E7;
-        --card-tile-color: rgba(16, 185, 129, 0.08);
-
-        --card-hover-border-color: rgba(24, 24, 27, 0.15);
-        --card-hover-box-shadow-1: rgba(24, 24, 27, 0.05);
-        --card-hover-box-shadow-1-y: 3px;
-        --card-hover-box-shadow-1-blur: 6px;
-        --card-hover-box-shadow-2: rgba(24, 24, 27, 0.1);
-        --card-hover-box-shadow-2-y: 8px;
-        --card-hover-box-shadow-2-blur: 15px;
-        --card-hover-icon-color: #18181B;
-        --card-hover-icon-background-color: rgba(24, 24, 27, 0.04);
-        --card-hover-icon-border-color: rgba(24, 24, 27, 0.34);
-
-        --blur-opacity: .1;
+    function changeYear(year) {
+        selectedYear = year;
+        document.getElementById('dropdownMenuButton').innerText = year;
+        updateContent();
     }
 
-    &.toggle .grid * {
-        transition-duration: 0s !important;
-    }
-    }
+    function handleTabClick(month) {
+        console.log(month);
+        var result = month.split('-');
 
-    .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 240px);
-    grid-gap: 32px;
-    position: relative;
-    z-index: 1;
+        localStorage.setItem('selectedMonth', result[0]);
+        localStorage.setItem('selectedYear', result[1]);
+        updateContent();
     }
 
-    .card {
-    background-color: var(--background-color);
-    box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur) var(--card-box-shadow-1), 0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur) var(--card-box-shadow-2), 0 0 0 1px var(--card-border-color);
-    padding: 56px 16px 16px 16px;
-    border-radius: 15px;
-    cursor: pointer;
-    position: relative;
-    transition: box-shadow .25s;
+    function updateContent() {
+        var selectedMonth = localStorage.getItem('selectedMonth');
+        var selectedYear = localStorage.getItem('selectedYear');
+        console.log('Bulan yang dipilih:', selectedMonth);
+        console.log('Tahun yang dipilih:', selectedYear);
+        $.ajax({
+                type: 'GET',
+                url: 'http://127.0.0.1:8000/datarkm/' + selectedYear + '/' + selectedMonth,
+                dataType: 'json',
+                success: function(data) {
+                    // Update the table with the new data
+                    console.log(data);
+                    $('#tabel tbody').empty();
+                    $.each(data.data, function(index, value) {
+                        var sales = value.sales.map(function(sale) {
+                            return sale.kode_karyawan;
+                        }).join(', ');
 
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 15px;
-        background-color: var(--card-background-color);
+                        var instruktur = value.instruktur.map(function(inst) {
+                            return inst.kode_karyawan;
+                        }).join(', ');
+
+                        var perusahaan = value.perusahaan.map(function(perus) {
+                            return perus.nama_perusahaan;
+                        }).join(', ');
+
+                        $('#tabel tbody').append('<tr>' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td>' + value.materi.nama_materi + '</td>' +
+                            '<td>' + perusahaan + '</td>' +
+                            '<td>' + sales + '</td>' +
+                            '<td>' + instruktur + '</td>' +
+                            '<td>' + value.metode_kelas + '</td>' +
+                            '<td>' + value.event + '</td>' +
+                            '<td>' + value.ruang + '</td>' +
+                            '<td>' + value.total_pax + '</td>' +
+                            '</tr>');
+                    });
+
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
     }
 
-    /* .icon {
-        z-index: 2;
-        position: relative;
-        display: table;
-        padding: 8px;
-
-        &::after {
-        content: '';
-        position: absolute;
-        inset: 4.5px;
-        border-radius: 50%;
-        background-color: var(--card-icon-background-color);
-        border: 1px solid var(--card-icon-border-color);
-        backdrop-filter: blur(2px);
-        transition: background-color .25s, border-color .25s;
-        }
-
-        svg {
-        position: relative;
-        z-index: 1;
-        display: block;
-        width: 24px;
-        height: 24px;
-        transform: translateZ(0);
-        color: var(--card-icon-color);
-        transition: color .25s;
-        }
-    } */
-
-    h4 {
-        z-index: 2;
-        position: relative;
-        margin: 12px 0 4px 0;
-        font-family: inherit;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 2;
-        color: var(--card-label-color);
-    }
-
-    p {
-        z-index: 2;
-        position: relative;
-        margin: 0;
-        font-size: 14px;
-        line-height: 1.7;
-        color: var(--text-color);
-    }
-
-    .shine {
-        border-radius: inherit;
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        overflow: hidden;
-        opacity: 0;
-        transition: opacity .5s;
-
-        &:before {
-        content: '';
-        width: 150%;
-        padding-bottom: 150%;
-        border-radius: 50%;
-        position: absolute;
-        left: 50%;
-        bottom: 55%;
-        filter: blur(35px);
-        opacity: var(--card-shine-opacity);
-        transform: translateX(-50%);
-        background-image: var(--card-shine-gradient);
-        }
-    }
-
-    .background {
-        border-radius: inherit;
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-        -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
-        mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
-
-        .tiles {
-        opacity: 0;
-        transition: opacity .25s;
-
-        .tile {
-            position: absolute;
-            background-color: var(--card-tile-color);
-            animation-duration: 8s;
-            animation-iteration-count: infinite;
-            opacity: 0;
-
-            &.tile-4,
-            &.tile-6,
-            &.tile-10 {
-            animation-delay: -2s;
-            }
-
-            &.tile-3,
-            &.tile-5,
-            &.tile-8 {
-            animation-delay: -4s;
-            }
-
-            &.tile-2,
-            &.tile-9 {
-            animation-delay: -6s;
-            }
-
-            &.tile-1 {
-            top: 0;
-            left: 0;
-            height: 10%;
-            width: 22.5%;
-            }
-
-            &.tile-2 {
-            top: 0;
-            left: 22.5%;
-            height: 10%;
-            width: 27.5%;
-            }
-
-            &.tile-3 {
-            top: 0;
-            left: 50%;
-            height: 10%;
-            width: 27.5%;
-            }
-
-            &.tile-4 {
-            top: 0;
-            left: 77.5%;
-            height: 10%;
-            width: 22.5%;
-            }
-
-            &.tile-5 {
-            top: 10%;
-            left: 0;
-            height: 22.5%;
-            width: 22.5%;
-            }
-
-            &.tile-6 {
-            top: 10%;
-            left: 22.5%;
-            height: 22.5%;
-            width: 27.5%;
-            }
-
-            &.tile-7 {
-            top: 10%;
-            left: 50%;
-            height: 22.5%;
-            width: 27.5%;
-            }
-
-            &.tile-8 {
-            top: 10%;
-            left: 77.5%;
-            height: 22.5%;
-            width: 22.5%;
-            }
-
-            &.tile-9 {
-            top: 32.5%;
-            left: 50%;
-            height: 22.5%;
-            width: 27.5%;
-            }
-
-            &.tile-10 {
-            top: 32.5%;
-            left: 77.5%;
-            height: 22.5%;
-            width: 22.5%;
-            }
-        }
-        }
-
-        @keyframes tile {
-
-        0%,
-        12.5%,
-        100% {
-            opacity: 1;
-        }
-
-        25%,
-        82.5% {
-            opacity: 0;
-        }
-        }
-
-        .line {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        transition: opacity .35s;
-
-        &:before,
-        &:after {
-            content: '';
-            position: absolute;
-            background-color: var(--card-line-color);
-            transition: transform .35s;
-        }
-
-        &:before {
-            left: 0;
-            right: 0;
-            height: 1px;
-            transform-origin: 0 50%;
-            transform: scaleX(0);
-        }
-
-        &:after {
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            transform-origin: 50% 0;
-            transform: scaleY(0);
-        }
-
-        &.line-1 {
-            &:before {
-            top: 10%;
-            }
-
-            &:after {
-            left: 22.5%;
-            }
-
-            &:before,
-            &:after {
-            transition-delay: .3s;
-            }
-        }
-
-        &.line-2 {
-            &:before {
-            top: 32.5%;
-            }
-
-            &:after {
-            left: 50%;
-            }
-
-            &:before,
-            &:after {
-            transition-delay: .15s;
-            }
-        }
-
-        &.line-3 {
-            &:before {
-            top: 55%;
-            }
-
-            &:after {
-            right: 22.5%;
-            }
-        }
-        }
-    }
-
-    &:hover {
-        box-shadow: 0px 3px 6px var(--card-hover-box-shadow-1), 0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur) var(--card-hover-box-shadow-2), 0 0 0 1px var(--card-hover-border-color);
-
-        .icon {
-        &::after {
-            background-color: var(--card-hover-icon-background-color);
-            border-color: var(--card-hover-icon-border-color);
-        }
-
-        svg {
-            color: var(--card-hover-icon-color);
-        }
-        }
-
-        .shine {
-        opacity: 1;
-        transition-duration: .5s;
-        transition-delay: 0s;
-        }
-
-        .background {
-
-        .tiles {
-            opacity: 1;
-            transition-delay: .25s;
-
-            .tile {
-            animation-name: tile;
-            }
-        }
-
-        .line {
-            opacity: 1;
-            transition-duration: .15s;
-
-            &:before {
-            transform: scaleX(1);
-            }
-
-            &:after {
-            transform: scaleY(1);
-            }
-
-            &.line-1 {
-
-            &:before,
-            &:after {
-                transition-delay: .0s;
-            }
-            }
-
-            &.line-2 {
-
-            &:before,
-            &:after {
-                transition-delay: .15s;
-            }
-            }
-
-            &.line-3 {
-
-            &:before,
-            &:after {
-                transition-delay: .3s;
-            }
-            }
-        }
-        }
-    }
-    }
-
-    .day-night {
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    opacity: .3;
-
-    input {
-        display: none;
-
-        &+div {
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        position: relative;
-        box-shadow: inset 8px -8px 0 0 var(--text-color);
-        transform: scale(1) rotate(-2deg);
-        transition: box-shadow .5s ease 0s, transform .4s ease .1s;
-
-        &:before {
-            content: '';
-            width: inherit;
-            height: inherit;
-            border-radius: inherit;
-            position: absolute;
-            left: 0;
-            top: 0;
-            transition: background-color .3s ease;
-        }
-
-        &:after {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            margin: -3px 0 0 -3px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            box-shadow: 0 -23px 0 var(--text-color), 0 23px 0 var(--text-color), 23px 0 0 var(--text-color), -23px 0 0 var(--text-color), 15px 15px 0 var(--text-color), -15px 15px 0 var(--text-color), 15px -15px 0 var(--text-color), -15px -15px 0 var(--text-color);
-            transform: scale(0);
-            transition: all .3s ease;
-        }
-        }
-
-        &:checked+div {
-        box-shadow: inset 20px -20px 0 0 var(--text-color);
-        transform: scale(.5) rotate(0deg);
-        transition: transform .3s ease .1s, box-shadow .2s ease 0s;
-
-        &:before {
-            background: var(--text-color);
-            transition: background-color .3s ease .1s;
-        }
-
-        &:after {
-            transform: scale(1);
-            transition: transform .5s ease .15s;
-        }
-        }
-    }
-    }
-
-    html {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    }
-
-    * {
-    box-sizing: inherit;
-    &:before,
-    &:after {
-        box-sizing: inherit;
-    }
-    }
-
-    // Center
-    body {
-    min-height: 100vh;
-    display: flex;
-    font-family: 'Inter', Arial;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--background-color);
-    overflow: hidden;
-
-    &:before {
-        content: '';
-        position: absolute;
-        inset: 0 -60% 65% -60%;
-        background-image: radial-gradient(ellipse at top, #10B981 0%, var(--background-color) 50%);
-        opacity: var(--blur-opacity);
-    }
-
-    .twitter {
-        position: fixed;
-        display: block;
-        right: 12px;
-        bottom: 12px;
-        svg {
-        width: 32px;
-        height: 32px;
-        fill: #fff;
-        }
-    }
-    }
-</style> --}}
-
-<style>
-    :root {
-    font-size: 20px;
-    }
-
-    p {
-    margin: 0;
-    }
-
-    p:not(:last-child) {
-    margin-bottom: 1.5em;
-    }
-
-    body {
-    font: 1em/1.618 Inter, sans-serif;
-
-    display: grid;
-    align-items:flex-start;
-    justify-content: space-around;
-
-    min-height: 100vh;
-    /* padding: 30px; */
-    margin: 0;
-
-    color: #224;
-
-    }
-
-    .card {
-    /* max-width: 300px; */
-    min-height: 200px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    max-width: 500px;
-    height: 250px;
-    padding: 20px;
-
-    border: 1px solid rgba(255, 255, 255, .25);
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.45);
-    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
-
-    backdrop-filter: blur(2px);
-    }
-
-    /* .card-footer {
-    font-size: 0.65em;
-    color: #446;
-    } */
-
-</style>
+</script>
+@endpush
 @endsection
