@@ -16,7 +16,7 @@ use Carbon\CarbonImmutable;
 
 class RKMController extends Controller
 {
-    public function index(): View
+    public function index()
     {
         $startDate = CarbonImmutable::create(2020, 1, 1);
         $endDate = CarbonImmutable::create(2030, 12, 31);
@@ -100,7 +100,7 @@ class RKMController extends Controller
         }
 
         $json = $monthRanges;
-        // return $rkmsByWeek;
+        // return $monthRanges;
 
         return view('rkm.index', compact('monthRanges', 'now', 'years', 'months', 'rkmsByWeek'));
 
@@ -168,14 +168,22 @@ class RKMController extends Controller
      */
     public function show(string $id): View
     {
-        // Get post by ID
-        $post = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+            ->where('materi_key', $id)
+            ->where('tanggal_awal', '=', function ($query) use ($id) {
+                $query->select('tanggal_awal')
+                    ->from('r_k_m_s')
+                    ->where('materi_key', $id)
+                    ->groupBy('tanggal_awal')
+                    ->havingRaw('COUNT(tanggal_awal) > 1');
+            })
+            ->get();
 
-        // Get comments related to the post
-        $comments = $post->comments;
+        $posts = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
 
-        // Render view with post and comments
-        return view('rkm.show', compact('post', 'comments'));
+        $comments = $posts->comments;
+
+        return view('rkm.show', compact('rkm', 'comments'));
     }
 
     public function edit(string $id)

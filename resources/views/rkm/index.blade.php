@@ -4,9 +4,15 @@
 <div class="container-fluid" style="background: ">
     <div class="row justify-content-center">
         <div class="row">
-            <a href="{{ route('rkm.create') }}">Tambah RKM</a>
-            <a href="{{ route('editInstruktur') }}">Tambah/Edit Instruktur RKM </a>
-            <a href="{{ route('rkmEdit') }}">Edit RKM </a>
+            <div class="col-md-12 d-flex my-2">
+                @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Admin Sales' || auth()->user()->jabatan == 'Finance & Accounting' )
+                <a class="btn click-primary mx-1" href="{{ route('rkm.create') }}">Tambah RKM</a>
+                <a class="btn click-primary mx-1" href="{{ route('rkmEdit') }}">Edit RKM </a>
+                @endif
+                @if ( auth()->user()->jabatan == 'Education Manager')
+                <a class="btn click-primary mx-1" href="{{ route('editInstruktur') }}">Tambah/Edit Instruktur RKM </a>
+                @endif
+            </div>
             <div class="col-md-3">
                 <nav>
                     <div class="nav nav-tabs flex-column" id="nav-tab" role="tablist">
@@ -30,10 +36,55 @@
                                         <p class="card-title my-1">Periode <strong>{{ \Carbon\Carbon::parse($weekRange['start'])->translatedFormat('l, d F Y') }}  - {{ \Carbon\Carbon::parse($weekRange['end'])->translatedFormat('l, d F Y') }}</strong> </p>
                                         @foreach ($rkmsByWeek as $rkms)
                                             @if ($rkms['weekRange'] ==  $weekRange )
-                                                {{ $rkms['rkms'] }}
-                                                {{-- @foreach ($rkms['rkms'] as $rkmsData) --}}
+                                                @foreach ($rkms['rkms'] as $rkmsData)
 
-                                            {{-- @endforeach --}}
+                                                    <table class="table table-responsive table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">No</th>
+                                                                <th scope="col">Materi</th>
+                                                                <th scope="col">Perusahaan</th>
+                                                                <th scope="col">Kode Sales</th>
+                                                                <th scope="col">Instruktur</th>
+                                                                <th scope="col">Metode Kelas</th>
+                                                                <th scope="col">Event</th>
+                                                                <th scope="col">Ruang</th>
+                                                                <th scope="col">Pax</th>
+                                                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Instruktur' || auth()->user()->jabatan == 'Education Manager')
+                                                                    <th scope="col">Aksi</th>
+                                                                @endif
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $rkmsData->materi->nama_materi }}</td>
+                                                            <td>
+                                                            @foreach ($rkmsData['perusahaan'] as $perusahaan )
+                                                            {{ $perusahaan->nama_perusahaan }},
+                                                            @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @foreach ($rkmsData['sales'] as $sales )
+                                                                {{ $sales->kode_karyawan }},
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @if (!$rkmsData->instruktur_key)
+                                                                    <p>Belum Ditentukan</p>
+                                                                    @else
+                                                                    {{ $rkmsData->instruktur_key }}
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $rkmsData->metode_kelas }}</td>
+                                                            <td>{{ $rkmsData->event }}</td>
+                                                            <td>{{ $rkmsData->ruang }}</td>
+                                                            <td>{{ $rkmsData->total_pax }}</td>
+                                                            <td>
+                                                            <a href="/rkm/{{$rkmsData->materi_key}}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
+                                                            </td>
+                                                        </tbody>
+                                                    </table>
+                                                @endforeach
                                             @endif
                                         @endforeach
                                     </div>

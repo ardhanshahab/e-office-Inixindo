@@ -10,43 +10,57 @@
                     <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                     <div class="row">
                         <div class="col-md-5">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Materi</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->materi->nama_materi }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Awal</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_awal)->translatedFormat('l, d F Y') }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Akhir</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_akhir)->translatedFormat('l, d F Y') }}</p></div>
-                                @php
-                                    $awal = explode("-",$post->tanggal_awal);
-                                    $akhir = explode("-",$post->tanggal_akhir);
-                                    $sama = $akhir[2] - $awal[2];
-                                    $hari = $sama + 1;
-                                @endphp
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Total Hari</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $hari }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Perusahaan</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->perusahaan->nama_perusahaan }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Sales</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->sales->nama_lengkap }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Instruktur</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->instruktur->nama_lengkap }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Metode Kelas</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->metode_kelas }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Ruang</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p> {{ $post->ruang }}</p></div>
-                                <div class="col-md-4 col-sm-4 col-xs-4"><p>Pax</p></div>
-                                <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->pax }}</p></div>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @foreach ($rkm as $post)
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">Kelas {{ $post->id }}</button>
+                                </li>
+                                @endforeach
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                @foreach ($rkm as $post)
+                                <div class="tab-pane fade" id="kelas{{ $post->id }}" role="tabpanel" aria-labelledby="kelas-tab-{{ $post->id }}">
+                                    <div class="row">
+                                        <h5>Kelas {{ $post->id }}</h5>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Materi</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->materi->nama_materi }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Awal</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_awal)->translatedFormat('l, d F Y') }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Akhir</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_akhir)->translatedFormat('l, d F Y') }}</p></div>
+                                        @php
+                                            $awal = explode("-",$post->tanggal_awal);
+                                            $akhir = explode("-",$post->tanggal_akhir);
+                                            $sama = $akhir[2] - $awal[2];
+                                            $hari = $sama + 1;
+                                        @endphp
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Total Hari</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $hari }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Perusahaan</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->perusahaan->nama_perusahaan }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Sales</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->sales->nama_lengkap }}</p></div>
+                                        {{-- <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Instruktur</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->instruktur->nama_lengkap }}</p></div> --}}
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Metode Kelas</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->metode_kelas }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Ruang</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p> {{ $post->ruang }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Pax</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->pax }}</p></div>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -114,7 +128,7 @@
 
 
                     </div>
-                    {{-- <div>{{ $post }}</div> --}}
+
                 </div>
             </div>
         </div>
