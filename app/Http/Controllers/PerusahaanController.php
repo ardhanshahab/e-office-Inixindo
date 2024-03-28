@@ -197,7 +197,6 @@ class PerusahaanController extends Controller
 
     public function joinPerusahaanKaryawan()
     {
-
         $startDate = CarbonImmutable::create(2020, 1, 1);
         $endDate = CarbonImmutable::create(2030, 12, 31);
         $now = CarbonImmutable::now()->locale('id_ID');
@@ -261,24 +260,27 @@ class PerusahaanController extends Controller
                 ->get();
 
             foreach ($rows as $row) {
-                $instruktur_ids = explode(', ', $row->instruktur_all);
-                $sales_ids = explode(', ', $row->sales_all);
-                $perusahaan_ids = explode(', ', $row->perusahaan_all);
+                if ($row->instruktur_all == null){
+                    $sales_ids = explode(', ', $row->sales_all);
+                    $perusahaan_ids = explode(', ', $row->perusahaan_all);
+                    $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
+                    $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
 
-                $row->instruktur = Karyawan::whereIn('kode_karyawan', $instruktur_ids)->get();
-                $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
-                $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
+                }else{
+                    $sales_ids = explode(', ', $row->sales_all);
+                    $perusahaan_ids = explode(', ', $row->perusahaan_all);
+                    $instruktur_ids = explode(', ', $row->instruktur_all);
+                    $row->instruktur = Karyawan::whereIn('kode_karyawan', $instruktur_ids)->get();
+                    $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
+                    $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
+                }
+
             }
             $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rows];
         }
 
-        $json = $monthRanges;
-        // return $rkmsByWeek;
-
-        return view('homeway', compact('monthRanges', 'now', 'years', 'months', 'rkmsByWeek'));
-
-
-
+        $json = response()->json($rkmsByWeek);
+        return $json;
     }
 
     public function datas($tahun, $bulan,){

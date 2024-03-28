@@ -47,6 +47,11 @@ Route::resource('/comment', \App\Http\Controllers\CommentController::class);
 Route::resource('/perusahaan', \App\Http\Controllers\PerusahaanController::class);
 Route::resource('/materi', \App\Http\Controllers\MateriController::class);
 Route::resource('/rkm', \App\Http\Controllers\RKMController::class);
+Route::get('/rkmEditInstruktur', [App\Http\Controllers\RKMController::class, 'editInstruktur'])->name('editInstruktur');
+Route::put('/rkmUpdateInstruktur', [App\Http\Controllers\RKMController::class, 'updateInstruktur'])->name('updateInstruktur');
+Route::get('/rkmEdit', [App\Http\Controllers\RKMController::class, 'editRKM'])->name('rkmEdit');
+Route::put('/rkmUpdate', [App\Http\Controllers\RKMController::class, 'updateRKM'])->name('rkmUpdate');
+
 Route::group(['middleware'=>'Admin'],function(){
     Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('user.register');
 });
