@@ -87,7 +87,7 @@
                                                             <td>{{ $rkm->total_pax }}</td>
                                                             {{-- <td>
                                                                 <div class="d-flex">
-                                                                    @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Instruktur' || auth()->user()->jabatan == 'Education Manager')
+                                                                    @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Instruktur' || auth()->user()->jabatan == 'General Manager' || auth()->user()->jabatan == 'Education Manager')
                                                                         <a href="{{ route('rkm.edit', $rkm->id) }}" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
                                                                         <a href="{{ route('rkm.show', $rkm->id) }}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
                                                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('rkm.destroy', $rkm->id) }}" method="POST">

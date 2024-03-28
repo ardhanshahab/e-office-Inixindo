@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'joinPerusahaanKaryawan'])->name('testdata');
 Route::get('/datas', [App\Http\Controllers\UserController::class, 'datas'])->name('datauser');
 Route::get('/datarkm/{tahun}/{bulan}', [App\Http\Controllers\PerusahaanController::class, 'datas'])->name('datarkm');
-Route::post('/change-year', 'HomeController@changeYear')->name('changeYear');
+// Route::post('/change-year', 'HomeController@changeYear')->name('changeYear');
 // test
 
 Route::resource('/comment', \App\Http\Controllers\CommentController::class);
