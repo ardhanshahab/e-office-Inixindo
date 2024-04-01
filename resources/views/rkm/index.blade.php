@@ -6,7 +6,7 @@
         <div class="col-md-12 d-flex my-2">
              @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Admin Sales' || auth()->user()->jabatan == 'Finance & Accounting' )
             <a class="btn click-primary mx-1" href="{{ route('rkm.create') }}">Tambah RKM</a>
-            <a class="btn click-primary mx-1" href="{{ route('rkmEdit') }}">Edit RKM </a>
+            {{-- <a class="btn click-primary mx-1" href="{{ route('rkmEdit') }}">Edit RKM </a> --}}
             @endif
             @if ( auth()->user()->jabatan == 'Education Manager')
             <a class="btn click-primary mx-1" href="{{ route('editInstruktur') }}">Tambah/Edit Instruktur RKM </a>
@@ -50,7 +50,7 @@
                             </div>
                     </div>
             </div>
-                <div class="row">
+                <div class="row my-2">
                     <div class="col-md-12" id="content">
                     </div>
                 </div>
@@ -84,13 +84,17 @@
 
             response.data.forEach(function (monthData) {
                 monthData.weeksData.forEach(function (weekData) {
-                    console.log(weekData);
                     html += '<div class="card">';
                     html += '<div class="card-body">';
                     html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
                     html += '<p class="card-title my-1">Periode : ' + weekData.start + ' - ' + weekData.end + '</p>';
-
+                    if (weekData.data.length === 0) {
+                        console.log('tidak ada data');
+                        html += '<p class="card-title text-center my-1">Tidak Ada Kelas Mingguan</p>';
+                    } else {
                     weekData.data.forEach(function (rkm) {
+
+
                         html += '<table class="table table-responsive table-striped">';
                         html += '<thead>';
                         html += '<tr>';
@@ -143,15 +147,9 @@
                         html += '</tbody>';
                         html += '</table>';
                     });
+                }
                     html += '</div>';
                     html += '</div>';
-                    // html += '<p class="card-title my-1">' + data + '</p>';
-                    // html += '<tr>';
-                    //     html += '<td>' + count++ + '</td>';
-                    //     html += '<td>' + rkmData.materi.nama_materi + '</td>';
-                    //     html += '<td>';
-                    //     rkmData.perusahaan.forEach(function (perusahaan) {
-                    //         html += perusahaan.nama_perusahaan + ', ';
                 });
             });
 

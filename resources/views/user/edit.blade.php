@@ -47,26 +47,26 @@
                             <div class="col-md-7 col-sm-7 col-xs-7">
                                 <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" value="{{ old('jabatan', $users->jabatan ) }}" required autocomplete="jabatan">
                                     <option selected>Pilih Jabatan</option>
-                                    <option value="Komisaris">Komisaris</option>
-                                    <option value="Direktur Utama">Direktur Utama</option>
-                                    <option value="Direktur">Direktur</option>
-                                    <option value="Education Manager">Education Manager</option>
-                                    <option value="Instruktur">Instruktur</option>
-                                    <option value="Technical Support">Technical Support</option>
-                                    <option value="General Manager">General Manager</option>
-                                    <option value="SPV Sales">SPV Sales</option>
-                                    <option value="Admin Sales">Admin Sales</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Tim Digital">Tim Digital</option>
-                                    <option value="Accounting">Accounting</option>
-                                    <option value="Finance & Accounting">Finance & Accounting</option>
-                                    <option value="HRD">HRD</option>
-                                    {{-- <option value="Admin Holding">Admin Holding</option> --}}
-                                    <option value="Customer Care">Customer Care</option>
-                                    <option value="Customer Service">Customer Service</option>
-                                    <option value="Programmer">Programmer</option>
-                                    <option value="Driver">Driver</option>
-                                    <option value="Office Boy">Office Boy</option>
+                                    <option @if ($users->jabatan == "Komisaris") selected @endif value="Komisaris">Komisaris</option>
+                                    <option @if ($users->jabatan == "Direktur Utama") selected @endif value="Direktur Utama">Direktur Utama</option>
+                                    <option @if ($users->jabatan == "Direktur") selected @endif value="Direktur">Direktur</option>
+                                    <option @if ($users->jabatan == "Education Manager") selected @endif value="Education Manager">Education Manager</option>
+                                    <option @if ($users->jabatan == "Instruktur") selected @endif value="Instruktur">Instruktur</option>
+                                    <option @if ($users->jabatan == "Technical Support") selected @endif value="Technical Support">Technical Support</option>
+                                    <option @if ($users->jabatan == "General Manager") selected @endif value="General Manager">General Manager</option>
+                                    <option @if ($users->jabatan == "SPV Sales") selected @endif value="SPV Sales">SPV Sales</option>
+                                    <option @if ($users->jabatan == "Admin Sales") selected @endif value="Admin Sales">Admin Sales</option>
+                                    <option @if ($users->jabatan == "Sales") selected @endif value="Sales">Sales</option>
+                                    <option @if ($users->jabatan == "Tim Digital") selected @endif value="Tim Digital">Tim Digital</option>
+                                    <option @if ($users->jabatan == "Accounting") selected @endif value="Accounting">Accounting</option>
+                                    <option @if ($users->jabatan == "Finance & Accounting") selected @endif value="Finance & Accounting">Finance & Accounting</option>
+                                    <option @if ($users->jabatan == "HRD") selected @endif value="HRD">HRD</option>
+                                    {{-- <option @if ($users->jabatan == "Direksi") selected @endif value="Admin Holding">Admin Holding</option> --}}
+                                    <option @if ($users->jabatan == "Customer Care") selected @endif value="Customer Care">Customer Care</option>
+                                    <option @if ($users->jabatan == "Customer Service") selected @endif value="Customer Service">Customer Service</option>
+                                    <option @if ($users->jabatan == "Programmer") selected @endif value="Programmer">Programmer</option>
+                                    <option @if ($users->jabatan == "Driver") selected @endif value="Driver">Driver</option>
+                                    <option @if ($users->jabatan == "Office Boy") selected @endif value="Office Boy">Office Boy</option>
                                 </select>
                                 @error('jabatan')
                             <span class="invalid-feedback" role="alert">
@@ -81,10 +81,10 @@
                             <div class="col-md-7 col-sm-7 col-xs-7">
                                 <select class="form-select @error('divisi') is-invalid @enderror" name="divisi" value="{{ old('divisi', $users->divisi ) }}" required autocomplete="divisi">
                                     <option selected>Pilih Divisi</option>
-                                    <option value="Direksi">Direksi</option>
-                                    <option value="Education">Education</option>
-                                    <option value="Sales & Marketing">Sales & Marketing</option>
-                                    <option value="Office">Office</option>
+                                    <option value="Direksi" @if ($users->divisi == "Direksi") selected @endif>Direksi</option>
+                                    <option value="Education" @if ($users->divisi == "Education") selected @endif>Education</option>
+                                    <option value="Sales & Marketing" @if ($users->divisi == "Sales & Marketing") selected @endif>Sales & Marketing</option>
+                                    <option value="Office" @if ($users->divisi == "Office") selected @endif>Office</option>
                                     </select>
                                 @error('divisi')
                             <span class="invalid-feedback" role="alert">
@@ -135,8 +135,8 @@
                             <div class="col-md-7 col-sm-7 col-xs-7">
                                 <select class="form-select @error('status_aktif') is-invalid @enderror" name="status_aktif" value="{{ old('status_aktif', $users->status_aktif ) }}" required autocomplete="status_aktif">
                                     <option selected>Pilih status</option>
-                                    <option value="1">Aktif</option>
-                                    <option value="0">Tidak Aktif</option>
+                                    <option @if ($users->status_aktif == "1") selected @endif value="1">Aktif</option>
+                                    <option @if ($users->status_aktif == "0") selected @endif value="0">Tidak Aktif</option>
                                     {{-- <option value="3">Three</option> --}}
                                   </select>
                                 @error('status_aktif')

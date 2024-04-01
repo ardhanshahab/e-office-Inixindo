@@ -216,8 +216,8 @@
 
         .click-secondary {
             background:    #355C7C;
-            border-radius: 1000px;
-            padding:       10px 25px;
+            border-radius: 5px;
+            padding:       5px 10px;
             color:         #ffffff;
             display:       inline-block;
             font:          normal bold 18px/1 "Open Sans", sans-serif;
@@ -231,8 +231,8 @@
         }
         .click-warning {
             background:    #f8be00;
-            border-radius: 1000px;
-            padding:       10px 20px;
+            border-radius: 5px;
+            padding:       5px 10px;
             color:         #000000;
             display:       inline-block;
             font:          normal bold 18px/1 "Open Sans", sans-serif;
