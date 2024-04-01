@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/registrasi', [App\Http\Controllers\UserController::class, 'regist'])->name('user.regist');
 });
 // test
-Route::get('/testdata', [App\Http\Controllers\PerusahaanController::class, 'joinPerusahaanKaryawan'])->name('testdata');
+Route::get('/testdata', [App\Http\Controllers\TestController::class, 'index'])->name('testdata');
 Route::get('/datas', [App\Http\Controllers\UserController::class, 'datas'])->name('datauser');
 Route::get('/datarkm/{tahun}/{bulan}', [App\Http\Controllers\PerusahaanController::class, 'datas'])->name('datarkm');
 // Route::post('/change-year', 'HomeController@changeYear')->name('changeYear');
