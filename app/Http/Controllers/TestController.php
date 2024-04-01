@@ -67,15 +67,7 @@ class TestController extends Controller
             $date = $date->addMonth();
         }
 
-        // $rkmsByWeek = [];
-        // foreach ($monthRanges as $monthRange) {
-        //     foreach ($monthRange['weeks'] as $weekRange) {
-
-        //         $rkmsByWeek[] = [ 'month' => $monthRanges,  'rkms' => $rows];
-        //     }
-        // }
         $json = $monthRanges;
-        // $jsons = $rkmsByWeek;
         return $json;
 
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class karyawan extends Model
 {
@@ -51,6 +52,12 @@ class karyawan extends Model
     public function rkmsInstruktur()
     {
         return $this->hasMany(Rkm::class, 'instruktur_key', 'kode_karyawan');
+    }
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($foto) => url('/storage/posts/' . $foto),
+        );
     }
 
 }
