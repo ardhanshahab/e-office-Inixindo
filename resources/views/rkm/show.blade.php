@@ -13,7 +13,7 @@
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 @foreach ($rkm as $post)
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">Kelas {{ $post->id }}</button>
+                                    <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">Kelas {{ $loop->iteration }}</button>
                                 </li>
                                 @endforeach
                             </ul>
@@ -21,7 +21,12 @@
                                 @foreach ($rkm as $post)
                                 <div class="tab-pane fade" id="kelas{{ $post->id }}" role="tabpanel" aria-labelledby="kelas-tab-{{ $post->id }}">
                                     <div class="row">
-                                        <h5>Kelas {{ $post->id }}</h5>
+                                        <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Kelas {{ $loop->iteration }}</h5></p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
+                                        {{-- <h5>ID Kelas {{ $post->id }}</h5> --}}
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>ID Kelas</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->id }}</p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Materi</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->materi->nama_materi }}</p></div>

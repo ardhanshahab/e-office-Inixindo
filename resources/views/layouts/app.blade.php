@@ -105,7 +105,7 @@
             text-align: center;
         }
         .click-primary {
-            border-radius: 10px;
+            border-radius: 5px;
             padding:       5px 10px;
             color:         #ffffff;
             display:       inline-block;
@@ -173,14 +173,14 @@
 
         .click-secondary-icon {
             background:    #355C7C;
-            border-radius: 1000px;
-            width:         45px;
-            height:        45px;
+            border-radius: 5px;
+            padding:       10px 20px;
             color:         #ffffff;
-            display:       flex;
+            display:       inline-block;
+            font:          normal bold 12px/1 "Open Sans", sans-serif;
+            text-align:    center;
             justify-content: center; /* Posisikan ikon secara horizontal di tengah */
             align-items:   center; /* Posisikan ikon secara vertikal di tengah */
-            text-align:    center;
             text-decoration: none; /* Hilangkan dekorasi hyperlink */
         }
         .click-secondary-icon i {
@@ -289,19 +289,13 @@
     </div>
     @stack('js')
     <script>
-        function setTheme(theme) {
-            document.body.className = theme + '-theme';
-            localStorage.setItem('theme', theme);
-            setCookie('theme', theme, 60);
+        $(document).ready(function() {
 
-        }
-
-        // Set theme from localStorage on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                setTheme(savedTheme);
-            }
+            localStorage.setItem('jabatan', '{{ auth()->user()->jabatan }}');
+            // localStorage.setItem('divisi', '{{ auth()->user()->divisi }}');
+            var jabatan = localStorage.getItem('jabatan');
+            // var divisi = localStorage.getItem('divisi');
+            // console.log(jabatan);
         });
 
     </script>

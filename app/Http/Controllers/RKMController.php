@@ -166,7 +166,7 @@ class RKMController extends Controller
      * @param  mixed $id
      * @return View
      */
-    public function show(string $id): View
+    public function show(string $id)
     {
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
             ->where('materi_key', $id)
@@ -179,6 +179,8 @@ class RKMController extends Controller
             })
             ->get();
 
+            // return $rkm;
+
         $posts = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
 
         $comments = $posts->comments;
@@ -190,9 +192,12 @@ class RKMController extends Controller
     {
         // Get post by ID
         $post = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
-        return $post;
+        $sales = karyawan::where('jabatan', 'sales')->get();
+        $instruktur = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
+        $materi = Materi::get();
+        $perusahaan = Perusahaan::get();
+        return view('rkm.edit', compact('post', 'sales', 'materi', 'perusahaan', 'instruktur'));
     }
-
     /**
      * edit
      *
