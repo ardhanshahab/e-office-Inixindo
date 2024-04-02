@@ -11,6 +11,12 @@
                     <div class="row">
                         <div class="col-md-5">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @php
+                                    $posts = $rkm->first()->id; // Mengambil ID dari objek pertama dalam array $rkm
+                                    $materi_key = $rkm->first()->materi_key; // Mengambil ID dari objek pertama dalam array $rkm
+                                    // echo $postId;
+                                    // $posts = $postId;
+                                @endphp
                                 @foreach ($rkm as $post)
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">Kelas {{ $loop->iteration }}</button>
@@ -22,7 +28,11 @@
                                 <div class="tab-pane fade" id="kelas{{ $post->id }}" role="tabpanel" aria-labelledby="kelas-tab-{{ $post->id }}">
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Kelas {{ $loop->iteration }}</h5></p></div>
+                                        @if ( auth()->user()->jabatan == 'Education Manager')
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('editInstruktur', $post->id) }}">Tambah/Edit Instruktur RKM </a></div>
+                                        @else
                                         <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
+                                        @endif
                                         {{-- <h5>ID Kelas {{ $post->id }}</h5> --}}
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>ID Kelas</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
@@ -51,9 +61,15 @@
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Sales</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->sales->nama_lengkap }}</p></div>
-                                        {{-- <div class="col-md-4 col-sm-4 col-xs-4"><p>Nama Instruktur</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Instruktur 1</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->instruktur->nama_lengkap }}</p></div> --}}
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->instruktur_key }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Instruktur 2</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->instruktur_key2}}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Asisten</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->asisten_key }}</p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Metode Kelas</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->metode_kelas }}</p></div>
@@ -69,41 +85,84 @@
                             </div>
                         </div>
                         <div class="col-md-7">
-                            <table class="table table-striped text-center" id="tabel">
+                            @php
+                            $startsAt = \Carbon\Carbon::parse(request('starts_at', $id->tanggal_awal))->startOfDay();
+                            $endsAt = \Carbon\Carbon::parse(request('ends_at', $id->tanggal_akhir))->startOfDay();
+                            $hariAwal = $startsAt->isoFormat('dddd');
+                            $hariAkhir = $endsAt->isoFormat('dddd');
+                            $range = [];
+                            for ($date = $startsAt->copy(); $date->lte($endsAt); $date->addDay()) {
+                                $range[] = $date->copy();
+                            }
+                            $daysOfWeek = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+                            // dd($range);
+                            // echo $range;
+                            @endphp
+
+                            <table class="table text-center" id="tabel">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Senin</th>
-                                        <th scope="col">Selasa</th>
-                                        <th scope="col">Rabu</th>
-                                        <th scope="col">Kamis</th>
-                                        <th scope="col">Jumat</th>
-                                        <th scope="col" style="background: red">Sabtu</th>
-                                        <th scope="col" style="background: red">Minggu</th>
+                                        @foreach($daysOfWeek as $day)
+                                                <th>{{ $day }}</th>
+                                        @endforeach
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);">Sabtu</th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);">Minggu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        @php
-                                            $startDate = new DateTime($post->tanggal_awal);
-                                            $endDate = new DateTime($post->tanggal_akhir);
-                                            $diff = $endDate->diff($startDate)->days;
-                                            $currentDate = clone $startDate;
-                                        @endphp
+                                        @if ($hariAwal == 'Selasa' && $hariAkhir == 'Rabu')
+                                        <th></th>
+                                        @foreach($range as $date)
+                                            <th>v</th>
+                                        @endforeach
+                                        <th></th>
+                                        <th></th>
+                                        @elseif ($hariAwal == 'Rabu')
+                                        <th></th>
+                                        <th></th>
+                                        @foreach($range as $date)
+                                            <th>v</th>
+                                        @endforeach
+                                        <th></th>
+                                        <th></th>
+                                        @elseif ($hariAwal == 'Kamis')
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        @foreach($range as $date)
+                                            <th>v</th>
+                                        @endforeach
+                                        <th></th>
+                                        <th></th>
+                                        @elseif ($hariAwal == 'Jumat')
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        @foreach($range as $date)
+                                            <th>v</th>
+                                        @endforeach
+                                        <th></th>
+                                        <th></th>
+                                        @else
+                                        @foreach($range as $date)
+                                            <th>v</th>
+                                        @endforeach
+                                        <th></th>
+                                        <th></th>
+                                        @endif
 
-                                        @for($i = 0; $i <= $diff; $i++)
-                                            @if($currentDate->format('N') >= 6) {{-- Sabtu dan Minggu --}}
-                                                <td style="background-color: red;">v</td>
-                                            @else
-                                                <td>v</td>
-                                            @endif
-                                            @php
-                                                $currentDate->modify('+1 day');
-                                            @endphp
-                                        @endfor
                                     </tr>
+                                    {{-- <tr>
+                                        @foreach($range as $date)
+                                            <th>v</th>
+                                        @endforeach
+                                    </tr> --}}
                                 </tbody>
-
                             </table>
+
+
 
                             <div class="container">
                                 <div class="row">
@@ -113,8 +172,9 @@
                                                 <div class="row">
                                                     <form method="POST" action="{{ route('comment.store') }}">
                                                         @csrf
-                                                        <input type="text" hidden name="rkm_key" value="{{ $post->id }}">
+                                                        <input type="text" hidden name="rkm_key" value="{{ $posts }}">
                                                         <input type="text" hidden name="karyawan_key" value="{{ auth()->user()->karyawan_id }}">
+                                                        <input type="text" hidden name="materi_key" value="{{ $materi_key }}">
                                                         <textarea class="form-control" name="content" placeholder="Tulis komentar Anda..."></textarea>
                                                         <button class="btn click-primary" type="submit">Kirim</button>
                                                     </form>
@@ -122,7 +182,7 @@
                                                 <div class="row my-2">
                                                 <h3>Komentar</h3>
                                                     @foreach($comments as $comment)
-                                                    <p><{{ \Carbon\Carbon::parse($comment->created_at)->translatedFormat('d F Y \J\a\m H:i:s') }}>{{ $comment->karyawan->nama_lengkap }} : {{ $comment->content }}</p>
+                                                    <p>{{ \Carbon\Carbon::parse($comment->created_at)->translatedFormat('d F Y \J\a\m H:i:s') }} | {{ $comment->karyawan->nama_lengkap }} : {{ $comment->content }}</p>
                                                 @endforeach
                                                 </div>
                                             </div>

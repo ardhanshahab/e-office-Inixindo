@@ -168,7 +168,7 @@ class RKMController extends Controller
      */
     public function show(string $id)
     {
-        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
             ->where('materi_key', $id)
             ->where('tanggal_awal', '=', function ($query) use ($id) {
                 $query->select('tanggal_awal')
@@ -181,11 +181,13 @@ class RKMController extends Controller
 
             // return $rkm;
 
-        $posts = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
+            $id = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->firstOrFail();
 
-        $comments = $posts->comments;
+            $comments = $id->comments;
 
-        return view('rkm.show', compact('rkm', 'comments'));
+        // return $rkm;
+
+        return view('rkm.show', compact('rkm', 'id', 'comments'));
     }
 
     public function edit(string $id)
@@ -229,7 +231,7 @@ class RKMController extends Controller
             'metode_kelas' => 'nullable',
             'event' => 'nullable',
             'ruang' => 'nullable',
-            'instruktur_key' => 'nullable',
+            // 'instruktur_key' => 'nullable',
             'status' => 'nullable',
         ]);
 
@@ -245,42 +247,35 @@ class RKMController extends Controller
                 'metode_kelas' => $request->metode_kelas,
                 'event' => $request->event,
                 'ruang' => $request->ruang,
-                'instruktur_key' => $request->instruktur_key,
+                // 'instruktur_key' => $request->instruktur_key,
                 'status' => $request->status,
             ]);
 
         return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
-    public function editInstruktur(): View
+    public function editInstruktur($id)
     {
-        //get post by ID
-        $rkm = RKM::with('materi')->get();
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
-
-        // return $karyawan;
-        //render view with post
+        // return $rkm;
         return view('rkm.editinstruktur', compact('rkm', 'karyawan'));
     }
-    public function updateInstruktur(Request $request): RedirectResponse
+    public function updateInstruktur(Request $request, $id): RedirectResponse
     {
         $this->validate($request, [
-            'rkm_key' => 'required',
             'instruktur_key' => 'required',
-            'instruktur2_key' => 'nullable',
-            'instruktur_asisten' => 'nullable',
-
+            'instruktur_key2' => 'nullable',
+            'asisten_key' => 'nullable',
         ]);
-        $post = RKM::findOrFail($request->rkm_key);
+        $post = RKM::findOrFail($id);
+        // dd($request->all());
         $post->update([
             'instruktur_key' => $request->instruktur_key,
-            'instruktur2_key' => $request->instruktur2_key,
-            'instruktur_asisten' => $request->instruktur_asisten,
-
+            'instruktur_key2' => $request->instruktur_key2,
+            'asisten_key' => $request->asisten_key,
         ]);
 
-        // return $karyawan;
-        //render view with post
         return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
     /**
@@ -302,7 +297,7 @@ class RKMController extends Controller
             'metode_kelas' => 'nullable',
             'event' => 'nullable',
             'ruang' => 'nullable',
-            'instruktur_key' => 'nullable',
+            // 'instruktur_key' => 'nullable',
             'status' => 'nullable',
         ]);
 
@@ -318,7 +313,7 @@ class RKMController extends Controller
                 'metode_kelas' => $request->metode_kelas,
                 'event' => $request->event,
                 'ruang' => $request->ruang,
-                'instruktur_key' => $request->instruktur_key,
+                // 'instruktur_key' => $request->instruktur_key,
                 'status' => $request->status,
             ]);
 
@@ -335,7 +330,7 @@ class RKMController extends Controller
     {
         $post = RKM::findOrFail($id);
 
-        Storage::delete('public/npwp/'. $post->foto_npwp);
+        // Storage::delete('public/npwp/'. $post->foto_npwp);
 
         $post->delete();
 

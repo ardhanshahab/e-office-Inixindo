@@ -53,6 +53,16 @@ class karyawan extends Model
     {
         return $this->hasMany(Rkm::class, 'instruktur_key', 'kode_karyawan');
     }
+
+    public function rkmsInstruktur2()
+    {
+        return $this->hasMany(Rkm::class, 'instruktur_key2', 'kode_karyawan');
+    }
+
+    public function rkmsAsisten()
+    {
+        return $this->hasMany(Rkm::class, 'asisten_key', 'kode_karyawan');
+    }
     protected function image(): Attribute
     {
         return Attribute::make(

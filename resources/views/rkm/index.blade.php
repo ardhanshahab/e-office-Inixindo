@@ -8,9 +8,9 @@
             <a class="btn click-primary mx-1" href="{{ route('rkm.create') }}">Tambah RKM</a>
             {{-- <a class="btn click-primary mx-1" href="{{ route('rkmEdit') }}">Edit RKM </a> --}}
             @endif
-            @if ( auth()->user()->jabatan == 'Education Manager')
+            {{-- @if ( auth()->user()->jabatan == 'Education Manager')
             <a class="btn click-primary mx-1" href="{{ route('editInstruktur') }}">Tambah/Edit Instruktur RKM </a>
-            @endif
+            @endif --}}
         </div>
         <div class="col-md-12">
                     <div class="card" style="width: 100%">

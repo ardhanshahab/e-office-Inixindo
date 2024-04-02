@@ -12,6 +12,7 @@ class CommentController extends Controller
         $validatedData = $request->validate([
             'karyawan_key' => 'required|exists:karyawans,id',
             'content' => 'required',
+            'materi_key' => 'required',
             'rkm_key' => 'required|exists:r_k_m_s,id',
         ]);
 

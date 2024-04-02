@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('event');
             $table->string('ruang');
             $table->string('instruktur_key')->nullable();
-            $table->string('instruktur2_key')->nullable();
-            $table->string('instruktur_asisten')->nullable();
+            $table->string('instruktur_key2')->nullable();
+            $table->string('asisten_key')->nullable();
             $table->enum('status', ['0', '1', '2']);
             $table->timestamps();
         });

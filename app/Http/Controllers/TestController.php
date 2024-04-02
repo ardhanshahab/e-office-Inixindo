@@ -71,14 +71,45 @@ class TestController extends Controller
         // $json = $monthRanges;
         // return $json;
 
-        $monthRanges[] = '';
+        // $monthRanges[] = '';
 
-        $rkm = RKM::with('materi')->get();
-        $sales = karyawan::where('jabatan', 'sales')->get();
-        $instruktur = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
-        $materi = Materi::get();
-        $perusahaan = Perusahaan::get();
-        $monthRanges[] = ['rkm' => $rkm, 'sales' => $sales];
-        return $monthRanges;
+        // $rkm = RKM::with('materi')->get();
+        // $sales = karyawan::where('jabatan', 'sales')->get();
+        // $instruktur = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
+        // $materi = Materi::get();
+        // $perusahaan = Perusahaan::get();
+        // $monthRanges[] = ['rkm' => $rkm, 'sales' => $sales];
+        // return $monthRanges;
+
+        $daysOfWeek = [
+            'Senin', // Monday
+            'Selasa', // Tuesday
+            'Rabu', // Wednesday
+            'Kamis', // Thursday
+            'Jumat', // Friday
+            'Sabtu', // Saturday
+            'Minggu' // Sunday
+        ];
+
+        $tanggal_awal = '2024-04-02';
+        $tanggal_awal = '2024-04-03';
+        $startDay = 'Selasa'; // Contoh hari mulai
+        $endDay = 'Jumat'; // Contoh hari akhir
+
+        $startIndex = array_search($startDay, $daysOfWeek); // Temukan indeks hari mulai
+        $endIndex = array_search($endDay, $daysOfWeek); // Temukan indeks hari akhir
+
+        // Jika indeks hari akhir lebih kecil dari indeks hari mulai, tambahkan 7 ke indeks hari akhir
+        if ($endIndex < $startIndex) {
+            $endIndex += 7;
+        }
+
+        // Buat array yang berisi hari-hari dari hari mulai hingga hari akhir
+        $selectedDays = array_slice($daysOfWeek, $startIndex, $endIndex - $startIndex + 1);
+
+        // Tampilkan array yang berisi hari-hari terpilih
+        foreach ($selectedDays as $day) {
+            echo $day . '<br>';
+        }
     }
 }

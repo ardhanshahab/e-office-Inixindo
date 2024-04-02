@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('rkm_key');
+            $table->string('materi_key');
             $table->string('karyawan_key');
             $table->string('content');
             $table->timestamps();

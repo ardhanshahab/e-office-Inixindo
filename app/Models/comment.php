@@ -11,6 +11,7 @@ class comment extends Model
         'karyawan_key',
         'content',
         'rkm_key',
+        'materi_key',
     ];
 
     public function rkm()

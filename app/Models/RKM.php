@@ -20,6 +20,8 @@ class RKM extends Model
         'event',
         'ruang',
         'instruktur_key',
+        'instruktur_key2',
+        'asisten_key',
         'status',
     ];
 
@@ -36,6 +38,16 @@ class RKM extends Model
     public function instruktur()
     {
         return $this->belongsTo(Karyawan::class, 'instruktur_key', 'kode_karyawan');
+    }
+
+    public function instruktur2()
+    {
+        return $this->belongsTo(Karyawan::class, 'instruktur_key2', 'kode_karyawan');
+    }
+
+    public function asisten()
+    {
+        return $this->belongsTo(Karyawan::class, 'asisten_key', 'kode_karyawan');
     }
 
     public function perusahaan()
