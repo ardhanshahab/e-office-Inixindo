@@ -69,16 +69,23 @@ class RKMController extends Controller
         $rkmsByWeek = [];
         foreach ($weekRanges as $weekRange) {
             $rows = RKM::with(['materi'])
-                ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
-                ->whereBetween('tanggal_awal', [$weekRange['start'],  $weekRange['end']])
-                ->whereBetween('tanggal_akhir', [$weekRange['start'],  $weekRange['end']])
-                ->select('r_k_m_s.materi_key', 'r_k_m_s.ruang','r_k_m_s.metode_kelas','r_k_m_s.event', 'r_k_m_s.tanggal_awal',
-                    DB::raw('GROUP_CONCAT(r_k_m_s.instruktur_key SEPARATOR ", ") AS instruktur_all'),
-                    DB::raw('GROUP_CONCAT(r_k_m_s.perusahaan_key SEPARATOR ", ") AS perusahaan_all'),
-                    DB::raw('GROUP_CONCAT(r_k_m_s.sales_key SEPARATOR ", ") AS sales_all'),
-                    DB::raw('SUM(r_k_m_s.pax) AS total_pax'))
-                ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang','r_k_m_s.metode_kelas','r_k_m_s.event', 'r_k_m_s.tanggal_awal',)
-                ->get();
+            ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
+            ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
+            ->whereBetween('tanggal_akhir', [$weekRange['start'], $weekRange['end']])
+            ->select(
+                'r_k_m_s.materi_key',
+                'r_k_m_s.ruang',
+                'r_k_m_s.metode_kelas',
+                'r_k_m_s.event',
+                'r_k_m_s.tanggal_awal',
+                DB::raw('GROUP_CONCAT(r_k_m_s.instruktur_key SEPARATOR ", ") AS instruktur_all'),
+                DB::raw('GROUP_CONCAT(r_k_m_s.perusahaan_key SEPARATOR ", ") AS perusahaan_all'),
+                DB::raw('GROUP_CONCAT(r_k_m_s.sales_key SEPARATOR ", ") AS sales_all'),
+                DB::raw('GROUP_CONCAT(DISTINCT r_k_m_s.status ORDER BY r_k_m_s.status SEPARATOR ", ") AS status_all'),
+                DB::raw('SUM(r_k_m_s.pax) AS total_pax')
+            )
+            ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang', 'r_k_m_s.metode_kelas', 'r_k_m_s.event', 'r_k_m_s.tanggal_awal')
+            ->get();
 
                 foreach ($rows as $row) {
                     if ($row->instruktur_all == null){
@@ -95,8 +102,15 @@ class RKMController extends Controller
                         $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
                         $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
                     }
+                    $statuses = RKM::join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
+                    ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
+                    ->whereBetween('tanggal_akhir', [$weekRange['start'], $weekRange['end']])
+                    ->select('r_k_m_s.status')
+                    ->distinct()
+                    ->orderBy('r_k_m_s.status')
+                    ->get();
             }
-            $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rows];
+            $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rows, 'status' => $statuses];
         }
 
         $json = $monthRanges;

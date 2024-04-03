@@ -42,21 +42,21 @@
                             @if ( auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'General Manager' )
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Actions
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="/karyawan/{{$user->id}}/edit" data-toggle="tooltip" data-placement="top" title="Edit User">
-                                            <i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> Edit
+                                            <img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit
                                         </a>
                                         <a class="dropdown-item" href="/profile/{{$user->id}}" data-toggle="tooltip" data-placement="top" title="Detail User">
-                                            <i class="fa fa-clipboard fa-fw" aria-hidden="true"></i> Detail
+                                            <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail
                                         </a>
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Hapus User">
-                                                <i class="fa fa-trash fa-fw" aria-hidden="true"></i> Hapus
+                                                <img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus
                                             </button>
                                         </form>
                                     </div>

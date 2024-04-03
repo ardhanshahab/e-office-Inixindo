@@ -25,7 +25,7 @@
                             <th scope="col">Alamat</th>
                             <th scope="col">CP</th>
                             <th scope="col">Nomor Telepon</th>
-                            {{-- <th scope="col">Foto NPWP</th> --}}
+                            <th scope="col">Foto NPWP</th>
                             @if ( auth()->user()->jabatan == 'HRD' )
                             <th scope="col">Aksi</th>
                             @endif
@@ -48,19 +48,35 @@
                             <td>{{ $perusahaan->alamat }}</td>
                             <td>{{ $perusahaan->cp }}</td>
                             <td>{{ $perusahaan->no_telp }}</td>
+                            @if (!$perusahaan->foto_npwp)
+                            <td> <a href="#" class="btn click-primary">Lihat Foto</a> </td>
+                            @else
+                            <td>Tidak Ada</td>
+                            @endif
+                            @if ( auth()->user()->jabatan == 'HRD' )
                             <td>
-                                <div class="d-flex">
-                                    @if ( auth()->user()->jabatan == 'HRD' )
-                                    <a href="{{ route('perusahaan.edit', $perusahaan->id) }}" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
-                                    <a href="{{ route('perusahaan.show', $perusahaan->id) }}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
-                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $perusahaan->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn click-danger-icon mx-1" data-toggle="tooltip" data-placement="top" title="Hapus User"><img src="{{ asset('icon/trash.svg') }}" class="" width="30px"></button>
-                                    </form>
-                                    @endif
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{{ route('perusahaan.edit', $perusahaan->id) }}" data-toggle="tooltip" data-placement="top" title="Edit perusahaan">
+                                            <img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit
+                                        </a>
+                                        {{-- <a class="dropdown-item" href="{{ route('perusahaan.show', $perusahaan->id) }}" data-toggle="tooltip" data-placement="top" title="Detail perusahaan">
+                                            <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail
+                                        </a> --}}
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Hapus perusahaan">
+                                                <img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </td>
+                            @endif
                           </tr>
                           @endforeach
                         </tbody>

@@ -69,32 +69,32 @@
     function getDataRKM() {
     var tahun = document.getElementById('tahun').value;
     var bulan = document.getElementById('bulan').value;
+    console.log(tahun);
+    console.log(bulan);
 
     $.ajax({
         url: "api/rkmAPI/" + tahun + "/" + bulan,
         method: 'GET',
         dataType: 'json',
         success: function (response) {
-            // console.log(response);
+            console.log(response);
 
             var html = ''; // Define html as an empty string here
-            var periode = '';
             var count = 1;
             var jabatan = localStorage.getItem('jabatan');
 
             response.data.forEach(function (monthData) {
                 monthData.weeksData.forEach(function (weekData) {
+                    console.log(weekData);
                     html += '<div class="card">';
                     html += '<div class="card-body">';
                     html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
                     html += '<p class="card-title my-1">Periode : ' + weekData.start + ' - ' + weekData.end + '</p>';
                     if (weekData.data.length === 0) {
-                        console.log('tidak ada data');
+                        // console.log('tidak ada data');
                         html += '<p class="card-title text-center my-1">Tidak Ada Kelas Mingguan</p>';
                     } else {
                     weekData.data.forEach(function (rkm) {
-
-
                         html += '<table class="table table-responsive table-striped">';
                         html += '<thead>';
                         html += '<tr>';
@@ -114,7 +114,13 @@
                         html += '</tr>';
                         html += '</thead>';
                         html += '<tbody>';
-                        html += '<tr>';
+                            if (rkm.status_all == '0') {
+                                html += '<tr style="background-color: rgba(255, 0, 0, 0.5);">';
+                            } else if (rkm.status_all == '1') {
+                                html += '<tr style="background-color: rgba(0, 0, 255, 0.5);">';
+                            } else {
+                                html += '<tr style="background-color: rgba(0, 0, 0, 0.5);">';
+                            }
                         html += '<td>' + count++ + '</td>';
                         html += '<td>' + rkm.materi.nama_materi + '</td>';
                         html += '<td>';

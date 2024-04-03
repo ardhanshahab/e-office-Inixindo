@@ -127,7 +127,7 @@
                                     <div class="card" id="card-hover">
                                         <div class="card-body d-flex">
                                             <div class="col-md-2">
-                                                <img src="{{ asset('icon/activity.svg') }}" class="img-responsive" width="30px">
+                                                <img src="{{ asset('icon/briefcase.svg') }}" class="img-responsive" width="30px">
 
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px">
@@ -159,7 +159,7 @@
                                         <div class="card" id="card-hover">
                                             <div class="card-body d-flex">
                                                 <div class="col-md-2">
-                                                    <img src="{{ asset('icon/book-open.svg') }}" class="img-responsive" width="30px">
+                                                    <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
                                                 </div>
                                                 <div class="col-md-10" style="margin-left: 10px">
                                                     <a href="/rkm" class="link stretched-link text-decoration-none"><h5 class="card-title">Rencana Kelas Mingguan</h5></a>
@@ -188,7 +188,7 @@
                                         <div class="card" id="card-hover">
                                             <div class="card-body d-flex">
                                                 <div class="col-md-2">
-                                                    <img src="{{ asset('icon/calendar.svg') }}" class="img-responsive" width="30px">
+                                                    <img src="{{ asset('icon/book-open.svg') }}" class="img-responsive" width="30px">
 
                                                 </div>
                                                 <div class="col-md-10" style="margin-left: 10px">

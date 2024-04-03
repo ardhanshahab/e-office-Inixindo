@@ -111,48 +111,89 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        @if ($hariAwal == 'Selasa' && $hariAkhir == 'Rabu')
-                                        <th></th>
-                                        @foreach($range as $date)
-                                            <th>v</th>
-                                        @endforeach
-                                        <th></th>
-                                        <th></th>
-                                        @elseif ($hariAwal == 'Rabu')
-                                        <th></th>
-                                        <th></th>
-                                        @foreach($range as $date)
-                                            <th>v</th>
-                                        @endforeach
-                                        <th></th>
-                                        <th></th>
-                                        @elseif ($hariAwal == 'Kamis')
+                                        @if ($hariAwal == 'Senin' && $hariAkhir == 'Selasa')
+                                        <th>v</th>
+                                        <th>v</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        @foreach($range as $date)
-                                            <th>v</th>
-                                        @endforeach
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Rabu')
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
                                         <th></th>
                                         <th></th>
-                                        @elseif ($hariAwal == 'Jumat')
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Kamis')
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Jumat')
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Rabu')
+                                        <th></th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Kamis')
+                                        <th></th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Jumat')
+                                        <th></th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Kamis')
+                                        <th></th>
+                                        <th></th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Jumat')
+                                        <th></th>
+                                        <th></th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        @elseif ($hariAwal == 'Kamis' && $hariAkhir == 'Jumat')
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
-                                        @foreach($range as $date)
-                                            <th>v</th>
-                                        @endforeach
-                                        <th></th>
-                                        <th></th>
+                                        <th>v</th>
+                                        <th>v</th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
                                         @else
-                                        @foreach($range as $date)
-                                            <th>v</th>
-                                        @endforeach
-                                        <th></th>
-                                        <th></th>
+                                        <th style="background-color: rgba(255, 0, 0, 0.5);">Error</th>
                                         @endif
-
                                     </tr>
                                     {{-- <tr>
                                         @foreach($range as $date)
@@ -161,8 +202,6 @@
                                     </tr> --}}
                                 </tbody>
                             </table>
-
-
 
                             <div class="container">
                                 <div class="row">
@@ -189,11 +228,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
                     </div>
-
                 </div>
             </div>
         </div>

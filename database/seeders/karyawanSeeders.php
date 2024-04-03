@@ -18,7 +18,7 @@ class karyawanSeeders extends Seeder
             'foto' => null,
             'nip' => '01000000',
             'nama_lengkap' => 'Muhamad Ardhan Hadaina',
-            'divisi' => 'Direksi',
+            'divisi' => 'office',
             'jabatan' => 'HRD',
             'status_aktif' => '1',
             'keterangan' => '',

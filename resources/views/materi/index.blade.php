@@ -32,16 +32,21 @@
                             <td>{{ $materi->kategori_materi }}</td>
                             <td>{{ $materi->vendor }}</td>
                             <td>
-                                <div class="d-flex">
-                                    @if ( auth()->user()->jabatan == 'HRD' )
-                                    <a href="{{ route('materi.edit', $materi->id) }}" class="btn click-warning-icon mx-1" data-toggle="tooltip" data-placement="top" title="Edit User"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="30px"></a>
-                                    <a href="{{ route('materi.show', $materi->id) }}" class="btn click-secondary-icon mx-1" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>
-                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('materi.destroy', $materi->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn click-danger-icon mx-1" data-toggle="tooltip" data-placement="top" title="Hapus User"><img src="{{ asset('icon/trash.svg') }}" class="" width="30px"></button>
-                                    </form>
-                                    @endif
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if ( auth()->user()->jabatan == 'HRD' )
+                                        <a class="dropdown-item" href="{{ route('materi.edit', $materi->id) }}"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>
+                                        {{-- <a class="dropdown-item" href="{{ route('materi.show', $materi->id) }}"> <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a> --}}
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('materi.destroy', $materi->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>
+                                        </form>
+                                        @endif
+                                    </div>
                                 </div>
                             </td>
                           </tr>
