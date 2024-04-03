@@ -274,16 +274,26 @@ class RKMController extends Controller
     public function editInstruktur($id)
     {
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
-        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->firstOrFail();
+
+        // $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
+        //     ->where('materi_key', $id)
+        //     ->get();
+
+
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
+            ->where('materi_key', $id)
+            ->firstOrFail();
+
         $allRKM = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-            ->select('id') // Memilih kolom id
+            ->select('id')
             ->where('materi_key', $id)
             ->get();
-        $ids = $allRKM->pluck('id'); // Mengambil nilai id dari hasil query
-        // return $ids;
+
+        $ids = $allRKM->pluck('id');
+        // return $rkm;
 
         return view('rkm.editinstruktur', compact('rkm', 'karyawan', 'ids'));
-    }
+        }
     public function updateInstruktur(Request $request)
     {
         $this->validate($request, [
