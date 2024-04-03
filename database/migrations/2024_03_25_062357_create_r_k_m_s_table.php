@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sales_key');
             $table->string('materi_key');
             $table->string('perusahaan_key');
+            $table->string('harga_jual');
             $table->string('pax');
             $table->date('tanggal_awal');
             $table->date('tanggal_akhir');

@@ -61,9 +61,21 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="harga_jual" class="col-md-4 col-form-label text-md-start">{{ __('Harga Jual') }}</label>
+                            <div class="col-md-6">
+                                <input id="harga_jual" type="number" placeholder="Harga Jual" class="form-control @error('harga_jual') is-invalid @enderror" name="harga_jual" value="{{ old('harga_jual') }}" autocomplete="harga_jual" autofocus>
+                                @error('harga_jual')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="pax" class="col-md-4 col-form-label text-md-start">{{ __('PAX') }}</label>
                             <div class="col-md-6">
-                                <input id="pax" type="text" placeholder="PAX" class="form-control @error('pax') is-invalid @enderror" name="pax" value="{{ old('pax') }}" autocomplete="pax" autofocus>
+                                <input id="pax" type="number" placeholder="PAX" class="form-control @error('pax') is-invalid @enderror" name="pax" value="{{ old('pax') }}" autocomplete="pax" autofocus>
                                 @error('pax')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

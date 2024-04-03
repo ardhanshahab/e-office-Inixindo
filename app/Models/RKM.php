@@ -13,6 +13,7 @@ class RKM extends Model
         'sales_key',
         'materi_key',
         'perusahaan_key',
+        'harga_jual',
         'pax',
         'tanggal_awal',
         'tanggal_akhir',

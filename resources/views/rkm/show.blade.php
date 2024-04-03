@@ -16,18 +16,16 @@
                             @endif
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 @php
-                                    $posts = $rkm->first()->id; // Mengambil ID dari objek pertama dalam array $rkm
-                                    $materi_key = $rkm->first()->materi_key; // Mengambil ID dari objek pertama dalam array $rkm
-                                    // echo auth()->user();
+                                    // $posts = $rkm->isNotEmpty() ? $rkm->first()->id : null;
+                                    // $materi_key = $rkm->isNotEmpty() ? $rkm->first()->materi_key : null;
                                     $user = auth()->user();
                                     $karyawan = DB::table('users')
-                                    ->join('karyawans', 'users.karyawan_id', '=', 'karyawans.id')
-                                    ->where('users.karyawan_id', $user->id)
-                                    ->first();
+                                        ->join('karyawans', 'users.karyawan_id', '=', 'karyawans.id')
+                                        ->where('users.karyawan_id', $user->id)
+                                        ->first();
                                     $kode_karyawan = $karyawan->kode_karyawan;
-                                    // echo $karyawan->kode_karyawan;
-                                    // $posts = $postId;
                                 @endphp
+
                                 @foreach ($rkm as $post)
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">{{ $post->sales_key }}</button>
@@ -41,14 +39,22 @@
                                         @if ($kode_karyawan == $post->sales_key )
                                         <div class="col-md-8 col-sm-8 col-xs-8"><p><h5> </h5></p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
+                                        @else
+                                        <div class="col-md-8 col-sm-8 col-xs-8"><p><h5> </h5></p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"  href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
                                         @endif
-                                        {{-- <h5>ID Kelas {{ $post->id }}</h5> --}}
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>ID RKM</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->id }}</p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Materi</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->materi->nama_materi }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Harga Jual Nett</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ 'Rp '. number_format($post->harga_jual, 0, ',', '.') }}</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Pax</p></div>
+                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->pax }}</p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Tanggal Awal</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ \Carbon\Carbon::parse($post->tanggal_awal)->translatedFormat('l, d F Y') }}</p></div>
@@ -85,9 +91,7 @@
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Ruang</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p> {{ $post->ruang }}</p></div>
-                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>Pax</p></div>
-                                        <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
-                                        <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->pax }}</p></div>
+
                                     </div>
                                 </div>
                                 @endforeach
@@ -226,7 +230,7 @@
                                                                 @csrf
                                                                 <input type="hidden" name="rkm_key" value="{{ $rkms->id }}">
                                                                 <input type="hidden" name="karyawan_key" value="{{ auth()->user()->karyawan_id }}">
-                                                                <input type="hidden" name="materi_key" value="{{ $materi_key }}">
+                                                                <input type="hidden" name="materi_key" value="{{ $rkms->materi_key }}">
                                                                 <textarea class="form-control" name="content" placeholder="Tulis komentar Anda..."></textarea>
                                                                 <button class="btn click-primary float-end mt-2" type="submit">Kirim</button>
                                                             </form>
