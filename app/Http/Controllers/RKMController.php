@@ -182,6 +182,7 @@ class RKMController extends Controller
      */
     public function show(string $id)
     {
+        // dd($id);
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
             ->where('materi_key', $id)
             ->where('tanggal_awal', '=', function ($query) use ($id) {
@@ -194,14 +195,14 @@ class RKMController extends Controller
             ->get();
 
             // return $rkm;
-
+            $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'comments'])->where('materi_key', $id)->get();
             $id = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->firstOrFail();
-            $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->get();
 
-            $comments = $id->comments;
+            $comments = collect();
+            foreach ($datas as $data) {
+                $comments = $comments->merge($data->comments);
+            }
 
-        // return $comments;
-        // return $id;
 
         return view('rkm.show', compact('rkm', 'id', 'comments'));
     }

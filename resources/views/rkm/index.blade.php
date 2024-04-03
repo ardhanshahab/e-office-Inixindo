@@ -135,11 +135,15 @@
                         });
                         html += '</td>';
                         html += '<td>';
-                        if (!rkm.instruktur_all) {
-                            html += 'Belum Ditentukan';
-                        } else {
-                            html += rkm.instruktur_all;
-                        }
+                            if (rkm.instruktur_all && rkm.instruktur_all.trim() !== '') {
+                                var instruktur_array = rkm.instruktur_all.split(', ');
+                                // Misalnya, jika Anda ingin menampilkan instruktur pertama
+                                html += instruktur_array[0];
+                                // Jika ingin menampilkan instruktur kedua
+                                // html += instruktur_array[1];
+                            } else {
+                                html += 'Belum Ditentukan';
+                            }
                         html += '</td>';
                         html += '<td>' + rkm.metode_kelas + '</td>';
                         html += '<td>' + rkm.event + '</td>';

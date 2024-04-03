@@ -39,11 +39,11 @@
                                 <div class="tab-pane fade" id="kelas{{ $post->id }}" role="tabpanel" aria-labelledby="kelas-tab-{{ $post->id }}">
                                     <div class="row">
                                         @if ($kode_karyawan == $post->sales_key )
-                                        <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Client {{ $loop->iteration }}</h5></p></div>
+                                        <div class="col-md-8 col-sm-8 col-xs-8"><p><h5> </h5></p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
                                         @endif
                                         {{-- <h5>ID Kelas {{ $post->id }}</h5> --}}
-                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>ID Kelas</p></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><p>ID RKM</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                                         <div class="col-md-7 col-sm-7 col-xs-7"><p>{{ $post->id }}</p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>Materi</p></div>
@@ -217,8 +217,10 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-body">
+                                                @php $formGenerated = false; @endphp
                                                 @foreach ($rkm as $rkms)
-                                                    @if ($kode_karyawan == $rkms->sales_key || $kode_karyawan == $rkms->instruktur_key || $kode_karyawan == $rkms->instruktur_key2 || $kode_karyawan == $rkms->asisten_key)
+                                                    @if (!$formGenerated && ($kode_karyawan == $rkms->sales_key || $kode_karyawan == $rkms->instruktur_key || $kode_karyawan == $rkms->instruktur_key2 || $kode_karyawan == $rkms->asisten_key))
+                                                        @php $formGenerated = true; @endphp
                                                         <div class="row">
                                                             <form method="POST" action="{{ route('comment.store') }}">
                                                                 @csrf
@@ -226,15 +228,14 @@
                                                                 <input type="hidden" name="karyawan_key" value="{{ auth()->user()->karyawan_id }}">
                                                                 <input type="hidden" name="materi_key" value="{{ $materi_key }}">
                                                                 <textarea class="form-control" name="content" placeholder="Tulis komentar Anda..."></textarea>
-                                                                <button class="btn click-primary" type="submit">Kirim</button>
+                                                                <button class="btn click-primary float-end mt-2" type="submit">Kirim</button>
                                                             </form>
                                                         </div>
                                                     @endif
                                                 @endforeach
-
                                                 <div class="row my-2">
                                                 <h3>Komentar</h3>
-                                                    @foreach($comments as $comment)
+                                                @foreach($comments->sortByDesc('created_at') as $comment)
                                                     <p>{{ \Carbon\Carbon::parse($comment->created_at)->translatedFormat('d F Y \J\a\m H:i:s') }} | {{ $comment->karyawan->nama_lengkap }} : {{ $comment->content }}</p>
                                                 @endforeach
                                                 </div>
