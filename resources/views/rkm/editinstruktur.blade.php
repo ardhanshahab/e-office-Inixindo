@@ -7,14 +7,18 @@
             <div class="card">
                 <div class="card-body" id="card">
                 <h5 class="card-title text-center mb-4">{{ __('Tambah Instruktur') }}</h5>
-                    <form method="POST" action="{{ route('updateInstruktur', $rkm->id) }}">
+
+                <form method="POST" action="{{ route('updateInstruktur') }}">
                         @csrf
                         @method('PUT')
 
                         <div class="row mb-3">
                             <label for="rkm_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama RKM') }}</label>
                             <div class="col-md-6">
-                                <input id="rkm_key" type="text" class="form-control @error('rkm_key') is-invalid @enderror" name="rkm_key" value="{{ $rkm->materi->nama_materi }}" disabled autocomplete="rkm_key" autofocus>
+                                <input id="rkm_key" type="text" class="form-control @error('rkm_key') is-invalid @enderror" name="rkm_key" value="{{ $rkm->materi_key }}" disabled autocomplete="rkm_key" autofocus>
+                                @foreach ( $ids as $id )
+                                <input id="rkm_id{{ $id }}" type="text" class="form-control @error('rkm_id') is-invalid @enderror" name="ids[]" value="{{ $id }}"  autocomplete="rkm_id" autofocus>
+                                @endforeach
                                 @error('rkm_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

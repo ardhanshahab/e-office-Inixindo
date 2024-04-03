@@ -19,11 +19,12 @@
                                 <label for="tahun" class="form-label">Tahun</label>
                                 <select id="tahun" class="form-select" aria-label="tahun">
                                     <option selected>Pilih Tahun</option>
-                                    <?php
-                                    for ($tahun = 2010; $tahun <= 2030; $tahun++) {
+                                    @php
+                                    $tahun_sekarang = date('Y');
+                                    for ($tahun = 2020; $tahun <= $tahun_sekarang + 2; $tahun++) {
                                         echo "<option value=\"$tahun\">$tahun</option>";
                                     }
-                                    ?>
+                                    @endphp
                                 </select>
 
                             </div>
@@ -144,7 +145,7 @@
                         html += '<td>' + rkm.event + '</td>';
                         html += '<td>' + rkm.ruang + '</td>';
                         html += '<td>' + rkm.total_pax + '</td>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager'){
+                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur'){
                         html += '<td>';
                         html += '<a href="/rkm/' + rkm.materi_key + '" class="btn btn-secondary mx-1" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard.svg') }}" class="img-responsive" width="30px"></a>';
                         html += '</td>';

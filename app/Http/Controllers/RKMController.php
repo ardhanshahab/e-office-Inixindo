@@ -196,10 +196,12 @@ class RKMController extends Controller
             // return $rkm;
 
             $id = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->firstOrFail();
+            $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->get();
 
             $comments = $id->comments;
 
-        // return $rkm;
+        // return $comments;
+        // return $id;
 
         return view('rkm.show', compact('rkm', 'id', 'comments'));
     }
@@ -270,28 +272,39 @@ class RKMController extends Controller
 
     public function editInstruktur($id)
     {
-        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->findOrFail($id);
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
-        // return $rkm;
-        return view('rkm.editinstruktur', compact('rkm', 'karyawan'));
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->firstOrFail();
+        $allRKM = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+            ->select('id') // Memilih kolom id
+            ->where('materi_key', $id)
+            ->get();
+        $ids = $allRKM->pluck('id'); // Mengambil nilai id dari hasil query
+        // return $ids;
+
+        return view('rkm.editinstruktur', compact('rkm', 'karyawan', 'ids'));
     }
-    public function updateInstruktur(Request $request, $id): RedirectResponse
+    public function updateInstruktur(Request $request)
     {
         $this->validate($request, [
             'instruktur_key' => 'required',
-            'instruktur_key2' => 'nullable',
+            'instruktur_key2' => 'required',
             'asisten_key' => 'nullable',
         ]);
-        $post = RKM::findOrFail($id);
-        // dd($request->all());
-        $post->update([
-            'instruktur_key' => $request->instruktur_key,
-            'instruktur_key2' => $request->instruktur_key2,
-            'asisten_key' => $request->asisten_key,
-        ]);
+
+        $ids = $request->ids;
+
+        foreach ($ids as $id) {
+            $rkm = RKM::findOrFail($id);
+            $rkm->update([
+                'instruktur_key' => $request->instruktur_key,
+                'instruktur_key2' => $request->instruktur_key2,
+                'asisten_key' => $request->asisten_key,
+            ]);
+        }
 
         return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
+
     /**
      * update
      *

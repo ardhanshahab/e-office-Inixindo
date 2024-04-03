@@ -10,16 +10,27 @@
                     <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                     <div class="row">
                         <div class="col-md-5">
+                            @if ( auth()->user()->jabatan == 'Education Manager')
+                                {{-- <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Client {{ $loop->iteration }}</h5></p></div> --}}
+                                <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('editInstruktur', $id->materi_key) }}">Tambah/Edit Instruktur RKM </a></div>
+                            @endif
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 @php
                                     $posts = $rkm->first()->id; // Mengambil ID dari objek pertama dalam array $rkm
                                     $materi_key = $rkm->first()->materi_key; // Mengambil ID dari objek pertama dalam array $rkm
-                                    // echo $postId;
+                                    // echo auth()->user();
+                                    $user = auth()->user();
+                                    $karyawan = DB::table('users')
+                                    ->join('karyawans', 'users.karyawan_id', '=', 'karyawans.id')
+                                    ->where('users.karyawan_id', $user->id)
+                                    ->first();
+                                    $kode_karyawan = $karyawan->kode_karyawan;
+                                    // echo $karyawan->kode_karyawan;
                                     // $posts = $postId;
                                 @endphp
                                 @foreach ($rkm as $post)
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">Kelas {{ $loop->iteration }}</button>
+                                    <button class="nav-link" id="kelas-tab-{{ $post->id }}" data-bs-toggle="tab" data-bs-target="#kelas{{ $post->id }}" type="button" role="tab" aria-controls="home" aria-selected="true">{{ $post->sales_key }}</button>
                                 </li>
                                 @endforeach
                             </ul>
@@ -27,10 +38,8 @@
                                 @foreach ($rkm as $post)
                                 <div class="tab-pane fade" id="kelas{{ $post->id }}" role="tabpanel" aria-labelledby="kelas-tab-{{ $post->id }}">
                                     <div class="row">
-                                        <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Kelas {{ $loop->iteration }}</h5></p></div>
-                                        @if ( auth()->user()->jabatan == 'Education Manager')
-                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('editInstruktur', $post->id) }}">Tambah/Edit Instruktur RKM </a></div>
-                                        @else
+                                        @if ($kode_karyawan == $post->sales_key )
+                                        <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Client {{ $loop->iteration }}</h5></p></div>
                                         <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
                                         @endif
                                         {{-- <h5>ID Kelas {{ $post->id }}</h5> --}}
@@ -208,16 +217,21 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <div class="row">
-                                                    <form method="POST" action="{{ route('comment.store') }}">
-                                                        @csrf
-                                                        <input type="text" hidden name="rkm_key" value="{{ $posts }}">
-                                                        <input type="text" hidden name="karyawan_key" value="{{ auth()->user()->karyawan_id }}">
-                                                        <input type="text" hidden name="materi_key" value="{{ $materi_key }}">
-                                                        <textarea class="form-control" name="content" placeholder="Tulis komentar Anda..."></textarea>
-                                                        <button class="btn click-primary" type="submit">Kirim</button>
-                                                    </form>
-                                                </div>
+                                                @foreach ($rkm as $rkms)
+                                                    @if ($kode_karyawan == $rkms->sales_key || $kode_karyawan == $rkms->instruktur_key || $kode_karyawan == $rkms->instruktur_key2 || $kode_karyawan == $rkms->asisten_key)
+                                                        <div class="row">
+                                                            <form method="POST" action="{{ route('comment.store') }}">
+                                                                @csrf
+                                                                <input type="hidden" name="rkm_key" value="{{ $rkms->id }}">
+                                                                <input type="hidden" name="karyawan_key" value="{{ auth()->user()->karyawan_id }}">
+                                                                <input type="hidden" name="materi_key" value="{{ $materi_key }}">
+                                                                <textarea class="form-control" name="content" placeholder="Tulis komentar Anda..."></textarea>
+                                                                <button class="btn click-primary" type="submit">Kirim</button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
                                                 <div class="row my-2">
                                                 <h3>Komentar</h3>
                                                     @foreach($comments as $comment)
