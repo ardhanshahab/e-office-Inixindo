@@ -91,7 +91,7 @@ class PerusahaanController extends Controller
     public function show(string $id): View
     {
         //get post by ID
-        $post = Perusahaan::findOrFail($id);
+        $post = Perusahaan::with('karyawan')->findOrFail($id);
 
         //render view with post
         return view('perusahaan.show', compact('post'));

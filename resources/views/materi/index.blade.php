@@ -19,7 +19,7 @@
                             <th scope="col">Nama Materi</th>
                             <th scope="col">Kategori Materi</th>
                             <th scope="col">Vendor</th>
-                            @if ( auth()->user()->jabatan == 'HRD' )
+                            @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
                             <th scope="col">Aksi</th>
                             @endif
                           </tr>
@@ -32,12 +32,12 @@
                             <td>{{ $materi->kategori_materi }}</td>
                             <td>{{ $materi->vendor }}</td>
                             <td>
+                                @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Actions
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        @if ( auth()->user()->jabatan == 'HRD' )
                                         <a class="dropdown-item" href="{{ route('materi.edit', $materi->id) }}"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>
                                         {{-- <a class="dropdown-item" href="{{ route('materi.show', $materi->id) }}"> <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a> --}}
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('materi.destroy', $materi->id) }}" method="POST">

@@ -17,16 +17,16 @@
                           <tr>
                             <th scope="col">No</th>
                             <th scope="col">Nama Perusahaan</th>
-                            <th scope="col">Kategori Perusahaan</th>
-                            <th scope="col">Lokasi</th>
+                            {{-- <th scope="col">Kategori Perusahaan</th>
+                            <th scope="col">Lokasi</th> --}}
                             <th scope="col">Sales</th>
-                            <th scope="col">Status</th>
+                            {{-- <th scope="col">Status</th>
                             <th scope="col">NPWP</th>
                             <th scope="col">Alamat</th>
                             <th scope="col">CP</th>
                             <th scope="col">Nomor Telepon</th>
-                            <th scope="col">Foto NPWP</th>
-                            @if ( auth()->user()->jabatan == 'HRD' )
+                            <th scope="col">Foto NPWP</th> --}}
+                            @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
                             <th scope="col">Aksi</th>
                             @endif
                           </tr>
@@ -36,14 +36,14 @@
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $perusahaan->nama_perusahaan }}</td>
-                            <td>{{ $perusahaan->kategori_perusahaan }}</td>
-                            <td>{{ $perusahaan->lokasi }}</td>
+                            {{-- <td>{{ $perusahaan->kategori_perusahaan }}</td>
+                            <td>{{ $perusahaan->lokasi }}</td> --}}
                             @if (!$perusahaan->karyawan_key)
                             <td>Tidak Ada Sales</td>
                             @else
-                            <td>{{ $perusahaan->karyawan->nama_lengkap }}</td>
+                            <td>{{ $perusahaan->karyawan->kode_karyawan }}</td>
                             @endif
-                            <td>{{ $perusahaan->status }}</td>
+                            {{-- <td>{{ $perusahaan->status }}</td>
                             <td>{{ $perusahaan->npwp }}</td>
                             <td>{{ $perusahaan->alamat }}</td>
                             <td>{{ $perusahaan->cp }}</td>
@@ -52,20 +52,20 @@
                             <td> <a href="#" class="btn click-primary">Lihat Foto</a> </td>
                             @else
                             <td>Tidak Ada</td>
-                            @endif
-                            @if ( auth()->user()->jabatan == 'HRD' )
+                            @endif --}}
+                            @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Actions
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" href="{{ route('perusahaan.edit', $perusahaan->id) }}" data-toggle="tooltip" data-placement="top" title="Edit perusahaan">
                                             <img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit
                                         </a>
-                                        {{-- <a class="dropdown-item" href="{{ route('perusahaan.show', $perusahaan->id) }}" data-toggle="tooltip" data-placement="top" title="Detail perusahaan">
+                                        <a class="dropdown-item" href="{{ route('perusahaan.show', $perusahaan->id) }}" data-toggle="tooltip" data-placement="top" title="Detail perusahaan">
                                             <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail
-                                        </a> --}}
+                                        </a>
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('perusahaan.destroy', $perusahaan->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')

@@ -1,4 +1,4 @@
-{{-- profil saya --}}
+
 @extends('layouts.app')
 
 @section('content')
@@ -7,14 +7,22 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <a href="#" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+                    <h5 class="card-title">Detail Materi</h5>
+                    <div class="row">
+                        <div class="col-md-5">
 
+                        </div>
+                        <div class="col-md-7">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <style>
-    /* Atur tata letak kolom untuk layar kecil */
     @media screen and (max-width: 768px) {
         .card {
             padding: 15px;
@@ -35,16 +43,7 @@
             text-align: left;
         }
     }
-        /* body.light-theme #card {
-            background-color: #fff;
-            color: #000
-        }
 
-        body.dark-theme #card {
-            background-color: #000;
-            color: #fff;
-            #
-        } */
         .cardname {
             display: flex;
             flex-direction: column;
@@ -110,7 +109,58 @@
             box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
             backdrop-filter: blur(2px);
             }
+            .checkmark {
+        display: block;
+        width: 25px;
+        height: 25px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        position: relative;
+        margin: 0 auto;
+    }
+
+    .checkmark:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22bb33;
+        display: none;
+    }
+
+    tr.selected .checkmark:after {
+        display: block;
+    }
 
 </style>
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tableBody = document.getElementById('table-body');
+        var startDate = new Date('{{ $post->tanggal_awal }}');
+        var endDate = new Date('{{ $post->tanggal_akhir }}');
+        var days = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
+
+        for (var i = 0; i <= days; i++) {
+            var row = document.createElement('tr');
+
+            var cell = document.createElement('td');
+            var checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('name', 'day[]');
+            checkbox.setAttribute('value', i + 1);
+            cell.appendChild(checkbox);
+            row.appendChild(cell);
+
+            tableBody.appendChild(row);
+        }
+    });
+</script> --}}
+
+
+
 
 @endsection

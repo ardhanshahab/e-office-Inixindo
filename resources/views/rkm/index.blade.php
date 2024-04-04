@@ -144,11 +144,11 @@
                         if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Office Manager' ){
                         html += '<td>';
                         html += '<div class="btn-group dropup">';
-                        html += '<button type="button" class="btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        html += '<button type="button" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                         html += 'Actions';
                         html += '</button>';
                         html += '<div class="dropdown-menu">';
-                        html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + '" data-toggle="tooltip" data-placement="top" title="Detail RKM">Detail RKM</a>';
+                        html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
                         // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
                         html += '</div>';
                         html += '</div>';
