@@ -6,23 +6,20 @@
         <div class="col-md-12 d-flex my-2">
              @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Admin Sales' || auth()->user()->jabatan == 'Finance & Accounting' )
             <a class="btn click-primary mx-1" href="{{ route('rkm.create') }}">Tambah RKM</a>
-            {{-- <a class="btn click-primary mx-1" href="{{ route('rkmEdit') }}">Edit RKM </a> --}}
             @endif
-            {{-- @if ( auth()->user()->jabatan == 'Education Manager')
-            <a class="btn click-primary mx-1" href="{{ route('editInstruktur') }}">Tambah/Edit Instruktur RKM </a>
-            @endif --}}
         </div>
-        <div class="col-md-12">
+            <div class="col-md-12">
                     <div class="card" style="width: 100%">
                         <div class="card-body d-flex justify-content-center">
                             <div class="col-md-4 mx-1">
                                 <label for="tahun" class="form-label">Tahun</label>
                                 <select id="tahun" class="form-select" aria-label="tahun">
-                                    <option selected>Pilih Tahun</option>
+                                    <option disabled>Pilih Tahun</option>
                                     @php
-                                    $tahun_sekarang = date('Y');
+                                    $tahun_sekarang = now()->year;
                                     for ($tahun = 2020; $tahun <= $tahun_sekarang + 2; $tahun++) {
-                                        echo "<option value=\"$tahun\">$tahun</option>";
+                                        $selected = $tahun == $tahun_sekarang ? 'selected' : '';
+                                        echo "<option value=\"$tahun\" $selected>$tahun</option>";
                                     }
                                     @endphp
                                 </select>
@@ -31,26 +28,22 @@
                             <div class="col-md-4 mx-1">
                                 <label for="bulan" class="form-label">Bulan</label>
                                 <select id="bulan" class="form-select" aria-label="bulan">
-                                    <option selected>Pilih Bulan</option>
-                                    <option value="1">Januari</option>
-                                    <option value="2">Februari</option>
-                                    <option value="3">Maret</option>
-                                    <option value="4">April</option>
-                                    <option value="5">Mei</option>
-                                    <option value="6">Juni</option>
-                                    <option value="7">Juli</option>
-                                    <option value="8">Agustus</option>
-                                    <option value="9">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
+                                    <option disabled>Pilih Bulan</option>
+                                    @php
+                                    $bulan_sekarang = now()->month;
+                                    $nama_bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                                    for ($bulan = 1; $bulan <= 12; $bulan++) {
+                                        $selected = $bulan == $bulan_sekarang ? 'selected' : '';
+                                        echo "<option value=\"$bulan\" $selected>{$nama_bulan[$bulan - 1]}</option>";
+                                    }
+                                    @endphp
                                 </select>
                             </div>
                             <div class="col-md-4 mx-1">
                                 <button type="submit" onclick="getDataRKM()" class="btn click-primary" style="margin-top: 37px">Cari Data</button>
                             </div>
+                        </div>
                     </div>
-            </div>
                 <div class="row my-2">
                     <div class="col-md-12" id="content">
                     </div>
@@ -108,8 +101,7 @@
                         html += '<th scope="col">Event</th>';
                         html += '<th scope="col">Ruang</th>';
                         html += '<th scope="col">Pax</th>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager') {
-                        // if ('{{ Auth::user()->jabatan }}' == 'HRD' || '{{ Auth::user()->jabatan }}' == 'Instruktur' || '{{ Auth::user()->jabatan }}' == 'Education Manager') {
+                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Office Manager') {
                             html += '<th scope="col">Aksi</th>';
                         }
                         html += '</tr>';
@@ -149,7 +141,7 @@
                         html += '<td>' + rkm.event + '</td>';
                         html += '<td>' + rkm.ruang + '</td>';
                         html += '<td>' + rkm.total_pax + '</td>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur'){
+                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Office Manager' ){
                         html += '<td>';
                         html += '<div class="btn-group dropup">';
                         html += '<button type="button" class="btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
@@ -157,7 +149,7 @@
                         html += '</button>';
                         html += '<div class="dropdown-menu">';
                         html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + '" data-toggle="tooltip" data-placement="top" title="Detail RKM">Detail RKM</a>';
-                        html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
+                        // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
                         html += '</div>';
                         html += '</div>';
                         html += '</td>';

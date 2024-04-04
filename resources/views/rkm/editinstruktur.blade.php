@@ -7,7 +7,6 @@
             <div class="card">
                 <div class="card-body" id="card">
                 <h5 class="card-title text-center mb-4">{{ __('Tambah Instruktur') }}</h5>
-
                 <form method="POST" action="{{ route('updateInstruktur') }}">
                         @csrf
                         @method('PUT')
@@ -55,7 +54,7 @@
                             <label for="instruktur_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Instruktur 1') }}</label>
                             <div class="col-md-6">
                                 <select class="form-select @error('instruktur_key') is-invalid @enderror" name="instruktur_key" required autocomplete="instruktur_key">
-                                    <option>Pilih Instruktur 1</option>
+                                    <option value="-">Pilih Instruktur 1</option>
                                     @foreach ( $karyawan as $instruktur_keys )
                                     <option value="{{ $instruktur_keys->kode_karyawan }}" @if ($rkm->instruktur_key == $instruktur_keys->kode_karyawan) selected @endif>{{ $instruktur_keys->kode_karyawan }} - {{ $instruktur_keys->nama_lengkap }}</option>
                                     @endforeach
@@ -72,7 +71,7 @@
                             <label for="instruktur_key2" class="col-md-4 col-form-label text-md-start">{{ __('Nama Instruktur 2') }}</label>
                             <div class="col-md-6">
                                 <select class="form-select @error('instruktur_key2') is-invalid @enderror" name="instruktur_key2" value="" required autocomplete="instruktur_key2">
-                                    <option selected>Pilih Instruktur 2</option>
+                                    <option value="-" selected>Pilih Instruktur 2</option>
                                     @foreach ( $karyawan as $instruktur_key2 )
                                     <option value="{{ $instruktur_key2->kode_karyawan }}" @if ($rkm->instruktur_key2 == $instruktur_key2->kode_karyawan) selected @endif>{{ $instruktur_key2->kode_karyawan }} - {{ $instruktur_key2->nama_lengkap }}</option>
                                     @endforeach
@@ -89,7 +88,7 @@
                             <label for="asisten_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Asisten Instruktur') }}</label>
                             <div class="col-md-6">
                                 <select class="form-select @error('asisten_key') is-invalid @enderror" name="asisten_key" value="" required autocomplete="asisten_key">
-                                    <option selected>Pilih Asisten Instruktur</option>
+                                    <option value="-" selected>Pilih Asisten Instruktur</option>
                                     @foreach ( $karyawan as $asisten_key )
                                     <option value="{{ $asisten_key->kode_karyawan }}" @if ($rkm->asisten_key == $asisten_key->kode_karyawan) selected @endif>{{ $asisten_key->kode_karyawan }} - {{ $asisten_key->nama_lengkap }}</option>
                                     @endforeach

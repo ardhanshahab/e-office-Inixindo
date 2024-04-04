@@ -7,17 +7,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <a href="#" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                     <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                     <div class="row">
                         <div class="col-md-5">
                             @if ( auth()->user()->jabatan == 'Education Manager')
-                                {{-- <div class="col-md-8 col-sm-8 col-xs-8"><p><h5>Client {{ $loop->iteration }}</h5></p></div> --}}
                                 <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('editInstruktur', $id->materi_key) }}">Tambah/Edit Instruktur RKM </a></div>
                             @endif
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 @php
-                                    // $posts = $rkm->isNotEmpty() ? $rkm->first()->id : null;
-                                    // $materi_key = $rkm->isNotEmpty() ? $rkm->first()->materi_key : null;
                                     $user = auth()->user();
                                     $karyawan = DB::table('users')
                                         ->join('karyawans', 'users.karyawan_id', '=', 'karyawans.id')
@@ -38,10 +36,10 @@
                                     <div class="row">
                                         @if ($kode_karyawan == $post->sales_key )
                                         <div class="col-md-8 col-sm-8 col-xs-8"><p><h5> </h5></p></div>
-                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="20px"> Edit RKM</a></div>
                                         @else
                                         <div class="col-md-8 col-sm-8 col-xs-8"><p><h5> </h5></p></div>
-                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"  href="{{ route('rkm.edit', $post->id) }}">Edit RKM</a></div>
+                                        <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"  href="{{ route('rkm.edit', $post->id) }}"><img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="20px"> Edit RKM</a></div>
                                         @endif
                                         <div class="col-md-4 col-sm-4 col-xs-4"><p>ID RKM</p></div>
                                         <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
@@ -223,7 +221,7 @@
                                             <div class="card-body">
                                                 @php $formGenerated = false; @endphp
                                                 @foreach ($rkm as $rkms)
-                                                    @if (!$formGenerated && ($kode_karyawan == $rkms->sales_key || $kode_karyawan == $rkms->instruktur_key || $kode_karyawan == $rkms->instruktur_key2 || $kode_karyawan == $rkms->asisten_key))
+                                                    @if (!$formGenerated && ($kode_karyawan == $rkms->sales_key || $kode_karyawan == $rkms->instruktur_key || $kode_karyawan == $rkms->instruktur_key2 || $kode_karyawan == $rkms->asisten_key || auth()->user()->jabatan == 'SPV Sales' ||  auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager'))
                                                         @php $formGenerated = true; @endphp
                                                         <div class="row">
                                                             <form method="POST" action="{{ route('comment.store') }}">
@@ -235,7 +233,7 @@
                                                                 <button class="btn click-primary float-end mt-2" type="submit">Kirim</button>
                                                             </form>
                                                         </div>
-                                                    @endif
+                                                        @endif
                                                 @endforeach
                                                 <div class="row my-2">
                                                 <h3>Komentar</h3>
