@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="card">
-                <h5 class="card-title text-center mb-4">{{ __('Registrasi Karyawan Baru') }}</h5>
+                <h5 class="card-title text-center mb-4">{{ __('Materi Baru') }}</h5>
                     <form method="POST" action="{{ route('materi.store') }}">
                         @csrf
                         <div class="row mb-3">

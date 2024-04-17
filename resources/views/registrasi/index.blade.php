@@ -6,17 +6,21 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
                 @if ( auth()->user()->jabatan == 'HRD' )
-                    <a href="{{ route('peserta.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah peserta"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Peserta</a>
+                    <a href="{{ route('registrasi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah registrasi"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Registrasi Peserta</a>
                 @endif
             </div>
+            {{-- {{ $post }} --}}
             <div class="card m-4">
                 <div class="card-body table-responsive">
-                    <h3 class="card-title text-center my-1">{{ __('Data Peserta') }}</h3>
+                    <h3 class="card-title text-center my-1">{{ __('Data Registrasi') }}</h3>
                     <table class="table table-striped">
                         <thead>
                           <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Nama</th>
+                            <th scope="col">ID Pelatihan</th>
+                            <th scope="col">Materi Pelatihan</th>
+                            <th scope="col">Tanggal Pelatihan</th>
+                            <th scope="col">Nama Peserta</th>
                             <th scope="col">Email</th>
                             <th scope="col">Jenis Kelamin</th>
                             <th scope="col">Nomor Handphone</th>
@@ -29,20 +33,28 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $post as $peserta )
+                            @foreach ( $post as $registrasi )
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $peserta->nama }}</td>
-                            <td>{{ $peserta->email }}</td>
-                            @if ($peserta->jenis_kelamin == 'L')
+                            <td>{{ $registrasi->id }}</td>
+                            <td>{{ $registrasi->rkm->materi->nama_materi }}</td>
+                            <td>{{ $registrasi->rkm->tanggal_awal }} - {{ $registrasi->rkm->tanggal_akhir }}</td>
+                            <td>{{ $registrasi->peserta->nama }}</td>
+                            <td>{{ $registrasi->peserta->email }}</td>
+                            @if ($registrasi->peserta->jenis_kelamin == 'L')
                             <td>Laki-laki</td>
                             @else
                             <td>Perempuan</td>
                             @endif
-                            <td>{{ $peserta->no_hp }}</td>
-                            <td>{{ $peserta->alamat }}</td>
-                            <td>{{ $peserta->perusahaan->nama_perusahaan }}</td>
-                            <td>{{ $peserta->tanggal_lahir }}</td>
+                            <td>{{ $registrasi->peserta->no_hp }}</td>
+                            <td>{{ $registrasi->peserta->alamat }}</td>
+                            <td>{{ $registrasi->peserta->perusahaan->nama_perusahaan }}</td>
+                            @if ($registrasi->peserta->tanggal_lahir == null)
+                            <td>Tidak Ada Data</td>
+                            @else
+                            <td>{{ $registrasi->peserta->tanggal_lahir }}</td>
+                            @endif
+                            {{-- <td>{{ $registrasi->tanggal_lahir }}</td> --}}
                             @if ( auth()->user()->jabatan == 'HRD' )
                             <td>
                                 <div class="dropdown">
@@ -50,16 +62,16 @@
                                         Actions
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{ route('peserta.edit', $peserta->id) }}" data-toggle="tooltip" data-placement="top" title="Edit peserta">
+                                        <a class="dropdown-item" href="{{ route('registrasi.edit', $registrasi->id) }}" data-toggle="tooltip" data-placement="top" title="Edit registrasi">
                                             <img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit
                                         </a>
-                                        {{-- <a class="dropdown-item" href="{{ route('peserta.show', $peserta->id) }}" data-toggle="tooltip" data-placement="top" title="Detail peserta">
+                                        <a class="dropdown-item" href="{{ route('registrasi.show', $registrasi->id) }}" data-toggle="tooltip" data-placement="top" title="Detail registrasi">
                                             <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail
-                                        </a> --}}
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('peserta.destroy', $peserta->id) }}" method="POST">
+                                        </a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('registrasi.destroy', $registrasi->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Hapus peserta">
+                                            <button type="submit" class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Hapus registrasi">
                                                 <img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus
                                             </button>
                                         </form>
@@ -72,7 +84,7 @@
                         </tbody>
                       </table>
                       <div class="d-flex">
-                        {{ $post->links() }}
+                        {{-- {{ $post->links() }} --}}
                         </div>
                 </div>
             </div>

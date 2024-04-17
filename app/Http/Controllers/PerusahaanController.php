@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Perusahaan;
 use App\Models\karyawan;
+use App\Models\Peserta;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use App\Models\RKM;
@@ -92,9 +93,9 @@ class PerusahaanController extends Controller
     {
         //get post by ID
         $post = Perusahaan::with('karyawan')->findOrFail($id);
-
+        $peserta = Peserta::where('perusahaan_key', $id)->get();
         //render view with post
-        return view('perusahaan.show', compact('post'));
+        return view('perusahaan.show', compact('post', 'peserta'));
     }
 
     /**

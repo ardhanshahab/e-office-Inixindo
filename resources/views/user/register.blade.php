@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body" id="card">
                 <h5 class="card-title text-center mb-4">{{ __('Registrasi Karyawan Baru') }}</h5>
-                    <form method="POST" action="{{ route('user.regist') }}">
+                    <form method="POST" action="{{ route('user.register') }}">
                         @csrf
                         <div class="row mb-3">
                             <label for="nama_lengkap" class="col-md-4 col-form-label text-md-start">{{ __('Nama') }}</label>

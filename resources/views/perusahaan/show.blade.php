@@ -149,14 +149,25 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    {{-- <th scope="row">{{ $loop->iteration }}</th> --}}
-                                                    <td>test</td>
-                                                    <td>test</td>
-                                                    <td>test</td>
-                                                    <td><a href="#" class="btn click-primary my-2">List Materi</a></td>
+                                                    @foreach ($peserta as $pesertas )
+                                                    <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td>{{ $pesertas->nama }}</td>
+                                                    <td>{{ $pesertas->email }}</td>
+                                                    <td><a href="#" class="btn click-primary my-2 list-materi-btn" data-id="{{ $pesertas->id }}">List Materi</a></td>
+                                                    {{-- <td><a href="#" class="btn click-primary my-2">List Materi</a></td> --}}
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p>List Materi</p>
+                                        <ul id="list-materi">
+
+                                        </ul>
+
                                     </div>
                                 </div>
                             </div>
@@ -284,26 +295,28 @@
             display: block;
         }
     </style>
-    {{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var tableBody = document.getElementById('table-body');
-        var startDate = new Date('{{ $post->tanggal_awal }}');
-        var endDate = new Date('{{ $post->tanggal_akhir }}');
-        var days = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
-
-        for (var i = 0; i <= days; i++) {
-            var row = document.createElement('tr');
-
-            var cell = document.createElement('td');
-            var checkbox = document.createElement('input');
-            checkbox.setAttribute('type', 'checkbox');
-            checkbox.setAttribute('name', 'day[]');
-            checkbox.setAttribute('value', i + 1);
-            cell.appendChild(checkbox);
-            row.appendChild(cell);
-
-            tableBody.appendChild(row);
-        }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+         $(document).ready(function () {
+    $(".list-materi-btn").click(function () {
+        var idPeserta = $(this).data("id");
+        $.ajax({
+            url: "/api/registrasi/list/" + idPeserta, // Ubah URL menjadi "/api/registrasi/list/{id_peserta}"
+            type: "GET",
+            success: function (data) {
+                $("#list-materi").empty();
+                $.each(data.list, function (index, materi) {
+                    console.log(materi);
+                    $("#list-materi").append("<li>" + materi + "</li>");
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                // Handle error here
+            }
+        });
     });
-</script> --}}
+});
+
+    </script>
 @endsection

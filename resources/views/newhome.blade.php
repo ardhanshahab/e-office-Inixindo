@@ -102,7 +102,7 @@
                                                 <img src="{{ asset('icon/table.svg') }}" class="img-responsive" width="30px">
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px">
-                                                <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Peserta</h5></a>
+                                                <a href="/peserta" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Peserta</h5></a>
                                                 <p class="card-text">Data Peserta yang mengikuti kelas.</p>
                                             </div>
                                         </div>
@@ -116,7 +116,7 @@
                                                 <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="30px">
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px" id="">
-                                                <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Registrasi</h5></a>
+                                                <a href="/registrasi" class="link stretched-link text-decoration-none"><h5 class="card-title">Registrasi</h5></a>
                                                 <p class="card-text">Registrasi peserta kelas.</p>
                                             </div>
                                         </div>

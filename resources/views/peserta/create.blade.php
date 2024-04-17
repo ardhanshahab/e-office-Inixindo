@@ -6,14 +6,14 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="card">
-                <h5 class="card-title text-center mb-4">{{ __('Registrasi Karyawan Baru') }}</h5>
-                    <form method="POST" action="{{ route('perusahaan.store') }}">
+                <h5 class="card-title text-center mb-4">{{ __('Tambah Peserta Baru') }}</h5>
+                    <form method="POST" action="{{ route('peserta.store') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="nama_perusahaan" class="col-md-4 col-form-label text-md-start">{{ __('Nama Perusahaan') }}</label>
+                            <label for="nama" class="col-md-4 col-form-label text-md-start">{{ __('Nama Peserta') }}</label>
                             <div class="col-md-6">
-                                <input id="nama_perusahaan" type="text" placeholder="Masukan Nama Perusahaan" class="form-control @error('nama_perusahaan') is-invalid @enderror" name="nama_perusahaan" value="{{ old('nama_perusahaan') }}" autocomplete="nama_perusahaan" autofocus>
-                                @error('nama_perusahaan')
+                                <input id="nama" type="text" placeholder="Masukan Nama Peserta" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{ old('nama') }}" autocomplete="nama" autofocus>
+                                @error('nama')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -22,10 +22,14 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="kategori_perusahaan" class="col-md-4 col-form-label text-md-start">{{ __('Kategori Perusahaan') }}</label>
+                            <label for="jenis_kelamin" class="col-md-4 col-form-label text-md-start">{{ __('Jenis Kelamin') }}</label>
                             <div class="col-md-6">
-                                <input id="kategori_perusahaan" type="text" placeholder="Masukan Kategori Perusahaan" class="form-control @error('kategori_perusahaan') is-invalid @enderror" name="kategori_perusahaan" value="{{ old('kategori_perusahaan') }}" autocomplete="kategori_perusahaan" autofocus>
-                                @error('kategori_perusahaan')
+                                <select class="form-select @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin" value="{{ old('jenis_kelamin' ) }}" required autocomplete="jenis_kelamin">
+                                    <option selected>Pilih Jenis Kelamin</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                                @error('jenis_kelamin')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -34,10 +38,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="lokasi" class="col-md-4 col-form-label text-md-start">{{ __('Lokasi') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-start">{{ __('Email') }}</label>
                             <div class="col-md-6">
-                                <input id="lokasi" type="text" placeholder="Masukan Lokasi Perusahaan" class="form-control @error('lokasi') is-invalid @enderror" name="lokasi" value="{{ old('lokasi') }}" autocomplete="lokasi" autofocus>
-                                @error('lokasi')
+                                <input id="email" type="text" placeholder="Masukan Email Peserta" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
+                                @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -46,34 +50,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="karyawan_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Karyawan') }}</label>
+                            <label for="no_hp" class="col-md-4 col-form-label text-md-start">{{ __('Nomor Handphone') }}</label>
                             <div class="col-md-6">
-                                <input id="karyawan_key" type="text" placeholder="Masukan Nama Karyawan" class="form-control @error('karyawan_key') is-invalid @enderror" name="karyawan_key" value="{{ old('karyawan_key') }}" autocomplete="karyawan_key" autofocus>
-                                @error('karyawan_key')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="status" class="col-md-4 col-form-label text-md-start">{{ __('Status') }}</label>
-                            <div class="col-md-6">
-                                <input id="status" type="text" placeholder="Masukan Status" class="form-control @error('status') is-invalid @enderror" name="status" value="{{ old('status') }}" autocomplete="status" autofocus>
-                                @error('status')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="npwp" class="col-md-4 col-form-label text-md-start">{{ __('NPWP') }}</label>
-                            <div class="col-md-6">
-                                <input id="npwp" type="text" placeholder="Masukan NPWP" class="form-control @error('npwp') is-invalid @enderror" name="npwp" value="{{ old('npwp') }}" autocomplete="npwp" autofocus>
-                                @error('npwp')
+                                <input id="no_hp" type="text" placeholder="Masukan Nomor Handphone" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" value="{{ old('no_hp') }}" autocomplete="no_hp" autofocus>
+                                @error('no_hp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -84,7 +64,7 @@
                         <div class="row mb-3">
                             <label for="alamat" class="col-md-4 col-form-label text-md-start">{{ __('Alamat') }}</label>
                             <div class="col-md-6">
-                                <input id="alamat" type="text" placeholder="Masukan Alamat Perusahaan" class="form-control @error('alamat') is-invalid @enderror" name="alamat" value="{{ old('alamat') }}" autocomplete="alamat" autofocus>
+                                <input id="alamat" type="text" placeholder="Masukan Alamat" class="form-control @error('alamat') is-invalid @enderror" name="alamat" value="{{ old('alamat') }}" autocomplete="alamat" autofocus>
                                 @error('alamat')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -94,10 +74,11 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="cp" class="col-md-4 col-form-label text-md-start">{{ __('CP') }}</label>
+                            <label for="perusahaan_key" class="col-md-4 col-form-label text-md-start">{{ __('Perusahaan / Instansi') }}</label>
                             <div class="col-md-6">
-                                <input id="cp" type="text" placeholder="Masukan CP Perusahaan" class="form-control @error('cp') is-invalid @enderror" name="cp" value="{{ old('cp') }}" autocomplete="cp" autofocus>
-                                @error('cp')
+                                <select style="height: 30px" class="form-select @error('perusahaan_key') is-invalid @enderror" name="perusahaan_key" id="perusahaan_key">
+                                </select>
+                                @error('perusahaan_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -106,22 +87,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="no_telp" class="col-md-4 col-form-label text-md-start">{{ __('Nomor Telepon') }}</label>
+                            <label for="tanggal_lahir" class="col-md-4 col-form-label text-md-start">{{ __('tanggal_lahir') }}</label>
                             <div class="col-md-6">
-                                <input id="no_telp" type="text" placeholder="Masukan Nomor Telepon Perusahaan" class="form-control @error('no_telp') is-invalid @enderror" name="no_telp" value="{{ old('no_telp') }}" autocomplete="no_telp" autofocus>
-                                @error('no_telp')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="foto_npwp" class="col-md-4 col-form-label text-md-start">{{ __('Foto NPWP') }}</label>
-                            <div class="col-md-6">
-                                <input type="file" class="form-control @error('foto_npwp') is-invalid @enderror" name="foto_npwp">
-                                @error('foto_npwp')
+                                <input id="tanggal_lahir" type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" autocomplete="tanggal_lahir" autofocus>
+                                @error('tanggal_lahir')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -145,4 +114,32 @@
 <style>
 
 </style>
+@push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+            $(document).ready(function() {
+              $('#perusahaan_key').select2({
+                placeholder: "Pilih Perusahaan",
+                allowClear: true,
+                ajax: {
+                    url: '{{route('getPerusahaan')}}',
+                    processResults: function({data}){
+                        console.log(data)
+                        return{
+                            results: $.map(data, function(item){
+                                return {
+                                    id: item.id,
+                                    text: item.nama_perusahaan
+                                }
+                            })
+                        }
+                    }
+                    // dataType: 'json'
+                  },
+
+              });
+            });
+    </script>
+@endpush
 @endsection

@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 use App\Models\RKM;
 use App\Models\karyawan;
+use Illuminate\Support\Carbon;
 use App\Models\Perusahaan;
 use App\Http\Resources\PostResource;
 
@@ -161,6 +162,53 @@ class RKMController extends Controller
 
         $json = $monthRanges;
         return new PostResource(true, 'List Detail Bulan RKM', $json);
+    }
+
+    public function getRKMRegist()
+    {
+        $today = Carbon::now();
+        $startDate = $today->startOfMonth()->toDateString(); // Tanggal awal bulan ini
+        $endDate = $today->addMonths(2)->endOfMonth()->toDateString(); // Tanggal akhir dua bulan ke depan
+
+        $rows = RKM::with(['materi:id,nama_materi'])
+            ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
+            ->join('perusahaans', 'r_k_m_s.perusahaan_key', '=', 'perusahaans.id')
+            ->whereBetween('r_k_m_s.tanggal_awal', [$startDate, $endDate])
+            ->whereBetween('r_k_m_s.tanggal_akhir', [$startDate, $endDate])
+            ->where('materis.nama_materi', 'LIKE', '%'.request('q').'%')
+            ->select('r_k_m_s.*', 'perusahaans.nama_perusahaan')
+            ->paginate(10);
+        return response()->json($rows);
+
+            // $perusahaans = Perusahaan::where('nama_perusahaan', 'LIKE', '%'.request('q').'%')->paginate(10);
+    }
+
+    public function getRKMDetail(Request $request)
+    {
+        $idRkm = $request->id_rkm;
+        $rkm = RKM::with('materi')
+            ->where('id', $idRkm)
+            ->first();
+
+        if ($rkm) {
+            return response()->json(['rkm' => $rkm]);
+        } else {
+            return response()->json(['rkm' => null]);
+        }
+    }
+
+    public function getRKMByMonthNow(Request $request)
+    {
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
+            ->whereYear('tanggal_awal', date("Y"))
+            ->whereMonth('tanggal_awal', date("m"))
+            ->get();
+
+        if ($rkm->isEmpty()) {
+            return response()->json(['success' => false, 'message' => 'No RKM found for the current month', 'data' => null]);
+        } else {
+            return response()->json(['success' => true, 'message' => 'List RKM Bulan ini', 'data' => $rkm]);
+        }
     }
 
 }

@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('jenis_kelamin');
             $table->string('email');
-            $table->string('no_hp');
-            $table->string('alamat');
+            $table->string('no_hp')->nullable();
+            $table->string('alamat')->nullable();
             $table->string('perusahaan_key');
-            $table->string('tanggal_lahir');
+            $table->string('tanggal_lahir')->nullable();
             $table->timestamps();
         });
     }
