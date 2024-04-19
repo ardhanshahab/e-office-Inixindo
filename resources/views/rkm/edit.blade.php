@@ -7,25 +7,9 @@
             <div class="card">
                 <div class="card-body" id="card">
                 <h5 class="card-title text-center mb-4">{{ __('Edit Rencana Kelas Mingguan') }}</h5>
-                    <form method="POST" action="{{ route('rkmUpdate') }}">
+                    <form method="POST" action="{{ route('rkm.update', $post->id) }}">
                         @csrf
                         @method('PUT')
-                        {{-- <div class="row mb-3">
-                            <label for="rkm_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama RKM') }}</label>
-                            <div class="col-md-6">
-                                <select class="form-select @error('rkm_key') is-invalid @enderror" name="rkm_key" value="{{ old('rkm_key' ) }}" required autocomplete="rkm_key">
-                                    <option selected>Pilih RKM</option>
-                                    @foreach ( $rkm as $rkms )
-                                    <option value="{{ $rkms->id }}">{{ $rkms->sales_key }} - {{ $rkms->materi->nama_materi }} - {{ $rkms->tanggal_awal }}</option>
-                                    @endforeach
-                                </select>
-                                @error('rkm_key')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div> --}}
                         <div class="row mb-3">
                             <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
@@ -73,6 +57,18 @@
                                     @endforeach
                                 </select>
                                 @error('perusahaan_key')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="harga_jual" class="col-md-4 col-form-label text-md-start">{{ __('Harga Jual') }}</label>
+                            <div class="col-md-6">
+                                <input id="harga_jual" type="number" placeholder="Harga Jual" class="form-control @error('harga_jual') is-invalid @enderror" name="harga_jual" value="{{ old('harga_jual', $post->harga_jual) }}" autocomplete="harga_jual" autofocus>
+                                @error('harga_jual')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

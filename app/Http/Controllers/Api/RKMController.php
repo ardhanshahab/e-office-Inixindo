@@ -123,18 +123,6 @@ class RKMController extends Controller
                         DB::raw('SUM(r_k_m_s.pax) AS total_pax'))
                     ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang', 'r_k_m_s.metode_kelas', 'r_k_m_s.event', 'r_k_m_s.tanggal_awal')
                     ->get();
-                    // $rows = DB::table('r_k_m_s')
-                    // ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
-                    // ->whereBetween('r_k_m_s.tanggal_awal', [$start, $end])
-                    // ->whereBetween('r_k_m_s.tanggal_akhir', [$start, $end])
-                    // ->select('r_k_m_s.materi_key', 'r_k_m_s.ruang', 'r_k_m_s.metode_kelas', 'r_k_m_s.event', 'r_k_m_s.tanggal_awal',
-                    //     DB::raw('GROUP_CONCAT(r_k_m_s.instruktur_key SEPARATOR ", ") AS instruktur_all'),
-                    //     DB::raw('GROUP_CONCAT(r_k_m_s.perusahaan_key SEPARATOR ", ") AS perusahaan_all'),
-                    //     DB::raw('GROUP_CONCAT(r_k_m_s.sales_key SEPARATOR ", ") AS sales_all'),
-                    //     DB::raw('GROUP_CONCAT(DISTINCT r_k_m_s.status ORDER BY r_k_m_s.status SEPARATOR ", ") AS status_all'),
-                    //     DB::raw('SUM(r_k_m_s.pax) AS total_pax'))
-                    // ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang', 'r_k_m_s.metode_kelas', 'r_k_m_s.event', 'r_k_m_s.tanggal_awal')
-                    // ->get();
 
                 foreach ($rows as $row) {
                     if ($row->instruktur_all == null) {

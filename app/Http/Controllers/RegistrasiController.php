@@ -45,7 +45,6 @@ class RegistrasiController extends Controller
         $this->validate($request, [
             'id_rkm'     => 'required',
             'id_peserta'   => 'required',
-
         ]);
 
         Registrasi::create([
