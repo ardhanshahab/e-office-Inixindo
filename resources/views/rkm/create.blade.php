@@ -44,13 +44,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="perusahaan_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Perusahaan') }}</label>
+                            <label for="perusahaan_key" class="col-md-4 col-form-label text-md-start">{{ __('Perusahaan / Instansi') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('perusahaan_key') is-invalid @enderror" name="perusahaan_key" value="{{ old('perusahaan_key', ) }}" required autocomplete="perusahaan_key">
-                                    <option selected>Pilih Perusahaan</option>
-                                    @foreach ( $perusahaan as $perusahaans )
-                                    <option value="{{ $perusahaans->id }}">{{ $perusahaans->nama_perusahaan }}</option>
-                                    @endforeach
+                                <select style="height: 30px" class="form-select @error('perusahaan_key') is-invalid @enderror" name="perusahaan_key" id="perusahaan_key">
                                 </select>
                                 @error('perusahaan_key')
                                     <span class="invalid-feedback" role="alert">
@@ -201,4 +197,31 @@
 <style>
 
 </style>
+@push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+            $(document).ready(function() {
+              $('#perusahaan_key').select2({
+                placeholder: "Pilih Perusahaan",
+                allowClear: true,
+                ajax: {
+                    url: '{{route('getPerusahaan')}}',
+                    processResults: function({data}){
+                        console.log(data)
+                        return{
+                            results: $.map(data, function(item){
+                                return {
+                                    id: item.id,
+                                    text: item.nama_perusahaan
+                                }
+                            })
+                        }
+                    }
+                    // dataType: 'json'
+                  },
+
+              });
+            });
+    </script>
 @endsection

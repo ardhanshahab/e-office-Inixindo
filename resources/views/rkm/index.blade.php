@@ -3,7 +3,8 @@
 @section('content')
 <div class="container-fluid" style="background: ">
     <div class="row justify-content-center">
-        <div class="col-md-12 d-flex my-2">
+        {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
+        <div class="col-md-12 d-flex my-2 justify-content-end">
              @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Admin Sales' || auth()->user()->jabatan == 'Finance & Accounting' )
             <a class="btn click-primary mx-1" href="{{ route('rkm.create') }}">Tambah RKM</a>
             @endif

@@ -6,7 +6,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="card">
-                <h5 class="card-title text-center mb-4">{{ __('Tambah Instruktur') }}</h5>
+                    <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+                    <h5 class="card-title text-center mb-4">{{ __('Tambah Instruktur') }}</h5>
                 <form method="POST" action="{{ route('updateInstruktur') }}">
                         @csrf
                         @method('PUT')

@@ -6,8 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="#" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}"
-                                class="img-responsive" width="20px"> Back</a>
+                        <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                         <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                         <div class="row">
                             <div class="col-md-5">

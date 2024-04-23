@@ -3,6 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
+        {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
                 @if ( auth()->user()->jabatan == 'HRD' )

@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
+                    <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                     <h6 class="card-title text-center">Ganti Foto Profile</h6>
                     <form action="{{ route('karyawan.updateFoto', $users->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf

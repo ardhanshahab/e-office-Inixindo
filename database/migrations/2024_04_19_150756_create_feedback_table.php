@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registrasis', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->string('id_rkm');
-            $table->string('id_peserta');
-            $table->string('id_materi');
+            $table->string('kategori_feedback');
+            $table->string('pertanyaan');
+            $table->string('key');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('registrasis');
+        Schema::dropIfExists('feedback');
     }
 };

@@ -192,7 +192,7 @@
 
                                                 </div>
                                                 <div class="col-md-10" style="margin-left: 10px">
-                                                    <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Feedback</h5></a>
+                                                    <a href="/feedback" class="link stretched-link text-decoration-none"><h5 class="card-title">Feedback</h5></a>
                                                     <p class="card-text">Feedback Pelayanan.</p>
                                                 </div>
                                             </div>

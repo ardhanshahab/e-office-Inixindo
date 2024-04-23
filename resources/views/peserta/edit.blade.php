@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="card">
+                    <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                 <h5 class="card-title text-center mb-4">{{ __('Edit Peserta') }}</h5>
                     <form method="POST" action="{{ route('perusahaan.update', $perusahaans->id) }}">
                         @csrf

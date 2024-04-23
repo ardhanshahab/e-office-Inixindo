@@ -12,6 +12,8 @@
             @endif
             <div class="card m-4" id="card">
                 <div class="card-body table-responsive">
+                    <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+
                     <h3 class="card-title text-center">{{ __('Profil Saya') }}</h3>
                     <div class="row">
                         {{-- foto --}}

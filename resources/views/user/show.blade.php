@@ -17,6 +17,8 @@
                     </a>
                 @endif
             </div>
+            <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+
             <div class="card-group m-1">
                 <div class="col-md-4">
                     <div class="card">

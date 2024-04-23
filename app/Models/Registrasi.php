@@ -11,6 +11,7 @@ class Registrasi extends Model
     protected $fillable = [
         'id_rkm',
         'id_peserta',
+        'id_materi',
     ];
     public function rkm()
     {
@@ -20,5 +21,10 @@ class Registrasi extends Model
     public function peserta()
     {
         return $this->belongsTo(Peserta::class, 'id_peserta', 'id');
+    }
+
+    public function materi()
+    {
+        return $this->belongsTo(Materi::class, 'id_materi', 'id');
     }
 }

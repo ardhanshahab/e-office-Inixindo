@@ -238,7 +238,7 @@
                 <!-- Tombol Home -->
                 <ul class="navbar-nav me-auto ">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/home') }}"><img src="{{ asset('icon/home.svg') }}" class="img-responsive" width="30px"></a>
+                        <a class="nav-link" href="{{ url('/home') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Home"><img src="{{ asset('icon/home.svg') }}" class="img-responsive" width="30px"></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav me-auto ">
@@ -269,7 +269,7 @@
                 </ul> --}}
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item mx-1">
-                        <a class="nav-link" href="{{ route('logout') }}"
+                        <a class="nav-link" href="{{ route('logout') }} "data-bs-toggle="tooltip" data-bs-placement="top" title="Logout"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                            <img src="{{ asset('icon/power.svg') }}" class="img-responsive" width="30px">
                         </a>

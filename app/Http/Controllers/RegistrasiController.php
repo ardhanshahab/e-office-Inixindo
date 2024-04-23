@@ -45,11 +45,13 @@ class RegistrasiController extends Controller
         $this->validate($request, [
             'id_rkm'     => 'required',
             'id_peserta'   => 'required',
+            'id_materi'   => 'required',
         ]);
 
         Registrasi::create([
             'id_rkm'     => $request->id_rkm,
             'id_peserta'     => $request->id_peserta,
+            'id_materi'     => $request->id_materi,
         ]);
 
         return redirect()->route('registrasi.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -93,6 +95,7 @@ class RegistrasiController extends Controller
         $this->validate($request, [
             'id_rkm'     => 'required',
             'id_peserta'   => 'required',
+            'id_materi'   => 'required',
         ]);
 
         $post = Registrasi::findOrFail($id);
@@ -100,6 +103,8 @@ class RegistrasiController extends Controller
             $post->update([
                 'id_rkm'     => $request->id_rkm,
                 'id_peserta'     => $request->id_peserta,
+                'id_materi'     => $request->id_materi,
+
             ]);
 
         return redirect()->route('registrasi.index')->with(['success' => 'Data Berhasil Diubah!']);

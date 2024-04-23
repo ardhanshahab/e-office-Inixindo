@@ -9,6 +9,7 @@
                     <h3 class="text-center my-1">{{ __('Ganti Password') }}</h3>
                 </div>
                 <div class="card-body table-responsive">
+                    <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                     <div class="row">
                         <form action="{{ route('user.updatePassword', $users->id) }}" method="post">
                             @csrf

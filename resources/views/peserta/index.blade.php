@@ -53,9 +53,9 @@
                                         <a class="dropdown-item" href="{{ route('peserta.edit', $peserta->id) }}" data-toggle="tooltip" data-placement="top" title="Edit peserta">
                                             <img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit
                                         </a>
-                                        {{-- <a class="dropdown-item" href="{{ route('peserta.show', $peserta->id) }}" data-toggle="tooltip" data-placement="top" title="Detail peserta">
+                                        <a class="dropdown-item" href="{{ route('peserta.show', $peserta->id) }}" data-toggle="tooltip" data-placement="top" title="Detail peserta">
                                             <img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail
-                                        </a> --}}
+                                        </a>
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('peserta.destroy', $peserta->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
