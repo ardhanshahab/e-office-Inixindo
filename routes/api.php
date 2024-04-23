@@ -27,6 +27,7 @@ Route::get('getRKMDetail', [App\Http\Controllers\Api\RKMController::class, 'getR
 Route::get('registrasi/list/{id_peserta}', [App\Http\Controllers\Api\PesertaController::class, 'listMateri'])->name('listMateri');
 // Route::get('/cek-peserta', 'PesertaController@cekPeserta')->name('cekPeserta');
 Route::get('getRKMByMonthNow', [App\Http\Controllers\Api\RKMController::class, 'getRKMByMonthNow'])->name('getRKMByMonthNow');
+Route::get('getFeedbacks', [App\Http\Controllers\Api\RKMController::class, 'getFeedbacks'])->name('getFeedbacks');
 
 
 
