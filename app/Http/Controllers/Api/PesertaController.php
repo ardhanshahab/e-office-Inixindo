@@ -20,14 +20,14 @@ class PesertaController extends Controller
 
     public function listMateri($id_peserta)
     {
-        $registrasi = Registrasi::where('id_peserta', $id_peserta)->with('rkm')->get();
+        $registrasi = Registrasi::with('materi')->where('id_peserta', $id_peserta)->with('rkm')->get();
 
-        // Mengakses nama_materi dari setiap objek Registrasi
-        $listMateri = $registrasi->map(function ($item) {
-            return $item->rkm->materi->nama_materi;
-        });
+        // // Mengakses nama_materi dari setiap objek Registrasi
+        // $listMateri = $registrasi->map(function ($item) {
+        //     return $item->rkm->materi->nama_materi;
+        // });
 
-        return response()->json(['list' => $listMateri]);
+        return response()->json(['list' => $registrasi]);
     }
 
 }

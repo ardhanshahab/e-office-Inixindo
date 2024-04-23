@@ -39,24 +39,30 @@
                                             aria-labelledby="kelas-tab-{{ $post->id }}">
                                             <div class="row">
                                                 @if ($kode_karyawan == $post->sales_key)
-                                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                                    <div class="col-md-5 col-sm-5 col-xs-5">
                                                         <p>
                                                         <h5> </h5>
                                                         </p>
                                                     </div>
-                                                    <div class="col-md-4 col-sm-4 col-xs-4"><a
-                                                            class="btn click-primary mx-1"
-                                                            href="{{ route('rkm.edit', $post->id) }}"><img
-                                                                src="{{ asset('icon/edit.svg') }}" class="img-responsive"
-                                                                width="20px"> Edit RKM</a></div>
+                                                    <div class="col-md-7 col-sm-7 col-xs-7 d-flex">
+                                                        <a class="btn click-primary mx-1" href="{{ route('rkm.edit', $post->id) }}">
+                                                            <img src="{{ asset('icon/edit.svg') }}" class="img-responsive" width="20px"> Edit RKM
+                                                        </a>
+                                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('rkm.destroy', $post->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        <button class="btn click-danger mx-1">
+                                                            <img src="{{ asset('icon/trash.svg') }}" class="img-responsive" width="20px"> Hapus RKM
+                                                        </button>
+                                                        </form>
+                                                    </div>
                                                 @else
                                                     <div class="col-md-8 col-sm-8 col-xs-8">
                                                         <p>
                                                         <h5> </h5>
                                                         </p>
                                                     </div>
-                                                    <div class="col-md-4 col-sm-4 col-xs-4"><a
-                                                            class="btn click-primary mx-1 disabled"
+                                                    <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"
                                                             href="{{ route('rkm.edit', $post->id) }}"><img
                                                                 src="{{ asset('icon/edit.svg') }}" class="img-responsive"
                                                                 width="20px"> Edit RKM</a></div>
@@ -445,6 +451,17 @@
                     color: #000000;
                     display: inline-block;
                     font: normal bold 18px/1 "Open Sans", sans-serif;
+                    text-align: center;
+                    transition: color 0.1s linear, background-color 0.2s linear;/
+                }
+
+                .click-danger {
+                    background: #962D2D;
+                    border-radius: 5px;
+                    padding:       5px 10px;
+                    color: #ffffff;
+                    display: inline-block;
+                    font: normal bold 14px/1 "Open Sans", sans-serif;
                     text-align: center;
                     transition: color 0.1s linear, background-color 0.2s linear;/
                 }

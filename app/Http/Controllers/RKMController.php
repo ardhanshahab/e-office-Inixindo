@@ -371,6 +371,7 @@ class RKMController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
+        // dd($id);
         $post = RKM::findOrFail($id);
 
         // Storage::delete('public/npwp/'. $post->foto_npwp);

@@ -164,11 +164,21 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <p>List Materi</p>
-                                        <ul id="list-materi">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama Materi</th>
+                                                    <th>Tanggal Awal</th>
+                                                    <th>Tanggal Akhir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="list-materi">
 
-                                        </ul>
-
+                                            </tbody>
+                                        </table>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -297,26 +307,32 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-         $(document).ready(function () {
-    $(".list-materi-btn").click(function () {
-        var idPeserta = $(this).data("id");
-        $.ajax({
-            url: "/api/registrasi/list/" + idPeserta, // Ubah URL menjadi "/api/registrasi/list/{id_peserta}"
-            type: "GET",
-            success: function (data) {
-                $("#list-materi").empty();
-                $.each(data.list, function (index, materi) {
-                    console.log(materi);
-                    $("#list-materi").append("<li>" + materi + "</li>");
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-                // Handle error here
-            }
+        $(document).ready(function () {
+            $(".list-materi-btn").click(function () {
+                var idPeserta = $(this).data("id");
+                $.ajax({
+                url: "/api/registrasi/list/" + idPeserta,
+                type: "GET",
+                success: function (data) {
+                    $("#list-materi").empty();
+                    console.log(data.list);
+                    $.each(data.list, function (index, item) {
+                        var row = "<tr>" +
+                            "<td>" + (index + 1) + "</td>" +
+                            "<td>" + item.materi.nama_materi + "</td>" +
+                            "<td>" + item.rkm.tanggal_awal + "</td>" +
+                            "<td>" + item.rkm.tanggal_akhir + "</td>" +
+                            "</tr>";
+                        $("#list-materi").append(row);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    // Handle error here
+                }
+            });
+            });
         });
-    });
-});
 
     </script>
 @endsection
