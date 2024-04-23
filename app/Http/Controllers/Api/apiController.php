@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Nilaifeedback;
 use App\Models\Materi;
-
+use App\Models\Perusahaan;
 
 class apiController extends Controller
 {
@@ -58,7 +58,16 @@ class apiController extends Controller
             'message' => 'List Materi',
             'data' => $materi
         ]);
+    }
 
+    public function getPerusahaanall()
+    {
+        $perusahaan = Perusahaan::with('karyawan')->get();
 
+        return response()->json([
+            'success' => true,
+            'message' => 'List perusahaan',
+            'data' => $perusahaan
+        ]);
     }
 }

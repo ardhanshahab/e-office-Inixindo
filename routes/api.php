@@ -29,6 +29,7 @@ Route::get('registrasi/list/{id_peserta}', [App\Http\Controllers\Api\PesertaCont
 Route::get('getRKMByMonthNow', [App\Http\Controllers\Api\RKMController::class, 'getRKMByMonthNow'])->name('getRKMByMonthNow');
 Route::get('getFeedbacks', [App\Http\Controllers\Api\apiController::class, 'getFeedbacks'])->name('getFeedbacks');
 Route::get('getMateri', [App\Http\Controllers\Api\apiController::class, 'getMateri'])->name('getMateri');
+Route::get('getPerusahaanall', [App\Http\Controllers\Api\apiController::class, 'getPerusahaanall'])->name('getPerusahaanall');
 
 
 
