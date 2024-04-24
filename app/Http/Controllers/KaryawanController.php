@@ -26,6 +26,7 @@ class KaryawanController extends Controller
 
     public function updateData(Request $request, $id)
     {
+        // dd($request->all());
         $karyawan = Karyawan::findOrFail($id);
         $user = User::findOrFail($id);
 

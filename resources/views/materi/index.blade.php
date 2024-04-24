@@ -19,9 +19,9 @@
                                 <th scope="col">Nama Materi</th>
                                 <th scope="col">Kategori Materi</th>
                                 <th scope="col">Vendor</th>
-                                @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
+                                {{-- @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
                                     <th scope="col">Aksi</th>
-                                @endif
+                                {{-- @endif --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -56,14 +56,17 @@
                 {"data": "vendor"},
                 {
                     "data": null,
-                    "render": function (data, type, row) {
-                        // Tampilkan kolom aksi sesuai dengan role pengguna
+                    "render": function(data, type, row) {
                         var actions = "";
-                        @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
+                        var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD'];
+                        var userRole = '{{ auth()->user()->jabatan }}';
+
+                        if (allowedRoles.includes(userRole)) {
                             actions += '<div class="dropdown">';
                             actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
                             actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                            actions += '<a class="dropdown-item" href="{{ url('/materi') }}/' + row.id + '/edit"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                        actions += '<a class="dropdown-item" href="{{ url('/materi') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                            // actions += '<a class="dropdown-item" href="{{ url('/materi') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                             actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/materi') }}/' + row.id + '" method="POST">';
                             actions += '@csrf';
                             actions += '@method('DELETE')';
@@ -71,7 +74,12 @@
                             actions += '</form>';
                             actions += '</div>';
                             actions += '</div>';
-                        @endif
+                        } else {
+                            actions += '<div class="dropdown">';
+                            actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                            actions += '</div>';
+                        }
+
                         return actions;
                     }
                 }
