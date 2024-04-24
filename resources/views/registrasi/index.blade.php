@@ -14,11 +14,10 @@
             <div class="card m-4">
                 <div class="card-body table-responsive">
                     <h3 class="card-title text-center my-1">{{ __('Data Registrasi') }}</h3>
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="registrasitable">
                         <thead>
                           <tr>
                             <th scope="col">No</th>
-                            <th scope="col">ID Pelatihan</th>
                             <th scope="col">Materi Pelatihan</th>
                             <th scope="col">Tanggal Pelatihan</th>
                             <th scope="col">Nama Peserta</th>
@@ -34,7 +33,65 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $post as $registrasi )
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+</style>
+@push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#registrasitable').DataTable({
+            "processing": true,
+            "ajax": {
+                "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
+                "type": "GET",
+            },
+            "columns": [
+                {"data": "id"},
+                {"data": "materi.nama_materi"},
+                {
+                    "data": "rkm.tanggal_awal",
+                    "render": function(data) {
+                        return moment(data).format('DD MMMM YYYY');
+                    }
+                },
+                {"data": "peserta.nama"},
+                {"data": "peserta.email"},
+                {
+                    "data": null,
+                    "render": function(data) {
+                        return data.peserta.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
+                    }
+                },
+                {"data": "peserta.no_hp"},
+                {"data": "peserta.alamat"},
+                {"data": "peserta.perusahaan.nama_perusahaan"},
+                {
+                    "data": "peserta.tanggal_lahir",
+                    "render": function(data) {
+                        return moment(data).format('DD MMMM YYYY');
+                    }
+                },
+            ],
+
+        });
+    });
+</script>
+@endpush
+@endsection
+
+{{-- @foreach ( $post as $registrasi )
                           <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $registrasi->id }}</td>
@@ -55,7 +112,7 @@
                             @else
                             <td>{{ $registrasi->peserta->tanggal_lahir }}</td>
                             @endif
-                            {{-- <td>{{ $registrasi->tanggal_lahir }}</td> --}}
+                            <td>{{ $registrasi->tanggal_lahir }}</td>
                             @if ( auth()->user()->jabatan == 'HRD' )
                             <td>
                                 <div class="dropdown">
@@ -81,24 +138,4 @@
                             </td>
                             @endif
                           </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-                      <div class="d-flex">
-                        {{-- {{ $post->links() }} --}}
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<style>
-
-</style>
-@push('js')
-    <script>
-
-    </script>
-@endpush
-@endsection
-
+                          @endforeach --}}

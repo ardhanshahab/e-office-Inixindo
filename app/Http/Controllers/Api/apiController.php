@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Nilaifeedback;
 use App\Models\Materi;
 use App\Models\Perusahaan;
+use App\Models\Peserta;
+use App\Models\Registrasi;
 
 class apiController extends Controller
 {
@@ -68,6 +70,18 @@ class apiController extends Controller
             'success' => true,
             'message' => 'List perusahaan',
             'data' => $perusahaan
+        ]);
+    }
+
+    public function getRegistrasiall()
+    {
+        $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
+        // $peserta = Peserta::with('perusahaan')->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'List perusahaan',
+            'data' => $registrasi,
         ]);
     }
 }
