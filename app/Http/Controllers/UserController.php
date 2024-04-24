@@ -67,9 +67,6 @@ class UserController extends Controller
 
     }
 
-
-
-
     public function show($id)
     {
         $users = User::with('karyawan')->findOrFail($id);
@@ -78,7 +75,6 @@ class UserController extends Controller
         // return $json;
         return view('user.show', compact('users'));
     }
-
 
     public function editPassword($id)
     {

@@ -9,6 +9,7 @@ use App\Models\Materi;
 use App\Models\Perusahaan;
 use App\Models\Peserta;
 use App\Models\Registrasi;
+use App\Models\User;
 
 class apiController extends Controller
 {
@@ -82,6 +83,30 @@ class apiController extends Controller
             'success' => true,
             'message' => 'List perusahaan',
             'data' => $registrasi,
+        ]);
+    }
+
+    public function getPesertaall()
+    {
+        // $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
+        $peserta = Peserta::with('perusahaan')->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'List perusahaan',
+            'data' => $peserta,
+        ]);
+    }
+
+    public function getUserall()
+    {
+        // $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
+        $user = User::with('karyawan')->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'List perusahaan',
+            'data' => $user,
         ]);
     }
 }

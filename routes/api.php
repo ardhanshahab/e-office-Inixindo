@@ -31,6 +31,8 @@ Route::get('getFeedbacks', [App\Http\Controllers\Api\apiController::class, 'getF
 Route::get('getMateri', [App\Http\Controllers\Api\apiController::class, 'getMateri'])->name('getMateri');
 Route::get('getPerusahaanall', [App\Http\Controllers\Api\apiController::class, 'getPerusahaanall'])->name('getPerusahaanall');
 Route::get('getRegistrasiall', [App\Http\Controllers\Api\apiController::class, 'getRegistrasiall'])->name('getRegistrasiall');
+Route::get('getPesertaall', [App\Http\Controllers\Api\apiController::class, 'getPesertaall'])->name('getPesertaall');
+Route::get('getUserall', [App\Http\Controllers\Api\apiController::class, 'getUserall'])->name('getUserall');
 
 
 
