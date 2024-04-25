@@ -71,7 +71,7 @@
                         actions += '<a class="dropdown-item" href="{{ url('/profile') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                         actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/user') }}/' + row.id + '" method="POST">';
                         actions += '@csrf';
-                        actions += '@method('DELETE')';
+                        actions += '<input type="hidden" name="_method" value="DELETE">';
                         actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
                         actions += '</form>';
                         actions += '</div>';

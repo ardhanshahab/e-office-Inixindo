@@ -3,15 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+        {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="card">
                 <h5 class="card-title text-center mb-4">{{ __('Registrasi Karyawan Baru') }}</h5>
-                    <form method="POST" action="{{ route('user.register') }}">
+                    <form method="POST" action="{{ route('user.registkaryawan') }}">
                         @csrf
                         <div class="row mb-3">
-                            <label for="nama_lengkap" class="col-md-4 col-form-label text-md-start">{{ __('Nama') }}</label>
+                            <label for="nama_lengkap" class="col-md-4 col-form-label text-md-start">{{ __('Nama Lengkap') }}</label>
                             <div class="col-md-6">
                                 <input id="nama_lengkap" type="text" placeholder="Masukan Nama Lengkap Anda" class="form-control @error('nama_lengkap') is-invalid @enderror" name="nama_lengkap" value="{{ old('nama_lengkap') }}" required autocomplete="nama_lengkap" autofocus>
                                 @error('nama_lengkap')
@@ -23,10 +23,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="jabatan" class="col-md-4 col-form-label text-md-start">{{ __('jabatan') }}</label>
+                            <label for="jabatan" class="col-md-4 col-form-label text-md-start">{{ __('Jabatan') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" aria-label="Default select example">
-                                    <option selected>Pilih jabatan</option>
+                                <select id="jabatan" class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" aria-label="Default select example">
+                                    <option selected>Pilih Jabatan</option>
                                     <option value="Direktur Utama">Direktur Utama</option>
                                     <option value="Direktur">Direktur</option>
                                     <option value="Education Manager">Education Manager</option>
@@ -44,9 +44,7 @@
                                     <option value="Customer Care">Customer Care</option>
                                     <option value="Programmer">Programmer</option>
                                     <option value="Office Boy">Office Boy</option>
-
-                                    {{-- <option value="3">Three</option> --}}
-                                  </select>
+                                </select>
                                 @error('jabatan')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -54,6 +52,21 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div id="kode_karyawan_row" style="display: none">
+                            <div class="row mb-3" id="">
+                                <label for="kode_karyawan" class="col-md-4 col-form-label text-md-start">{{ __('Kode Karyawan') }}</label>
+                                <div class="col-md-6">
+                                    <input id="kode_karyawan" type="text" placeholder="Masukan Kode Karyawan" class="form-control @error('kode_karyawan') is-invalid @enderror" name="kode_karyawan" value="{{ old('kode_karyawan') }}" required autocomplete="kode_karyawan">
+                                    @error('kode_karyawan')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="row mb-3">
                             <label for="username" class="col-md-4 col-form-label text-md-start">{{ __('Username') }}</label>
@@ -87,7 +100,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="status_akun" class="col-md-4 col-form-label text-md-start">{{ __('Status_akun Akun') }}</label>
+                            <label for="status_akun" class="col-md-4 col-form-label text-md-start">{{ __('Status Akun') }}</label>
                             <div class="col-md-6">
                                 <select class="form-select @error('status_akun') is-invalid @enderror" name="status_akun" aria-label="Default select example">
                                     <option selected>Pilih Status Akun</option>
@@ -103,8 +116,6 @@
                             </div>
                         </div>
                         <input id="karyawan_id" type="text" hidden   class="form-control @error('karyawan_id') is-invalid @enderror" name="karyawan_id"  value="{{ $countuser }}" required autocomplete="karyawan_id">
-
-
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn click-primary">
@@ -118,7 +129,16 @@
         </div>
     </div>
 </div>
-<style>
+<script>
+    document.getElementById('jabatan').addEventListener('change', function() {
+        var selectedJabatan = this.value;
+        var kodeKaryawanRow = document.getElementById('kode_karyawan_row');
 
-</style>
+        if (selectedJabatan === 'Instruktur' || selectedJabatan === 'Sales' || selectedJabatan === 'Admin Sales' || selectedJabatan === 'SPV Sales' || selectedJabatan === 'Education Manager') {
+            kodeKaryawanRow.style.display = 'block';
+        } else {
+            kodeKaryawanRow.style.display = 'none';
+        }
+    });
+</script>
 @endsection

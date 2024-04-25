@@ -163,7 +163,7 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-body">
-                                        <p>List Materi</p>
+                                        <h5 class="card-title">List Materi</h5>
                                         <table class="table">
                                             <thead>
                                                 <tr>

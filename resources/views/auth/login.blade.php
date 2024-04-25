@@ -1,12 +1,12 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="container">
-        <div class="row align-self-center justify-content-center" style="margin-top: 50px">
+    <div class="container mt-4">
+        <div class="row align-self-center justify-content-center" style="margin-top: 100px">
             <div class="col-md-6">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="d-flex mt-4">
+                        <div class="d-flex justify-content-center mt-4">
                             <img src="https://inixindobdg.co.id/images/logoinix.png" class="mx-2" style="width:50px;">
                             <h1 class="text-center mx-2">INIXINDO BANDUNG</h1>
                         </div>
@@ -74,7 +74,7 @@
                                 </div>
                             </div> --}}
 
-                            <div class="row mb-0 align-items-center">
+                            <div class="row mb-3 align-items-center">
                                 <div class="col-md-10 offset-md-4">
                                     <button type="submit" class="btn click-primary" style="max-width: 320px">
                                         {{ __('Login') }}

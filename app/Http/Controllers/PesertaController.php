@@ -14,7 +14,7 @@ class PesertaController extends Controller
     public function index()
     {
         // $post = Peserta::with('perusahaan')->all();
-        $post = Peserta::with('perusahaan')->paginate(25);
+        $post = Peserta::with('perusahaan')->get();
 
         // return $post;
         return view('peserta.index', compact('post'));

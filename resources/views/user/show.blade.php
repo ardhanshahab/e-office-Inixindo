@@ -56,6 +56,10 @@
                                     <div class="col-md-5 col-sm-5 col-xs-5"><p>Divisi</p></div>
                                     <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->karyawan->divisi }}</p></div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5 col-xs-5"><p>Kode Karyawan</p></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->karyawan->kode_karyawan }}</p></div>
+                                </div>
                             </div>
                         </div>
                     </div>

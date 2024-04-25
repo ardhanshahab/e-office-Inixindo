@@ -44,6 +44,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-4 col-sm-4 col-xs-4"><p>Kode Karyawan</p></div>
+                            <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
+                            <div class="col-md-7 col-sm-7 col-xs-7">
+                                <input id="kode_karyawan" type="text" placeholder="Masukan Kode Karyawan Anda" class="form-control @error('kode_karyawan') is-invalid @enderror" name="kode_karyawan" value="{{ old('kode_karyawan', $users->kode_karyawan ) }}" required autocomplete="kode_karyawan">
+                                @error('kode_karyawan')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4 col-sm-4 col-xs-4"><p>Jabatan</p></div>
                             <div class="col-md-1 col-sm-1 col-xs-1"><p>:</p></div>
                             <div class="col-md-7 col-sm-7 col-xs-7">

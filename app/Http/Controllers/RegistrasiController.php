@@ -9,14 +9,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\RKM;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrasiController extends Controller
 {
     public function index()
     {
+        $instrukturKey = Auth::user();
 
-        $post = Registrasi::with('rkm', 'peserta')->get();
+        dd($instrukturKey);
+        $post = Registrasi::select('id', 'rkm_key')
+        ->with('rkm', 'peserta')
+        ->get();
 
+
+
+        $registrasiInstrukturSama = Registrasi::whereIn('rkm_key', $instrukturKey)
+        ->with('rkm', 'peserta')
+        ->get();
         // return $post;
         return view('registrasi.index', compact('post'));
     }

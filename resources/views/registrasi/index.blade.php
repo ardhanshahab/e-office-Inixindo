@@ -20,6 +20,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Materi Pelatihan</th>
                             <th scope="col">Tanggal Pelatihan</th>
+                            <th scope="col">Instruktur</th>
                             <th scope="col">Nama Peserta</th>
                             <th scope="col">Email</th>
                             <th scope="col">Jenis Kelamin</th>
@@ -27,9 +28,9 @@
                             <th scope="col">Alamat</th>
                             <th scope="col">Perusahaan/Instansi</th>
                             <th scope="col">Tanggal Lahir</th>
-                            @if ( auth()->user()->jabatan == 'HRD' )
-                            <th scope="col">Aksi</th>
-                            @endif
+                            {{-- @if ( auth()->user()->jabatan == 'HRD' ) --}}
+                            {{-- <th scope="col">Aksi</th> --}}
+                            {{-- @endif --}}
                           </tr>
                         </thead>
                         <tbody>
@@ -66,6 +67,7 @@
                         return moment(data).format('DD MMMM YYYY');
                     }
                 },
+                {"data": "rkm.instruktur_key"},
                 {"data": "peserta.nama"},
                 {"data": "peserta.email"},
                 {

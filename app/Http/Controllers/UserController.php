@@ -36,8 +36,9 @@ class UserController extends Controller
             'status_akun' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'karyawan_id' => ['required', 'string'],
+            'kode_karyawan' => ['nullable', 'string'],
         ]);
-        // dd($data);
+        dd($data);
 
 
         try {
@@ -111,6 +112,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $users = User::findOrFail($id);
+        // dd($users);
         $users->delete();
         return redirect('/user')->with('success', 'User Berhasil Dihapus');
     }
