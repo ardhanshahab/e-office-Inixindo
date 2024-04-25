@@ -78,36 +78,37 @@
             var count = 1;
             var jabatan = localStorage.getItem('jabatan');
 
-            response.data.forEach(function (monthData) {
-                monthData.weeksData.forEach(function (weekData) {
+            response.data.forEach(function(monthData) {
+                monthData.weeksData.forEach(function(weekData) {
                     console.log(weekData);
                     html += '<div class="card">';
                     html += '<div class="card-body">';
                     html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
                     html += '<p class="card-title my-1">Periode : ' + weekData.start + ' - ' + weekData.end + '</p>';
+                    html += '<table class="table table-responsive table-striped">';
+                    html += '<thead>';
+                    html += '<tr>';
+                    html += '<th scope="col">No</th>';
+                    html += '<th scope="col">Materi</th>';
+                    html += '<th scope="col">Perusahaan</th>';
+                    html += '<th scope="col">Kode Sales</th>';
+                    html += '<th scope="col">Instruktur</th>';
+                    html += '<th scope="col">Metode Kelas</th>';
+                    html += '<th scope="col">Event</th>';
+                    html += '<th scope="col">Ruang</th>';
+                    html += '<th scope="col">Pax</th>';
+                    if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Office Manager') {
+                        html += '<th scope="col">Aksi</th>';
+                    }
+                    html += '</tr>';
+                    html += '</thead>';
+                    html += '<tbody>';
                     if (weekData.data.length === 0) {
-                        // console.log('tidak ada data');
-                        html += '<p class="card-title text-center my-1">Tidak Ada Kelas Mingguan</p>';
-                    } else {
-                    weekData.data.forEach(function (rkm) {
-                        html += '<table class="table table-responsive table-striped">';
-                        html += '<thead>';
                         html += '<tr>';
-                        html += '<th scope="col">No</th>';
-                        html += '<th scope="col">Materi</th>';
-                        html += '<th scope="col">Perusahaan</th>';
-                        html += '<th scope="col">Kode Sales</th>';
-                        html += '<th scope="col">Instruktur</th>';
-                        html += '<th scope="col">Metode Kelas</th>';
-                        html += '<th scope="col">Event</th>';
-                        html += '<th scope="col">Ruang</th>';
-                        html += '<th scope="col">Pax</th>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Office Manager') {
-                            html += '<th scope="col">Aksi</th>';
-                        }
+                        html += '<td colspan="10" class="text-center">Tidak Ada Kelas Mingguan</td>';
                         html += '</tr>';
-                        html += '</thead>';
-                        html += '<tbody>';
+                    } else {
+                        weekData.data.forEach(function(rkm, index) {
                             if (rkm.status_all == '0') {
                                 html += '<tr style="background-color: rgba(255, 0, 0, 0.5);">';
                             } else if (rkm.status_all == '1') {
@@ -115,55 +116,53 @@
                             } else {
                                 html += '<tr style="background-color: rgba(0, 0, 0, 0.5);">';
                             }
-                        html += '<td>' + count++ + '</td>';
-                        html += '<td>' + rkm.materi.nama_materi + '</td>';
-                        html += '<td>';
-                        rkm.perusahaan.forEach(function (perusahaan) {
-                            html += perusahaan.nama_perusahaan + ', ';
-                        });
-                        html += '</td>';
-                        html += '<td>';
-                        rkm.sales.forEach(function (sales) {
-                            html += sales.kode_karyawan + ', ';
-                        });
-                        html += '</td>';
-                        html += '<td>';
+                            html += '<td>' + (index + 1) + '</td>';
+                            html += '<td>' + rkm.materi.nama_materi + '</td>';
+                            html += '<td>';
+                            rkm.perusahaan.forEach(function(perusahaan) {
+                                html += perusahaan.nama_perusahaan + ', ';
+                            });
+                            html += '</td>';
+                            html += '<td>';
+                            rkm.sales.forEach(function(sales) {
+                                html += sales.kode_karyawan + ', ';
+                            });
+                            html += '</td>';
+                            html += '<td>';
                             if (rkm.instruktur_all && rkm.instruktur_all.trim() !== '') {
                                 var instruktur_array = rkm.instruktur_all.split(', ');
-                                // Misalnya, jika Anda ingin menampilkan instruktur pertama
                                 html += instruktur_array[0];
-                                // Jika ingin menampilkan instruktur kedua
-                                // html += instruktur_array[1];
                             } else {
                                 html += 'Belum Ditentukan';
                             }
-                        html += '</td>';
-                        html += '<td>' + rkm.metode_kelas + '</td>';
-                        html += '<td>' + rkm.event + '</td>';
-                        html += '<td>' + rkm.ruang + '</td>';
-                        html += '<td>' + rkm.total_pax + '</td>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Office Manager' ){
-                        html += '<td>';
-                        html += '<div class="btn-group dropup">';
-                        html += '<button type="button" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        html += 'Actions';
-                        html += '</button>';
-                        html += '<div class="dropdown-menu">';
-                        html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
-                        // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</td>';
-                        }
-                        html += '</tr>';
-                        html += '</tbody>';
-                        html += '</table>';
-                    });
-                }
+                            html += '</td>';
+                            html += '<td>' + rkm.metode_kelas + '</td>';
+                            html += '<td>' + rkm.event + '</td>';
+                            html += '<td>' + rkm.ruang + '</td>';
+                            html += '<td>' + rkm.total_pax + '</td>';
+                            if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Office Manager') {
+                                html += '<td>';
+                                html += '<div class="btn-group dropup">';
+                                html += '<button type="button" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                                html += 'Actions';
+                                html += '</button>';
+                                html += '<div class="dropdown-menu">';
+                                html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
+                                // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
+                                html += '</div>';
+                                html += '</div>';
+                                html += '</td>';
+                            }
+                            html += '</tr>';
+                        });
+                    }
+                    html += '</tbody>';
+                    html += '</table>';
                     html += '</div>';
                     html += '</div>';
                 });
             });
+
 
             $('#content').html(html);
             // $('#periode').html(periode);

@@ -132,7 +132,7 @@ class RKMController extends Controller
         $instruktur = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
         $materi = Materi::get();
         $perusahaan = Perusahaan::get();
-        return view('rkm.create', compact('sales', 'materi', 'perusahaan', 'instruktur'));
+        return view('rkm.tambahrkm', compact('sales', 'materi', 'perusahaan', 'instruktur'));
     }
 
     /**

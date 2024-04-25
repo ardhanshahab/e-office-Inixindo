@@ -250,23 +250,6 @@
                     </li>
                 </ul>
 
-
-                <!-- Tombol Logout -->
-                {{-- <ul class="navbar-nav navbar-right">
-                    <li class="nav-item dropdown">
-                        <button class="btn nav-link dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('icon/moon.svg') }}" class="img-responsive" width="30px">
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeDropdown">
-                            <li>
-                                <button class="btn" onclick="setTheme('dark')">Dark Theme</button>
-                            </li>
-                            <li>
-                                <button class="btn" onclick="setTheme('light')">Light Theme</button>
-                            </li>
-                        </ul>
-                    </li>
-                </ul> --}}
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item mx-1">
                         <a class="nav-link" href="{{ route('logout') }} "data-bs-toggle="tooltip" data-bs-placement="top" title="Logout"
@@ -280,7 +263,6 @@
                 </ul>
             </div>
         </nav>
-
 
         <main class="py-2" style="height: 100vh" id="bgsvg">
             @yield('content')

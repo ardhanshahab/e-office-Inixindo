@@ -19,9 +19,9 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama Perusahaan</th>
                             <th scope="col">Sales</th>
-                            @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
+                            {{-- @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
                             <th scope="col">Aksi</th>
-                            @endif
+                            {{-- @endif --}}
                           </tr>
                         </thead>
                         <tbody>
@@ -60,26 +60,33 @@
                 },
 
                 {
-                    "data": null,
-                    "render": function (data, type, row) {
-                        var actions = "";
-                        @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales')
-                            actions += '<div class="dropdown">';
-                            actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
-                            actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                            actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '/edit"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
-                            actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail perusahaan"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
-                            actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
-                            actions += '@csrf';
-                            actions += '@method('DELETE')';
-                            actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
-                            actions += '</form>';
-                            actions += '</div>';
-                            actions += '</div>';
-                        @endif
-                        return actions;
+                "data": null,
+                "render": function(data, type, row) {
+                    var actions = "";
+                    var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD'];
+                    var userRole = '{{ auth()->user()->jabatan }}';
+
+                    if (allowedRoles.includes(userRole)) {
+                        actions += '<div class="dropdown">';
+                        actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                        actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                        actions += '<a class="dropdown-item" href="{{ url('/profile') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                        actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/user') }}/' + row.id + '" method="POST">';
+                        actions += '@csrf';
+                        actions += '@method('DELETE')';
+                        actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
+                        actions += '</form>';
+                        actions += '</div>';
+                        actions += '</div>';
+                    } else {
+                        actions += '<div class="dropdown">';
+                        actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                        actions += '</div>';
                     }
+
+                    return actions;
                 }
+            }
             ]
         });
     });
