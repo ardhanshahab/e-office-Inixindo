@@ -12,6 +12,7 @@ class Registrasi extends Model
         'id_rkm',
         'id_peserta',
         'id_materi',
+        'id_instruktur',
     ];
     public function rkm()
     {
@@ -26,5 +27,10 @@ class Registrasi extends Model
     public function materi()
     {
         return $this->belongsTo(Materi::class, 'id_materi', 'id');
+    }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(karyawan::class, 'id_instruktur', 'kode_karyawan');
     }
 }

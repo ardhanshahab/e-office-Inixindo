@@ -3,9 +3,27 @@
 @section('content')
 <div class="container-fluid" style="background: ">
     <h5 style="text-transform: capitalize; color:#000;">Selamat Datang, {{ auth()->user()->username }}</h5>
-@if (auth()->user()->jabatan == 'HRD')
     <div class="row justify-content-between">
         <div class="container d-flex justify-content-around my-4">
+        @if (auth()->user()->jabatan == 'Instruktur' || auth()->user()->jabatan == 'Education Manager')
+            <div class="mx-1" id="hero1">
+                <h5 class="card-title text-center">Kelas anda minggu ini</h5>
+                <h4 class="text-center">{{ $kelasmingguini }}</h4>
+            </div>
+            <div class="mx-1" id="hero1">
+                <h5 class="card-title text-center">Running Class</h5>
+                <h4 class="text-center">{{ $runningclass }}</h4>
+            </div>
+            <div class="mx-1" id="hero1">
+                <h5 class="card-title text-center">Jumlah Mengajar</h5>
+                <h4 class="text-center">{{ $jumlahmengajar }}</h4>
+            </div>
+            <div class="mx-1" id="hero1">
+                <h5 class="card-title text-center">Jumlah Peserta anda</h5>
+                <h4 class="text-center">{{ $pesertaanda }}</h4>
+            </div>
+        @endif
+        @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting')
             <div class="mx-1" id="hero1">
                 <h5 class="card-title text-center">Total Karyawan</h5>
                 <h4 class="text-center">{{ $totalkaryawan }}</h4>
@@ -16,33 +34,11 @@
             </div>
             <div class="mx-1" id="hero1">
                 <h5 class="card-title text-center">Peserta Aktif</h5>
-                <h4 class="text-center">100</h4>
+                <h4 class="text-center">{{ $pesertaaktif }}</h4>
             </div>
+        @endif
         </div>
     </div>
-@endif
-@if (auth()->user()->jabatan == 'Instruktur')
-    <div class="row justify-content-between">
-        <div class="container d-flex justify-content-around my-4">
-            <div class="mx-1" id="hero1">
-                <h5 class="card-title text-center">Kelas anda minggu ini</h5>
-                <h4 class="text-center">{{ $totalkaryawan }}</h4>
-            </div>
-            <div class="mx-1" id="hero1">
-                <h5 class="card-title text-center">Running Class</h5>
-                <h4 class="text-center">{{ $karyawanaktif }}</h4>
-            </div>
-            <div class="mx-1" id="hero1">
-                <h5 class="card-title text-center">Jumlah Mengajar</h5>
-                <h4 class="text-center">100</h4>
-            </div>
-            <div class="mx-1" id="hero1">
-                <h5 class="card-title text-center">Jumlah Peserta anda</h5>
-                <h4 class="text-center">{{ $totalkaryawan }}</h4>
-            </div>
-        </div>
-    </div>
-@endif
 
     <div class="row justify-content-between">
         <div class="col-md-6">

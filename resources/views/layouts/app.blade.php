@@ -274,7 +274,7 @@
         $(document).ready(function() {
 
             localStorage.setItem('jabatan', '{{ auth()->user()->jabatan }}');
-            // localStorage.setItem('divisi', '{{ auth()->user()->divisi }}');
+            localStorage.setItem('id_instruktur', '{{ auth()->user()->kode_karyawan }}');
             var jabatan = localStorage.getItem('jabatan');
             // var divisi = localStorage.getItem('divisi');
             // console.log(jabatan);

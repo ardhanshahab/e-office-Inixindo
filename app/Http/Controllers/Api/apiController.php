@@ -77,11 +77,10 @@ class apiController extends Controller
     public function getRegistrasiall()
     {
         $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
-        // $peserta = Peserta::with('perusahaan')->get();
 
         return response()->json([
             'success' => true,
-            'message' => 'List perusahaan',
+            'message' => 'List Registrasi',
             'data' => $registrasi,
         ]);
     }

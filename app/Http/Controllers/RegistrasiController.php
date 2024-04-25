@@ -15,20 +15,8 @@ class RegistrasiController extends Controller
 {
     public function index()
     {
-        $instrukturKey = Auth::user();
 
-        dd($instrukturKey);
-        $post = Registrasi::select('id', 'rkm_key')
-        ->with('rkm', 'peserta')
-        ->get();
-
-
-
-        $registrasiInstrukturSama = Registrasi::whereIn('rkm_key', $instrukturKey)
-        ->with('rkm', 'peserta')
-        ->get();
-        // return $post;
-        return view('registrasi.index', compact('post'));
+        return view('registrasi.index');
     }
 
     /**
