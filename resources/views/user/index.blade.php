@@ -85,8 +85,14 @@
                     return actions;
                 }
             }
-
             ],
+            "createdRow": function(row, data, dataIndex) {
+        $("td", row).each(function() {
+            if ($(this).html() === "" || $(this).html() === null || $(this).html() === "null") {
+                $(this).html("-");
+            }
+        });
+    }
         });
     });
 </script>

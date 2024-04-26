@@ -185,21 +185,27 @@ class RKMController extends Controller
      */
     public function show(string $id)
     {
-        // dd($id);
+        $array = explode('ixb', $id);
+        $materi_key = $array[0];
+        $bulan = $array[1];
+
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
-            ->where('materi_key', $id)
-            ->where('tanggal_awal', '=', function ($query) use ($id) {
+            ->where('materi_key', $materi_key)
+            ->whereIn('tanggal_awal', function ($query) use ($materi_key, $bulan) {
                 $query->select('tanggal_awal')
                     ->from('r_k_m_s')
-                    ->where('materi_key', $id)
+                    ->where('materi_key', $materi_key)
+                    ->whereMonth('tanggal_awal', $bulan) // Memastikan bulan sama dengan bulan saat ini
                     ->groupBy('tanggal_awal')
                     ->havingRaw('COUNT(tanggal_awal) >= 1');
-            })
+                })
             ->get();
 
+        // dd($rkm);
+
             // return $rkm;
-            $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'comments'])->where('materi_key', $id)->get();
-            $id = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $id)->firstOrFail();
+            $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'comments'])->where('materi_key', $materi_key)->get();
+            $ids = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $materi_key)->firstOrFail();
 
             $comments = collect();
             foreach ($datas as $data) {
@@ -207,7 +213,7 @@ class RKMController extends Controller
             }
 
 
-        return view('rkm.show', compact('rkm', 'id', 'comments'));
+        return view('rkm.show', compact('rkm', 'ids', 'comments'));
     }
 
     public function edit(string $id)

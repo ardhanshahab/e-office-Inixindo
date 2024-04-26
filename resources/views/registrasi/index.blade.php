@@ -3,6 +3,19 @@
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
+                  <!-- Modal Spinner -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="spinnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="loader"></div>
+                    <div clas="loader-txt">
+                        <p>Mohon Tunggu..</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
         {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
@@ -17,10 +30,10 @@
                     <table class="table table-striped" id="registrasitable">
                         <thead>
                           <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Materi Pelatihan</th>
                             <th scope="col">Tanggal Pelatihan</th>
                             <th scope="col">Instruktur</th>
+                            {{-- <th scope="col">No</th> --}}
                             <th scope="col">Nama Peserta</th>
                             <th scope="col">Email</th>
                             <th scope="col">Jenis Kelamin</th>
@@ -28,9 +41,6 @@
                             <th scope="col">Alamat</th>
                             <th scope="col">Perusahaan/Instansi</th>
                             <th scope="col">Tanggal Lahir</th>
-                            {{-- @if ( auth()->user()->jabatan == 'HRD' ) --}}
-                            {{-- <th scope="col">Aksi</th> --}}
-                            {{-- @endif --}}
                           </tr>
                         </thead>
                         <tbody>
@@ -42,12 +52,57 @@
     </div>
 </div>
 <style>
+    .loader {
+    position: relative;
+    text-align: center;
+    margin: 15px auto 35px auto;
+    z-index: 9999;
+    display: block;
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgba(0, 0, 0, .3);
+    border-radius: 50%;
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    }
 
+    @keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+    }
+
+    @-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+    }
+    .modal-content {
+    border-radius: 0px;
+    box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-backdrop.show {
+    opacity: 0.75;
+    }
+
+    .loader-txt {
+    p {
+        font-size: 13px;
+        color: #666;
+        small {
+        font-size: 11.5px;
+        color: #999;
+        }
+    }
+    }
 </style>
 @push('js')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.jsdelivr.net/gh/ashl1/datatables-rowsgroup@fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
 <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
 <script>
@@ -55,13 +110,18 @@
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
 
         $('#registrasitable').DataTable({
-            "processing": true,
+            'rowsGroup': [0,1,2],
             "ajax": {
                 "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                 "type": "GET",
+                "beforeSend": function () {
+                    $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
+                },
+                "complete": function () {
+                    $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                }
             },
             "columns": [
-                {"data": "id"},
                 {"data": "materi.nama_materi"},
                 {
                     "data": "rkm.tanggal_awal",
@@ -70,6 +130,12 @@
                     }
                 },
                 {"data": "id_instruktur"},
+                // {
+                //     "data": null,
+                //     "render": function (data, type, row, meta) {
+                //         return meta.row + 1; // Nomor urut dimulai dari 1, bukan dari 0
+                //     }
+                // },
                 {"data": "peserta.nama"},
                 {"data": "peserta.email"},
                 {
@@ -89,8 +155,8 @@
                 },
             ],
             "initComplete": function() {
-            this.api().columns(3).search(idInstruktur).draw();
-        }
+                this.api().columns(2).search(idInstruktur).draw();
+            }
         });
     });
 </script>

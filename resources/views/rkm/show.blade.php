@@ -12,7 +12,7 @@
                             <div class="col-md-5">
                                 @if (auth()->user()->jabatan == 'Education Manager')
                                     <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1"
-                                            href="{{ route('editInstruktur', $id->materi_key) }}">Tambah/Edit Instruktur RKM
+                                            href="{{ route('editInstruktur', $ids->materi_key) }}">Tambah/Edit Instruktur RKM
                                         </a></div>
                                 @endif
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -210,10 +210,10 @@
                             <div class="col-md-7">
                                 @php
                                     $startsAt = \Carbon\Carbon::parse(
-                                        request('starts_at', $id->tanggal_awal),
+                                        request('starts_at', $ids->tanggal_awal),
                                     )->startOfDay();
                                     $endsAt = \Carbon\Carbon::parse(
-                                        request('ends_at', $id->tanggal_akhir),
+                                        request('ends_at', $ids->tanggal_akhir),
                                     )->startOfDay();
                                     $hariAwal = $startsAt->isoFormat('dddd');
                                     $hariAkhir = $endsAt->isoFormat('dddd');

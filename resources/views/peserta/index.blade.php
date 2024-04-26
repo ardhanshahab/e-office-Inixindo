@@ -2,6 +2,19 @@
 
 @section('content')
 <div class="container-fluid">
+       <!-- Modal Spinner -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="spinnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="loader"></div>
+                    <div clas="loader-txt">
+                        <p>Mohon Tunggu..</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
@@ -59,7 +72,51 @@
     </div>
 </div>
 <style>
+    .loader {
+    position: relative;
+    text-align: center;
+    margin: 15px auto 35px auto;
+    z-index: 9999;
+    display: block;
+    width: 80px;
+    height: 80px;
+    border: 10px solid rgba(0, 0, 0, .3);
+    border-radius: 50%;
+    border-top-color: #000;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    }
 
+    @keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+    }
+
+    @-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+    }
+    .modal-content {
+    border-radius: 0px;
+    box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-backdrop.show {
+    opacity: 0.75;
+    }
+
+    .loader-txt {
+    p {
+        font-size: 13px;
+        color: #666;
+        small {
+        font-size: 11.5px;
+        color: #999;
+        }
+    }
+    }
 </style>
 @push('js')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -78,10 +135,15 @@
            $('#pesertaall').show();
         }
         $('#pesertaalltable').DataTable({
-                "processing": true,
                 "ajax": {
                     "url": "{{ route('getPesertaall') }}", // URL API untuk mengambil data
                     "type": "GET",
+                    "beforeSend": function () {
+                        $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
+                    },
+                    "complete": function () {
+                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    }
                 },
                 "columns": [
                     {"data": "id"},
@@ -106,10 +168,15 @@
                 ],
             });
         $('#pesertatable').DataTable({
-                "processing": true,
                 "ajax": {
                     "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                     "type": "GET",
+                    "beforeSend": function () {
+                        $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
+                    },
+                    "complete": function () {
+                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    }
                 },
                 "columns": [
                     {"data": "id"},
