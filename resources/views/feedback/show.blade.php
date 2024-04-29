@@ -9,14 +9,127 @@
                 <div class="card-body">
                     <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                     {{-- <a href="#" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
-                    <h5 class="card-title">Detail Materi</h5>
+                    <h5 class="card-title">Detail Feedbacks</h5>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-lg-5 col-md-12 col-sm 12">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Nama Materi</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->materi->nama_materi }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Tanggal Pelaksanaan</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->tanggal_awal }} s/d {{ $feedbacks[0]->rkm->tanggal_akhir }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Instruktur</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->instruktur_key}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Instruktur 2</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->instruktur_key2}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Asisten</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->asisten_key}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Perusahaan</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->perusahaan->nama_perusahaan}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                    <p>Sales</p>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                    <p>:</p>
+                                </div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                    <p>{{ $feedbacks[0]->rkm->sales_key}}</p>
+                                </div>
+                            </div>
 
+                            {{-- <p><b>Email : </b>{{ $feedback->email }}</p> --}}
+                            {{-- {{ $feedbacks }} --}}
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-lg-7 col-md-12 col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    {{-- <div class=""> --}}
+                                        <table class="table table-striped table-auto table-responsive">
+                                            <thead>
+                                                <th>Peserta</th>
+                                                <th>Materi</th>
+                                                <th>Pelayanan</th>
+                                                <th>Fasilitas</th>
+                                                <th>Instruktur</th>
+                                                <th>Instruktur2</th>
+                                                <th>Asisten</th>
+                                                <th>Umum 1</th>
+                                                <th>Umum 2</th>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($post as $posts)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $posts['materi'] }}</td>
+                                                    <td>{{ $posts['pelayanan'] }}</td>
+                                                    <td>{{ $posts['fasilitas'] }}</td>
+                                                    <td>{{ $posts['instruktur'] }}</td>
+                                                    <td>{{ $posts['instruktur2'] }}</td>
+                                                    <td>{{ $posts['asisten'] }}</td>
+                                                    <td>{{ $posts['umum1'] }}</td>
+                                                    <td>{{ $posts['umum2'] }}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    {{-- </div> --}}
+                                </div>
+                            </div>
+                        </div>
 
-                        </div>
                     </div>
                 </div>
             </div>
@@ -43,6 +156,11 @@
             width: 100%;
             text-align: left;
         }
+    }
+
+    .table-auto {
+        table-layout: auto;
+        /* width: auto; */
     }
 
         .cardname {

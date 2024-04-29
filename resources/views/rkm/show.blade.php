@@ -344,7 +344,7 @@
                                                                     $kode_karyawan == $rkms->instruktur_key2 ||
                                                                     $kode_karyawan == $rkms->asisten_key ||
                                                                     auth()->user()->jabatan == 'SPV Sales' ||
-                                                                    auth()->user()->jabatan == 'Office Manager' ||
+                                                                    auth()->user()->jabatan == 'Accounting' ||
                                                                     auth()->user()->jabatan == 'Education Manager'))
                                                             @php $formGenerated = true; @endphp
                                                             <div class="row">

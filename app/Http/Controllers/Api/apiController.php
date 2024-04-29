@@ -23,6 +23,9 @@ class apiController extends Controller
 
         foreach ($groupedFeedbacks as $id_rkm => $feedbackGroup) {
             $nama_materi = $feedbackGroup->first()->rkm->materi->nama_materi;
+            $instruktur_key = $feedbackGroup->first()->rkm->instruktur_key;
+            $tanggal_awal = $feedbackGroup->first()->rkm->tanggal_awal;
+            $tanggal_akhir = $feedbackGroup->first()->rkm->tanggal_akhir;
             $totalFeedbacks = $feedbackGroup->count();
             $totalM1 = $feedbackGroup->sum('M1');
             $totalM2 = $feedbackGroup->sum('M2');
@@ -69,6 +72,9 @@ class apiController extends Controller
             $averageFeedbacks[] = [
                 'nama_materi' => $nama_materi,
                 'id_rkm' => $id_rkm,
+                'instruktur_key' => $instruktur_key,
+                'tanggal_awal' => $tanggal_awal,
+                'tanggal_akhir' => $tanggal_akhir,
                 'averageM1' => $totalM1 / $totalFeedbacks,
                 'averageM2' => $totalM2 / $totalFeedbacks,
                 'averageM3' => $totalM3 / $totalFeedbacks,
@@ -109,19 +115,19 @@ class apiController extends Controller
                 'averageI6as' => $totalI6as / $totalFeedbacks,
                 'averageI7as' => $totalI7as / $totalFeedbacks,
                 'averageI8as' => $totalI8as / $totalFeedbacks,
-                'averageM' => ($totalM1 + $totalM2 + $totalM3 + $totalM4) / ($totalFeedbacks * 4),
-                'averageP' => ($totalP1 + $totalP2 + $totalP3 + $totalP4 + $totalP5 + $totalP6 + $totalP7) / ($totalFeedbacks * 7),
-                'averageF' => ($totalF1 + $totalF2 + $totalF3 + $totalF4 + $totalF5) / ($totalFeedbacks * 5),
-                'averageI' => ($totalI1 + $totalI2 + $totalI3 + $totalI4 + $totalI5 + $totalI6 + $totalI7 + $totalI8) / ($totalFeedbacks * 8),
-                'averageIb' => ($totalI1b + $totalI2b + $totalI3b + $totalI4b + $totalI5b + $totalI6b + $totalI7b + $totalI8b) / ($totalFeedbacks * 8),
-                'averageIas' => ($totalI1as + $totalI2as + $totalI3as + $totalI4as + $totalI5as + $totalI6as + $totalI7as + $totalI8as) / ($totalFeedbacks * 8),
+                'averageM' => round(($totalM1 + $totalM2 + $totalM3 + $totalM4) / ($totalFeedbacks * 4), 1),
+                'averageP' => round(($totalP1 + $totalP2 + $totalP3 + $totalP4 + $totalP5 + $totalP6 + $totalP7) / ($totalFeedbacks * 7), 1),
+                'averageF' => round(($totalF1 + $totalF2 + $totalF3 + $totalF4 + $totalF5) / ($totalFeedbacks * 5), 1),
+                'averageI' => round(($totalI1 + $totalI2 + $totalI3 + $totalI4 + $totalI5 + $totalI6 + $totalI7 + $totalI8) / ($totalFeedbacks * 8), 1),
+                'averageIb' => round(($totalI1b + $totalI2b + $totalI3b + $totalI4b + $totalI5b + $totalI6b + $totalI7b + $totalI8b) / ($totalFeedbacks * 8), 1),
+                'averageIas' => round(($totalI1as + $totalI2as + $totalI3as + $totalI4as + $totalI5as + $totalI6as + $totalI7as + $totalI8as) / ($totalFeedbacks * 8), 1),
             ];
         }
         return response()->json([
             'success' => true,
             'message' => 'List Feedbacks',
-            // 'data' => $transformedFeedbacks->values()
             'data' => $averageFeedbacks
+            // 'data' => $groupedFeedbacks
         ]);
 
     }
@@ -166,7 +172,7 @@ class apiController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'List perusahaan',
+            'message' => 'List Peserta',
             'data' => $peserta,
         ]);
     }

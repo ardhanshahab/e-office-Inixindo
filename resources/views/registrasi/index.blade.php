@@ -102,7 +102,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script src="https://cdn.jsdelivr.net/gh/ashl1/datatables-rowsgroup@fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/gh/ashl1/datatables-rowsgroup@fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
 <script>
@@ -110,7 +110,7 @@
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
 
         $('#registrasitable').DataTable({
-            'rowsGroup': [0,1,2],
+
             "ajax": {
                 "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -154,9 +154,9 @@
                     }
                 },
             ],
-            "initComplete": function() {
-                this.api().columns(2).search(idInstruktur).draw();
-            }
+            // "initComplete": function() {
+            //     this.api().columns(2).search(idInstruktur).draw();
+            // }
         });
     });
 </script>

@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'HRD' )
+                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager')
                     <a href="{{ route('peserta.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah peserta"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Peserta</a>
                 @endif
             </div>
@@ -128,8 +128,8 @@
     $(document).ready(function(){
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
         if(idInstruktur){
-            $('#peserta').show();
-            $('#pesertaall').hide();
+            $('#peserta').hide();
+            $('#pesertaall').show();
         }else{
            $('#peserta').hide();
            $('#pesertaall').show();

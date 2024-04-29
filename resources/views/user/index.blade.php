@@ -61,7 +61,7 @@
                 "data": null,
                 "render": function(data, type, row) {
                     var actions = "";
-                    var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD'];
+                    var allowedRoles = ['Accounting', 'HRD'];
                     var userRole = '{{ auth()->user()->jabatan }}';
 
                     if (allowedRoles.includes(userRole)) {

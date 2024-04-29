@@ -29,6 +29,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">RKM</th>
+                                <th>Instruktur</th>
+                                <th>Tanggal</th>
                                 <th>Materi</th>
                                 <th>Pelayanan</th>
                                 <th>Fasilitas</th>
@@ -98,7 +100,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.css">
 <script src="https://cdn.jsdelivr.net/gh/ashl1/datatables-rowsgroup@fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
         $(document).ready(function(){
             $('#datafeedback').DataTable({
@@ -114,7 +116,16 @@
                     }
                 },
                 "columns": [
-                    {"data": "materiNama"},
+                    {"data": "nama_materi"},
+                    {"data": "instruktur_key"},
+                    {
+                    "data": null,
+                        "render": function(data, type, row) {
+                            var tanggalAwal = moment(data.tanggal_awal).format('DD MMMM YYYY');
+                            var tanggalAkhir = moment(data.tanggal_akhir).format('DD MMMM YYYY');
+                            return tanggalAwal + ' s/d ' + tanggalAkhir;
+                            }
+                    },
                     {"data": "averageM"},
                     {"data": "averageP"},
                     {"data": "averageF"},
@@ -125,14 +136,14 @@
                     "data": null,
                     "render": function(data, type, row) {
                         var actions = "";
-                        var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD'];
+                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD'];
                         var userRole = '{{ auth()->user()->jabatan }}';
 
                         if (allowedRoles.includes(userRole)) {
                             actions += '<div class="dropdown">';
                             actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
                             actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                            actions += '<a class="dropdown-item" href="{{ url('/feedback') }}/' + row.id_materi + '" data-toggle="tooltip" data-placement="top" title="Detail Feedback"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                            actions += '<a class="dropdown-item" href="{{ url('/feedback') }}/' + row.id_rkm + '" data-toggle="tooltip" data-placement="top" title="Detail Feedback"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                             actions += '</div>';
                             actions += '</div>';
                         } else {

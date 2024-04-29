@@ -115,12 +115,40 @@ class feedbackController extends Controller
      * @param  mixed $id
      * @return View
      */
-    public function show(string $id): View
+    public function show(string $id)
     {
         //get post by ID
-        $post = Feedback::with('karyawan')->findOrFail($id);
+        $feedbacks = Nilaifeedback::with('rkm', 'regist')->where('id_rkm', $id)->get();
+        $transformedFeedbacks = $feedbacks->map(function ($feedback) {
+                return [
+                    'id_regist' => $feedback->id_regist,
+                    'id_rkm' => $feedback->id_rkm,
+                    'email' => $feedback->email,
+                    'materi' => round(($feedback->M1 + $feedback->M2 + $feedback->M3 + $feedback->M4) / 4, 1),
+                    'pelayanan' => round(($feedback->P1 + $feedback->P2 + $feedback->P3 + $feedback->P4 + $feedback->P5 + $feedback->P6 + $feedback->P7) / 7, 1),
+                    'fasilitas' => round(($feedback->F1 + $feedback->F2 + $feedback->F3 + $feedback->F4 + $feedback->F5) / 5, 1),
+                    'instruktur' => round(($feedback->I1 + $feedback->I2 + $feedback->I3 + $feedback->I4 + $feedback->I5 + $feedback->I6 + $feedback->I7 + $feedback->I8) / 8, 1),
+                    'instruktur2' => round(($feedback->I1b + $feedback->I2b + $feedback->I3b + $feedback->I4b + $feedback->I5b + $feedback->I6b + $feedback->I7b + $feedback->I8b) / 8, 1),
+                    'asisten' => round(($feedback->I1as + $feedback->I2as + $feedback->I3as + $feedback->I4as + $feedback->I5as + $feedback->I6as + $feedback->I7as + $feedback->I8as) / 8, 1),
+                    'umum1' => $feedback->U1,
+                    'umum2' => $feedback->U2,
+                    'regist' => [
+                        'id' => $feedback->regist->id,
+                        'nama' => $feedback->regist->peserta->nama, // contoh atribut yang ingin Anda tambahkan dari relasi regist
+                        // tambahkan atribut lainnya yang Anda perlukan
+                    ],
+                    'rkm' => [
+                        'id' => $feedback->rkm->id,
+                        'nama_materi' => $feedback->rkm->materi->nama_materi, // contoh atribut yang ingin Anda tambahkan dari relasi rkm
+                        // tambahkan atribut lainnya yang Anda perlukan
+                    ],
+                ];
+            });
+            $post =  $transformedFeedbacks;
+            $feedbacks = Nilaifeedback::with('rkm', 'regist')->where('id_rkm', $id)->get();
+
         //render view with post
-        return view('feedback.show', compact('post', 'peserta'));
+        return view('feedback.show', compact('post', 'feedbacks'));
     }
 
     /**

@@ -19,7 +19,7 @@
         <div class="col-md-12">
             {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'HRD' )
+                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting')
                     <a href="{{ route('perusahaan.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah Perusahaan"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Perusahaan</a>
                 @endif
             </div>
@@ -32,7 +32,7 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama Perusahaan</th>
                             <th scope="col">Sales</th>
-                            {{-- @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
+                            {{-- @if ( auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
                             <th scope="col">Aksi</th>
                             {{-- @endif --}}
                           </tr>
@@ -125,7 +125,7 @@
                 "data": null,
                 "render": function(data, type, row) {
                     var actions = "";
-                    var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD'];
+                    var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD'];
                     var userRole = '{{ auth()->user()->jabatan }}';
 
                     if (allowedRoles.includes(userRole)) {

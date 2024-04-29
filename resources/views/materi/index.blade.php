@@ -18,7 +18,8 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'HRD' )
+                @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager')
+
                     <a href="{{ route('materi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Materi</a>
                 @endif
             </div>
@@ -32,7 +33,7 @@
                                 <th scope="col">Nama Materi</th>
                                 <th scope="col">Kategori Materi</th>
                                 <th scope="col">Vendor</th>
-                                {{-- @if ( auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
+                                {{-- @if ( auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
                                     <th scope="col">Aksi</th>
                                 {{-- @endif --}}
                             </tr>
@@ -119,7 +120,7 @@
                     "data": null,
                     "render": function(data, type, row) {
                         var actions = "";
-                        var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD'];
+                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD'];
                         var userRole = '{{ auth()->user()->jabatan }}';
 
                         if (allowedRoles.includes(userRole)) {
