@@ -12,12 +12,17 @@
                         <div class="row mb-3">
                             <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" value="{{ old('sales_key' ) }}" required autocomplete="sales_key">
-                                    <option selected>Pilih Sales</option>
-                                    @foreach ( $sales as $salesis )
-                                    <option value="{{ $salesis->kode_karyawan }}">{{ $salesis->kode_karyawan }} - {{ $salesis->nama_lengkap }}</option>
+                                <select disabled class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
+                                    <option value="">Pilih Sales</option>
+                                    @foreach ($sales as $salesis)
+                                        @if ($salesis->kode_karyawan == auth()->user()->id_sales)
+                                            <option value="{{ $salesis->kode_karyawan }}" selected>{{ $salesis->kode_karyawan }} - {{ $salesis->nama_lengkap }}</option>
+                                        @else
+                                            <option value="{{ $salesis->kode_karyawan }}">{{ $salesis->kode_karyawan }} - {{ $salesis->nama_lengkap }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="id_sales" value="{{auth()->user()->id_sales}}"/>
                                 @error('sales_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -29,11 +34,7 @@
                         <div class="row mb-3">
                             <label for="materi_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Materi') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('materi_key') is-invalid @enderror" name="materi_key" value="{{ old('materi_key', ) }}" required autocomplete="materi_key">
-                                    <option selected>Pilih Materi</option>
-                                    @foreach ( $materi as $materis )
-                                    <option value="{{ $materis->id }}">{{ $materis->nama_materi }}</option>
-                                    @endforeach
+                                <select id="materi_key" class="form-select @error('materi_key') is-invalid @enderror" name="materi_key" value="{{ old('materi_key', ) }}" required autocomplete="materi_key">
                                 </select>
                                 @error('materi_key')
                                     <span class="invalid-feedback" role="alert">
@@ -197,6 +198,26 @@
                                 return {
                                     id: item.id,
                                     text: item.nama_perusahaan
+                                }
+                            })
+                        }
+                    }
+                    // dataType: 'json'
+                  },
+
+              });
+              $('#materi_key').select2({
+                placeholder: "Pilih Materi",
+                allowClear: true,
+                ajax: {
+                    url: '{{route('getMateris')}}',
+                    processResults: function({data}){
+                        console.log(data)
+                        return{
+                            results: $.map(data, function(item){
+                                return {
+                                    id: item.id,
+                                    text: item.nama_materi
                                 }
                             })
                         }

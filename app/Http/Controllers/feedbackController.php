@@ -119,6 +119,7 @@ class feedbackController extends Controller
     {
         //get post by ID
         $feedbacks = Nilaifeedback::with('rkm', 'regist')->where('id_rkm', $id)->get();
+        // return $feedbacks;
         $transformedFeedbacks = $feedbacks->map(function ($feedback) {
                 return [
                     'id_regist' => $feedback->id_regist,
@@ -137,14 +138,15 @@ class feedbackController extends Controller
                         'nama' => $feedback->regist->peserta->nama, // contoh atribut yang ingin Anda tambahkan dari relasi regist
                         // tambahkan atribut lainnya yang Anda perlukan
                     ],
-                    'rkm' => [
-                        'id' => $feedback->rkm->id,
-                        'nama_materi' => $feedback->rkm->materi->nama_materi, // contoh atribut yang ingin Anda tambahkan dari relasi rkm
-                        // tambahkan atribut lainnya yang Anda perlukan
-                    ],
+                    // 'rkm' => [
+                    //     'id' => $feedback->rkm->id,
+                    //     'nama_materi' => $feedback->rkm->materi->nama_materi, // contoh atribut yang ingin Anda tambahkan dari relasi rkm
+                    //     // tambahkan atribut lainnya yang Anda perlukan
+                    // ],
                 ];
             });
             $post =  $transformedFeedbacks;
+            // return $post;
             $feedbacks = Nilaifeedback::with('rkm', 'regist')->where('id_rkm', $id)->get();
 
         //render view with post

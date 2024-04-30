@@ -205,4 +205,15 @@ class apiController extends Controller
             'data' => $user,
         ]);
     }
+    public function getRegistrasi(Request $request)
+    {
+        $id_rkm = $request->id_rkm;
+        // $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
+        $user = Registrasi::with('peserta')->where('id_rkm', $id_rkm)->get();
+
+        return response()->json([
+            'data' => $user
+        ]);
+
+    }
 }

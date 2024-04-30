@@ -133,10 +133,6 @@
                 "data": null,
                 "render": function(data, type, row) {
                     var actions = "";
-                    var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD'];
-                    var userRole = '{{ auth()->user()->jabatan }}';
-
-                    if (allowedRoles.includes(userRole)) {
                         actions += '<div class="dropdown">';
                         actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
                         actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
@@ -148,11 +144,6 @@
                         actions += '</form>';
                         actions += '</div>';
                         actions += '</div>';
-                    } else {
-                        actions += '<div class="dropdown" style="display: none;">';
-                        actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
-                        actions += '</div>';
-                    }
                     return actions;
                 }
             }
