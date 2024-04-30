@@ -21,7 +21,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     <style>
         body{
-            background-image: url('/css/background inix office-01.svg');
+            background-image: url('/css/background inix office-02.svg');
             background-position: center;
             background-size: cover;
             background-repeat:no-repeat;

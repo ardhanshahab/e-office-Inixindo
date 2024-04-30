@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('id_peserta');
             $table->string('id_materi');
             $table->string('id_instruktur');
+            $table->string('id_sales');
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\jabatan;
 use App\Models\karyawan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,8 +23,9 @@ class UserController extends Controller
     {
         $user = User::count();
         $countuser = $user + 1;
+        $jabatan = jabatan::all();
 
-        return view('user.register', compact('countuser'));
+        return view('user.register', compact('countuser', 'jabatan'));
     }
 
     public function regist(Request $request)

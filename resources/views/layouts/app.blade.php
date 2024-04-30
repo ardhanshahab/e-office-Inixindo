@@ -253,12 +253,13 @@
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item mx-1">
                         <a class="nav-link" href="{{ route('logout') }} "data-bs-toggle="tooltip" data-bs-placement="top" title="Logout"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin?')) { document.getElementById('logout-form').submit(); }">
                            <img src="{{ asset('icon/power.svg') }}" class="img-responsive" width="30px">
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
+
                     </li>
                 </ul>
             </div>

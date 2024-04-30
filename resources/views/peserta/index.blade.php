@@ -32,6 +32,7 @@
                             <th scope="col">Nama</th>
                             <th scope="col">Email</th>
                             <th scope="col">id</th>
+                            <th scope="col">id</th>
                             <th scope="col">Jenis Kelamin</th>
                             <th scope="col">Nomor Handphone</th>
                             <th scope="col">Alamat</th>
@@ -127,9 +128,11 @@
 <script>
     $(document).ready(function(){
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
-        if(idInstruktur){
-            $('#peserta').hide();
-            $('#pesertaall').show();
+        var idSales = "{{ auth()->user()->id_sales }}";
+        console.log(idSales);
+        if(idInstruktur || idSales){
+            $('#peserta').show();
+            $('#pesertaall').hide();
         }else{
            $('#peserta').hide();
            $('#pesertaall').show();
@@ -187,6 +190,10 @@
                         "visible": false
                     },
                     {
+                        "data": "id_sales",
+                        "visible": false
+                    },
+                    {
                         "data": null,
                         "render": function(data) {
                             return data.peserta.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
@@ -205,6 +212,7 @@
                 ],
                 "initComplete": function() {
                             this.api().columns(3).search(idInstruktur).draw();
+                            this.api().columns(4).search(idSales).draw();
                         }
             });
     });

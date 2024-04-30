@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\jabatan;
 use Illuminate\Http\Request;
 use App\Models\Nilaifeedback;
 use App\Models\Materi;
@@ -143,6 +144,17 @@ class apiController extends Controller
         ]);
     }
 
+    public function getJabatan()
+    {
+        $materi = jabatan::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'List Jabatan',
+            'data' => $materi
+        ]);
+    }
+
     public function getPerusahaanall()
     {
         $perusahaan = Perusahaan::with('karyawan')->get();
@@ -156,7 +168,7 @@ class apiController extends Controller
 
     public function getRegistrasiall()
     {
-        $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
+        $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi', 'karyawan', 'sales')->get();
 
         return response()->json([
             'success' => true,

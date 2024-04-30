@@ -34,21 +34,35 @@ class MateriController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        //validate form
-        $this->validate($request, [
-            'nama_materi'     => 'required',
-            'kategori_materi'   => 'required',
-            'vendor'   => 'required'
+        // Validate form
+        $validatedData = $this->validate($request, [
+            'nama_materi' => 'required',
+            'kode_materi' => 'required',
+            'kategori_materi' => 'required',
+            'vendor' => 'required',
+            'silabus' => 'nullable|file|mimes:pdf|max:2048' // tambahkan validasi untuk file PDF
         ]);
 
-        Materi::create([
-            'nama_materi'     => $request->nama_materi,
-            'kategori_materi'     => $request->kategori_materi,
-            'vendor'   => $request->vendor
+        $materi = new Materi([
+            'nama_materi' => $validatedData['nama_materi'],
+            'kode_materi' => $validatedData['kode_materi'],
+            'kategori_materi' => $validatedData['kategori_materi'],
+            'vendor' => $validatedData['vendor']
         ]);
+
+        if ($request->hasFile('silabus')) {
+            $file = $request->file('silabus');
+            $filename = 'silabus_' . $validatedData['nama_materi'] . '.pdf';
+            $path = $file->storeAs('silabus', $filename, 'public');
+
+            $materi->silabus = $path;
+        }
+
+        $materi->save();
 
         return redirect()->route('materi.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
+
 
     /**
      * show
@@ -87,20 +101,40 @@ class MateriController extends Controller
     {
         $this->validate($request, [
             'nama_materi'     => 'required',
-            'kategori_materi'   => 'required',
-            'vendor'   => 'required'
+            'kode_materi'     => 'required',
+            'kategori_materi' => 'required',
+            'vendor'          => 'required',
+            'silabus'         => 'nullable|file|mimes:pdf|max:2048' // tambahkan validasi untuk file PDF
         ]);
 
-        $post = Materi::findOrFail($id);
+        $materi = Materi::findOrFail($id);
 
-            $post->update([
-                'nama_materi'     => $request->nama_materi,
-                'kategori_materi'     => $request->kategori_materi,
-                'vendor'   => $request->vendor
-            ]);
+        // Update attribut materi
+        $materi->nama_materi = $request->nama_materi;
+        $materi->kode_materi = $request->kode_materi;
+        $materi->kategori_materi = $request->kategori_materi;
+        $materi->vendor = $request->vendor;
+
+        // Jika file silabus baru diunggah
+        if ($request->hasFile('silabus')) {
+            // Hapus file silabus lama jika ada
+            if ($materi->silabus) {
+                Storage::delete($materi->silabus);
+            }
+
+            $file = $request->file('silabus');
+            $filename = 'silabus_' . $request->nama_materi . '.pdf';
+            $path = $file->storeAs('silabus', $filename, 'public');
+            $materi->silabus = $path;
+        }
+
+        // Simpan perubahan
+        $materi->save();
 
         return redirect()->route('materi.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
+
+
 
     /**
      * destroy

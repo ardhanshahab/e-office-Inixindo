@@ -66,7 +66,7 @@
                                 </div>
 
                                 <div class="col-sm-6 my-1">
-                                    <div class="card shadow-sm"  id="card-hover">
+                                    <div class="card"  id="card-hover">
                                         <div class="card-body d-flex">
                                             <div class="col-md-2">
                                                 <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
@@ -79,10 +79,24 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="col-sm-6 my-1">
+                                    <div class="card"  id="card-hover">
+                                        <div class="card-body d-flex">
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
+                                            </div>
+                                            <div class="col-md-10" style="margin-left: 10px">
+                                                <a href="/jabatan" class="link stretched-link text-decoration-none"><h5 class="card-title">Jabatan</h5></a>
+                                                <p class="card-text">Data Jabatan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-
                 </div>
                 {{-- end karyawan --}}
                 {{-- peserta --}}

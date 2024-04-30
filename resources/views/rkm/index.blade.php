@@ -181,7 +181,7 @@
                                 } else if (rkm.status_all == '1') {
                                     html += '<tr style="background-color: rgba(0, 0, 255, 0.5);">';
                                 } else {
-                                    html += '<tr style="background-color: rgba(0, 0, 0, 0.5);">';
+                                    html += '<tr style="background-color: rgba(0, 0, 0, 0.5); color: #fff">';
                                 }
                                 html += '<td>' + (index + 1) + '</td>';
                                 html += '<td>' + rkm.materi.nama_materi + '</td>';

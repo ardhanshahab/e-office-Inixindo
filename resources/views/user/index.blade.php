@@ -17,7 +17,7 @@
                           <tr>
                             <th scope="col">No</th>
                             <th scope="col">NIP</th>
-                            <th scope="col">Username</th>
+                            {{-- <th scope="col">Username</th> --}}
                             <th scope="col">Nama Lengkap</th>
                             <th scope="col">Jabatan</th>
                             <th scope="col">Divisi</th>
@@ -52,7 +52,7 @@
             "columns": [
                 {"data": "id"},
                 {"data": "karyawan.nip"},
-                {"data": "username"},
+                // {"data": "username"},
                 {"data": "karyawan.nama_lengkap"},
                 {"data": "karyawan.jabatan"},
                 {"data": "karyawan.divisi"},

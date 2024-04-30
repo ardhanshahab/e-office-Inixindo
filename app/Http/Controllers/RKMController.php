@@ -170,6 +170,7 @@ class RKMController extends Controller
             'event' => $request->event,
             'ruang' => $request->ruang,
             'status' => $request->status,
+            'isi_pax' => $request->pax,
         ]);
 
         return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Disimpan!']);
@@ -244,51 +245,10 @@ class RKMController extends Controller
         //render view with post
         return view('rkm.edit', compact('rkm', 'sales', 'materi', 'perusahaan', 'instruktur'));
     }
-    // public function updateRKM(Request $request): RedirectResponse
-    // {
-    //     dd($request->all());
-    //     //validate form
-    //     $this->validate($request, [
-    //         'rkm_key' => 'required',
-    //         'sales_key' => 'required',
-    //         'materi_key' => 'nullable',
-    //         'harga_jual' => 'nullable',
-    //         'pax' => 'nullable',
-    //         'tanggal_awal' => 'nullable',
-    //         'tanggal_akhir' => 'nullable',
-    //         'metode_kelas' => 'nullable',
-    //         'event' => 'nullable',
-    //         'ruang' => 'nullable',
-    //         'status' => 'nullable',
-    //     ]);
-
-    //     $post = RKM::findOrFail($request->rkm_key);
-
-
-    //         $post->update([
-    //             'sales_key' => $request->sales_key,
-    //             'materi_key' => $request->materi_key,
-    //             'hargajual' => $request->hargajual,
-    //             'pax' => $request->pax,
-    //             'tanggal_awal' => $request->tanggal_awal,
-    //             'tanggal_akhir' => $request->tanggal_akhir,
-    //             'metode_kelas' => $request->metode_kelas,
-    //             'event' => $request->event,
-    //             'ruang' => $request->ruang,
-    //             'status' => $request->status,
-    //         ]);
-
-    //     return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Diubah!']);
-    // }
 
     public function editInstruktur($id)
     {
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
-
-        // $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
-        //     ->where('materi_key', $id)
-        //     ->get();
-
 
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
             ->where('materi_key', $id)
@@ -364,6 +324,8 @@ class RKMController extends Controller
                 'event' => $request->event,
                 'ruang' => $request->ruang,
                 'status' => $request->status,
+                'isi_pax' => $request->pax,
+
             ]);
 
         return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Diubah!']);

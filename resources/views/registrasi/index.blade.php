@@ -19,7 +19,7 @@
         {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Education Manager')
+                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Sales')
                     <a href="{{ route('registrasi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah registrasi"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Registrasi Peserta</a>
                 @endif
             </div>
@@ -154,9 +154,9 @@
                     }
                 },
             ],
-            // "initComplete": function() {
-            //     this.api().columns(2).search(idInstruktur).draw();
-            // }
+            "initComplete": function() {
+                this.api().columns(2).search(idInstruktur).draw();
+            }
         });
     });
 </script>

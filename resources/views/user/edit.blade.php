@@ -61,7 +61,10 @@
                             <div class="col-md-7 col-sm-7 col-xs-7">
                                 <select class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" value="{{ old('jabatan', $users->jabatan ) }}" required autocomplete="jabatan">
                                     <option selected>Pilih Jabatan</option>
-                                    <option @if ($users->jabatan == "Komisaris") selected @endif value="Komisaris">Komisaris</option>
+                                    @foreach ($jabatan as $jabatans)
+                                        <option value="{{ $jabatans->nama_jabatan }}" @if ($users->jabatan == $jabatans->nama_jabatan) selected @endif>{{ $jabatans->nama_jabatan }}</option>
+                                    @endforeach
+                                    {{-- <option @if ($users->jabatan == "Komisaris") selected @endif value="Komisaris">Komisaris</option>
                                     <option @if ($users->jabatan == "Direktur Utama") selected @endif value="Direktur Utama">Direktur Utama</option>
                                     <option @if ($users->jabatan == "Direktur") selected @endif value="Direktur">Direktur</option>
                                     <option @if ($users->jabatan == "Education Manager") selected @endif value="Education Manager">Education Manager</option>
@@ -75,12 +78,12 @@
                                     <option @if ($users->jabatan == "Accounting") selected @endif value="Accounting">Accounting</option>
                                     <option @if ($users->jabatan == "Finance & Accounting") selected @endif value="Finance & Accounting">Finance & Accounting</option>
                                     <option @if ($users->jabatan == "HRD") selected @endif value="HRD">HRD</option>
-                                    {{-- <option @if ($users->jabatan == "Direksi") selected @endif value="Admin Holding">Admin Holding</option> --}}
+                                    <option @if ($users->jabatan == "Admin Holding") selected @endif value="Admin Holding">Admin Holding</option>
                                     <option @if ($users->jabatan == "Customer Care") selected @endif value="Customer Care">Customer Care</option>
                                     <option @if ($users->jabatan == "Customer Service") selected @endif value="Customer Service">Customer Service</option>
                                     <option @if ($users->jabatan == "Programmer") selected @endif value="Programmer">Programmer</option>
                                     <option @if ($users->jabatan == "Driver") selected @endif value="Driver">Driver</option>
-                                    <option @if ($users->jabatan == "Office Boy") selected @endif value="Office Boy">Office Boy</option>
+                                    <option @if ($users->jabatan == "Office Boy") selected @endif value="Office Boy">Office Boy</option> --}}
                                 </select>
                                 @error('jabatan')
                             <span class="invalid-feedback" role="alert">

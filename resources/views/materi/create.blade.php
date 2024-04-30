@@ -8,7 +8,7 @@
                 <div class="card-body" id="card">
                 <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                 <h5 class="card-title text-center mb-4">{{ __('Materi Baru') }}</h5>
-                    <form method="POST" action="{{ route('materi.store') }}">
+                    <form method="POST" action="{{ route('materi.store') }}"  enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <label for="nama_materi" class="col-md-4 col-form-label text-md-start">{{ __('Nama Materi') }}</label>
@@ -35,10 +35,34 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="kode_materi" class="col-md-4 col-form-label text-md-start">{{ __('Kode Materi') }}</label>
+                            <div class="col-md-6">
+                                <input id="kode_materi" type="text" placeholder="Masukan Kode Materi" class="form-control @error('kode_materi') is-invalid @enderror" name="kode_materi" value="{{ old('kode_materi') }}" autocomplete="kode_materi" autofocus>
+                                @error('kode_materi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="vendor" class="col-md-4 col-form-label text-md-start">{{ __('Vendor') }}</label>
                             <div class="col-md-6">
                                 <input id="vendor" type="text" placeholder="Masukan Vendor Materi" class="form-control @error('vendor') is-invalid @enderror" name="vendor" value="{{ old('vendor') }}" autocomplete="vendor" autofocus>
                                 @error('vendor')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="silabus" class="col-md-4 col-form-label text-md-start">{{ __('Silabus (PDF)') }}</label>
+                            <div class="col-md-6">
+                                <input type="file" name="silabus" class="form-control-file" accept="application/pdf">
+                                @error('silabus')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

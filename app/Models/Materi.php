@@ -10,8 +10,10 @@ class Materi extends Model
     use HasFactory;
     protected $fillable = [
         'nama_materi',
+        'kode_materi',
         'kategori_materi',
         'vendor',
+        'silabus'
     ];
 
     public function rkms()

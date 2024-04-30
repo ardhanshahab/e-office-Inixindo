@@ -6,6 +6,7 @@ use App\Models\Registrasi;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Peserta;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\RKM;
@@ -26,8 +27,9 @@ class RegistrasiController extends Controller
      */
     public function create()
     {
+        $countPeserta = Peserta::get()->count() + 1;
 
-        return view('registrasi.create');
+        return view('registrasi.create', compact('countPeserta'));
     }
 
     /**
@@ -36,21 +38,47 @@ class RegistrasiController extends Controller
      * @param  mixed $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         //validate form
         // dd($request->all());
-        $this->validate($request, [
-            'id_rkm'     => 'required',
-            'id_peserta'   => 'required',
-            'id_materi'   => 'required',
-        ]);
+        $rkms = RKM::where('id', $request->id_rkm)->where('perusahaan_key', $request->perusahaan_key)->first();
+        $peserta = Peserta::where('id', $request->id_peserta)->first();
+        $registrasi = Registrasi::where('id_peserta', $request->id_peserta)->where('id_rkm', $request->id_rkm)->first();
+        // dd($rkms);
+        if ($registrasi === null) {
+            if ($peserta === null) {
+                $peserta = Peserta::create([
+                    'nama'            => $request->nama,
+                    'jenis_kelamin'   => $request->jenis_kelamin,
+                    'email'           => $request->email,
+                    'no_hp'           => $request->no_hp,
+                    'alamat'          => $request->alamat,
+                    'perusahaan_key'  => $request->perusahaan_key,
+                    'tanggal_lahir'   => $request->tanggal_lahir
+                ]);
+            }
+            if ($rkms === null) {
+                return redirect()->route('registrasi.index')->with(['error' => 'Mohon maaf peserta ini daftar dikelas yang salah!']);
+            }
+            if ($rkms->isi_pax === '0') {
+                return redirect()->route('registrasi.index')->with(['error' => 'Mohon maaf kapasitas kelas sudah penuh!']);
+            }else{
+                Registrasi::create([
+                    'id_rkm'        => $request->id_rkm,
+                    'id_peserta'    => $peserta->id,
+                    'id_materi'     => $rkms->materi_key,
+                    'id_instruktur' => $rkms->instruktur_key,
+                    'id_sales'      => $rkms->sales_key,
+                ]);
 
-        Registrasi::create([
-            'id_rkm'     => $request->id_rkm,
-            'id_peserta'     => $request->id_peserta,
-            'id_materi'     => $request->id_materi,
-        ]);
+                $rkms->update([
+                    'isi_pax' => $rkms->isi_pax - 1,
+                ]);
+            }
+        } else {
+            return redirect()->route('registrasi.index')->with(['error' => 'Mohon maaf anda sudah mendaftar kelas ini!']);
+        }
 
         return redirect()->route('registrasi.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }

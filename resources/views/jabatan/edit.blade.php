@@ -8,7 +8,7 @@
                 <div class="card-body" id="card">
                     <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                 <h5 class="card-title text-center mb-4">{{ __('Edit Materi') }}</h5>
-                    <form method="POST" action="{{ route('materi.update', $materis->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('materi.update', $materis->id) }}">
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
@@ -40,18 +40,6 @@
                             <div class="col-md-6">
                                 <input id="vendor" type="text" placeholder="Masukan Vendor Materi" class="form-control @error('vendor') is-invalid @enderror" name="vendor" value="{{ old('vendor', $materis->vendor) }}" autocomplete="vendor" autofocus>
                                 @error('vendor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="silabus" class="col-md-4 col-form-label text-md-start">{{ __('Silabus (PDF)') }}</label>
-                            <div class="col-md-6">
-                                <input type="file" name="silabus" class="form-control-file" accept="application/pdf" value="{{ old('silabus', $materis->silabus) }}">
-                                @error('silabus')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

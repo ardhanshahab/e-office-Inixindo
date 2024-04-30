@@ -24,6 +24,7 @@ class RKM extends Model
         'instruktur_key2',
         'asisten_key',
         'status',
+        'isi_pax'
     ];
 
     public function sales()

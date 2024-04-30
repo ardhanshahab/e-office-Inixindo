@@ -155,8 +155,8 @@ class RKMController extends Controller
     public function getRKMRegist()
     {
         $today = Carbon::now();
-        $startDate = $today->startOfMonth()->toDateString(); // Tanggal awal bulan ini
-        $endDate = $today->addMonths(2)->endOfMonth()->toDateString(); // Tanggal akhir dua bulan ke depan
+        $startDate = $today->startOfWeek()->toDateString(); // Tanggal awal minggu ini
+        $endDate = $today->endOfWeek()->toDateString(); // Tanggal akhir minggu ini
 
         $rows = RKM::with(['materi:id,nama_materi'])
             ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
@@ -167,6 +167,7 @@ class RKMController extends Controller
             ->select('r_k_m_s.*', 'perusahaans.nama_perusahaan')
             ->paginate(10);
         return response()->json($rows);
+
 
             // $perusahaans = Perusahaan::where('nama_perusahaan', 'LIKE', '%'.request('q').'%')->paginate(10);
     }

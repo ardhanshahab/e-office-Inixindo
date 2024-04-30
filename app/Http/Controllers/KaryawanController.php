@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\jabatan;
 use Carbon\Carbon;
 
 class KaryawanController extends Controller
@@ -21,7 +22,8 @@ class KaryawanController extends Controller
     public function edit($id)
     {
         $users = karyawan::findOrFail($id);
-        return view('user.edit', compact('users'));
+        $jabatan = jabatan::all();
+        return view('user.edit', compact('users', 'jabatan'));
     }
 
     public function updateData(Request $request, $id)

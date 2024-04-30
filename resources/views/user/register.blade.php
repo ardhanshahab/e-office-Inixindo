@@ -27,7 +27,10 @@
                             <div class="col-md-6">
                                 <select id="jabatan" class="form-select @error('jabatan') is-invalid @enderror" name="jabatan" aria-label="Default select example">
                                     <option selected>Pilih Jabatan</option>
-                                    <option value="Direktur Utama">Direktur Utama</option>
+                                    @foreach ($jabatan as $jabatans)
+                                    <option value="{{ $jabatans->nama_jabatan }}">{{ $jabatans->nama_jabatan }}</option>
+                                    @endforeach
+                                    {{-- <option value="Direktur Utama">Direktur Utama</option>
                                     <option value="Direktur">Direktur</option>
                                     <option value="Education Manager">Education Manager</option>
                                     <option value="Instruktur">Instruktur</option>
@@ -43,7 +46,7 @@
                                     <option value="Admin Holding">Admin Holding</option>
                                     <option value="Customer Care">Customer Care</option>
                                     <option value="Programmer">Programmer</option>
-                                    <option value="Office Boy">Office Boy</option>
+                                    <option value="Office Boy">Office Boy</option> --}}
                                 </select>
                                 @error('jabatan')
                                     <span class="invalid-feedback" role="alert">
