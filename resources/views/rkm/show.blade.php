@@ -56,6 +56,16 @@
                                                         </button>
                                                         </form>
                                                     </div>
+                                                @elseif (auth()->user()->jabatan == 'Customer Care')
+                                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                                    <p>
+                                                    <h5> </h5>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1"
+                                                        href="{{ route('rkm.edit', $post->id) }}"><img
+                                                            src="{{ asset('icon/edit.svg') }}" class="img-responsive"
+                                                            width="20px"> Edit RKM</a></div>
                                                 @else
                                                     <div class="col-md-8 col-sm-8 col-xs-8">
                                                         <p>

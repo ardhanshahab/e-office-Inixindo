@@ -225,7 +225,9 @@ class RKMController extends Controller
         $instruktur = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
         $materi = Materi::get();
         $perusahaan = Perusahaan::get();
+        // return $post;
         return view('rkm.edit', compact('post', 'sales', 'materi', 'perusahaan', 'instruktur'));
+
     }
     /**
      * edit
@@ -243,6 +245,7 @@ class RKMController extends Controller
         $perusahaan = Perusahaan::get();
 
         //render view with post
+
         return view('rkm.edit', compact('rkm', 'sales', 'materi', 'perusahaan', 'instruktur'));
     }
 

@@ -34,6 +34,7 @@ Route::get('getRegistrasiall', [App\Http\Controllers\Api\apiController::class, '
 Route::get('getPesertaall', [App\Http\Controllers\Api\apiController::class, 'getPesertaall'])->name('getPesertaall');
 Route::get('getUserall', [App\Http\Controllers\Api\apiController::class, 'getUserall'])->name('getUserall');
 Route::get('getJabatan', [App\Http\Controllers\Api\apiController::class, 'getJabatan'])->name('getJabatan');
+Route::get('getMateris', [App\Http\Controllers\Api\apiController::class, 'getMateris'])->name('getMateris');
 
 
 

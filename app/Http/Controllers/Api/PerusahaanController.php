@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class PerusahaanController extends Controller
 {
     public function getPerusahaan(){
-        $perusahaans = Perusahaan::where('nama_perusahaan', 'LIKE', '%'.request('q').'%')->paginate(10);
+        $perusahaans = Perusahaan::where('nama_perusahaan', 'LIKE', '%'.request('q').'%')->paginate(20);
         return response()->json($perusahaans);
     }
 

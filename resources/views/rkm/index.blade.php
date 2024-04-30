@@ -164,7 +164,7 @@
                         html += '<th scope="col">Event</th>';
                         html += '<th scope="col">Ruang</th>';
                         html += '<th scope="col">Pax</th>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Accounting') {
+                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Accounting' || jabatan == 'Customer Care') {
                             html += '<th scope="col">Aksi</th>';
                         }
                         html += '</tr>';
@@ -207,7 +207,7 @@
                                 html += '<td>' + rkm.event + '</td>';
                                 html += '<td>' + rkm.ruang + '</td>';
                                 html += '<td>' + rkm.total_pax + '</td>';
-                                if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Accounting') {
+                                if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Accounting' || jabatan == 'Customer Care') {
                                     html += '<td>';
                                     html += '<div class="btn-group dropup">';
                                     html += '<button type="button" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';

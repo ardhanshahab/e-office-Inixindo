@@ -14,7 +14,7 @@
                         <div class="row mb-3">
                             <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
+                                <select id="sales_key" class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
                                     <option>Pilih Sales</option>
                                     @foreach ($sales as $salesis)
                                         <option value="{{ $salesis->kode_karyawan }}" @if ($post->sales->kode_karyawan == $salesis->kode_karyawan) selected @endif>
@@ -22,7 +22,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-
+                                <input type="hidden" name="sales_key"  value="{{$post->sales_key}}"/>
                                 @error('sales_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -34,12 +34,13 @@
                         <div class="row mb-3">
                             <label for="materi_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Materi') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('materi_key') is-invalid @enderror" name="materi_key" value="{{ $post->materi_key }}" required autocomplete="materi_key">
+                                <select id="materi_key" class="form-select select2 @error('materi_key') is-invalid @enderror" name="materi_key" required autocomplete="materi_key">
                                     <option selected>Pilih Materi</option>
-                                    @foreach ( $materi as $materis )
-                                    <option value="{{ $materis->id }}"@if ($post->materi_key == $materis->id) selected @endif>{{ $materis->nama_materi }}</option>
+                                    @foreach ($materi as $materis)
+                                        <option value="{{ $materis->id }}" @if ($post->materi_key == $materis->id) selected @endif>{{ $materis->nama_materi }}</option>
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="materi_key"  value="{{$post->materi_key}}"/>
                                 @error('materi_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -51,12 +52,13 @@
                         <div class="row mb-3">
                             <label for="perusahaan_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Perusahaan') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('perusahaan_key') is-invalid @enderror" name="perusahaan_key" value="{{ old('perusahaan_key',$post->perusahaan_key ) }}" required autocomplete="perusahaan_key">
+                                <select class="form-select select2 @error('perusahaan_key') is-invalid @enderror" name="perusahaan_key" required autocomplete="perusahaan_key" id="perusahaan_key">
                                     <option selected>Pilih Perusahaan</option>
-                                    @foreach ( $perusahaan as $perusahaans )
-                                    <option value="{{ $perusahaans->id }}" @if ($post->perusahaan_key == $perusahaans->id) selected @endif >{{ $perusahaans->nama_perusahaan }}</option>
+                                    @foreach ($perusahaan as $perusahaans)
+                                        <option value="{{ $perusahaans->id }}" {{ $post->perusahaan_key == $perusahaans->id ? 'selected' : '' }}>{{ $perusahaans->nama_perusahaan }}</option>
                                     @endforeach
                                 </select>
+                                <input type="hidden" name="perusahaan_key"  value="{{$post->perusahaan_key}}"/>
                                 @error('perusahaan_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -156,8 +158,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="row mb-3">
                             <label for="status" class="col-md-4 col-form-label text-md-start">{{ __('Status') }}</label>
                             <div class="col-md-6">
@@ -193,65 +193,75 @@
 
 </style>
 @push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     const rkmKeySelect = document.querySelector('select[name="rkm_key"]');
-    //     const salesSelect = document.querySelector('select[name="sales_key"]');
-    //     const materiSelect = document.querySelector('select[name="materi_key"]');
-    //     const perusahaanSelect = document.querySelector('select[name="perusahaan_key"]');
-    //     const paxInput = document.querySelector('input[name="pax"]');
-    //     const tanggalAwalInput = document.querySelector('input[name="tanggal_awal"]');
-    //     const tanggalAkhirInput = document.querySelector('input[name="tanggal_akhir"]');
-    //     const metodeKelasInput = document.querySelector('input[name="metode_kelas"]');
-    //     const eventInput = document.querySelector('input[name="event"]');
-    //     const ruangSelect = document.querySelector('select[name="ruang"]');
-    //     // const instrukturSelect = document.querySelector('select[name="instruktur_key"]');
-    //     const statusSelect = document.querySelector('select[name="status"]');
+    $(document).ready(function() {
+        var perusahaan_key = '{{ $post->perusahaan_key }}'
+        var materi_key = '{{ $post->materi_key }}'
+        // var data = '{{ $post }}'
+        console.log(materi_key);
+        $('#perusahaan_key').select2({
+            placeholder: "Pilih Perusahaan",
+            allowClear: true,
+            ajax: {
+                url: '{{route('getPerusahaan')}}',
+                dataType: 'json',
+                delay: 250,
+                data: function (perusahaan_key) {
+                    return {
+                        q: $.trim(perusahaan_key.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.nama_perusahaan
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
 
-    //     rkmKeySelect.addEventListener('change', function() {
-    //         const selectedRkmKey = this.value;
-    //         if (selectedRkmKey === 'Pilih RKM') {
-    //             resetFields();
-    //             return;
-    //         }
+        $('#materi_key').select2({
+            placeholder: "Pilih Materi",
+            allowClear: true,
+            ajax: {
+                url: '{{ route('getMateris') }}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: $.trim(params.term)
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.nama_materi
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
 
-    //         // Lakukan request AJAX untuk mendapatkan data RKM berdasarkan rkm_key yang dipilih
-    //         fetch(`/rkm/${selectedRkmKey}/edit`)
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 // Mengisi nilai pada input lainnya berdasarkan data yang diterima
-    //                 salesSelect.value = data.sales_key;
-    //                 materiSelect.value = data.materi_key;
-    //                 perusahaanSelect.value = data.perusahaan_key;
-    //                 paxInput.value = data.pax;
-    //                 tanggalAwalInput.value = data.tanggal_awal;
-    //                 tanggalAkhirInput.value = data.tanggal_akhir;
-    //                 metodeKelasInput.value = data.metode_kelas;
-    //                 eventInput.value = data.event;
-    //                 ruangSelect.value = data.ruang;
-    //                 // instrukturSelect.value = data.instruktur_key;
-    //                 statusSelect.value = data.status;
-    //             })
-    //             .catch(error => console.error('Error:', error));
-    //     });
+    // $('#materi_key').val(materi_key).trigger('change');
+        // $('#perusahaan_key').val(perusahaan_key).trigger('change');
+        $('#perusahaan_key, #materi_key').prop('disabled', true);
+        $('#sales_key').prop('readonly', true);
 
-    //     // Fungsi untuk mereset nilai pada input lainnya ketika rkm_key dipilih kembali ke "Pilih RKM"
-    //     function resetFields() {
-    //         salesSelect.value = 'Pilih Sales';
-    //         materiSelect.value = 'Pilih Materi';
-    //         perusahaanSelect.value = 'Pilih Perusahaan';
-    //         paxInput.value = '';
-    //         tanggalAwalInput.value = '';
-    //         tanggalAkhirInput.value = '';
-    //         metodeKelasInput.value = '';
-    //         eventInput.value = '';
-    //         ruangSelect.value = 'Pilih Ruang';
-    //         // instrukturSelect.value = 'Pilih Instruktur';
-    //         statusSelect.value = 'Pilih Status';
-    //     }
-    // });
+        // $('#materi_key').val(materi_key).trigger('change');
+    });
 </script>
+
 @endpush
-
-
 @endsection

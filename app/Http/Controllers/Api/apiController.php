@@ -144,6 +144,11 @@ class apiController extends Controller
         ]);
     }
 
+    public function getMateris(){
+        $perusahaans = Materi::where('nama_materi', 'LIKE', '%'.request('q').'%')->paginate(20);
+        return response()->json($perusahaans);
+    }
+
     public function getJabatan()
     {
         $materi = jabatan::all();
