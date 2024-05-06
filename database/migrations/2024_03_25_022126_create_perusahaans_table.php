@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_perusahaan');
             $table->string('kategori_perusahaan')->nullable();
             $table->string('lokasi')->nullable();
-            $table->string('karyawan_key')->nullable();
+            $table->string('sales_key')->nullable();
             $table->string('status')->nullable();
             $table->string('npwp')->nullable();
             $table->string('alamat')->nullable();

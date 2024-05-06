@@ -62,7 +62,7 @@
                     <div class="col-md-12" id="content">
                     </div>
                 </div>
-        </div>
+            </div>
     </div>
 </div>
 <style>
@@ -136,9 +136,7 @@
                 $('#loadingModal').modal('show');
             },
             complete: function () {
-                setTimeout(function() {
-                    $('#loadingModal').modal('hide');
-                }, 1500);
+                $('#loadingModal').modal('hide');
             },
             success: function(response) {
                 console.log(response);
@@ -148,8 +146,8 @@
                 response.data.forEach(function(monthData) {
                     monthData.weeksData.forEach(function(weekData) {
                         console.log(weekData);
-                        html += '<div class="card">';
-                        html += '<div class="card-body">';
+                        html += '<div class="card my-2">';
+                        html += '<div class="card-body table-responsive">';
                         html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
                         html += '<p class="card-title my-1">Periode : ' + weekData.start + ' - ' + weekData.end + '</p>';
                         html += '<table class="table table-responsive table-striped">';

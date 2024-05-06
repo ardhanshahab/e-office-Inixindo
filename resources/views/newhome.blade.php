@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting')
                                 <div class="col-sm-6 my-1">
                                     <div class="card"  id="card-hover">
                                         <div class="card-body d-flex">
@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                @endif
                             </div>
                         </div>
                     </div>

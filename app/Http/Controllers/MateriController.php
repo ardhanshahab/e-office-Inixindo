@@ -99,15 +99,17 @@ class MateriController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+        // dd($request->all());
         $this->validate($request, [
             'nama_materi'     => 'required',
-            'kode_materi'     => 'required',
+            'kode_materi'     => 'nullable',
             'kategori_materi' => 'required',
             'vendor'          => 'required',
             'silabus'         => 'nullable|file|mimes:pdf|max:2048' // tambahkan validasi untuk file PDF
         ]);
 
         $materi = Materi::findOrFail($id);
+        // dd($materi);
 
         // Update attribut materi
         $materi->nama_materi = $request->nama_materi;

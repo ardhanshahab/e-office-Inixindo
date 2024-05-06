@@ -12,7 +12,7 @@ class Perusahaan extends Model
         'nama_perusahaan',
         'kategori_perusahaan',
         'lokasi',
-        'karyawan_key',
+        'sales_key',
         'status',
         'npwp',
         'alamat',
@@ -23,12 +23,12 @@ class Perusahaan extends Model
 
     public function karyawan()
     {
-        return $this->belongsTo(Karyawan::class, 'karyawan_key', 'id');
+        return $this->belongsTo(Karyawan::class, 'sales_key', 'kode_karyawan');
     }
 
     public function rkms()
     {
-        return $this->hasMany(Rkm::class, 'nama_perusahaan', 'perusahaan_key    ');
+        return $this->hasMany(Rkm::class, 'nama_perusahaan', 'perusahaan_key');
     }
 
     public function peserta()

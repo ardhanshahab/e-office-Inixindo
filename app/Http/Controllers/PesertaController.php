@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class PesertaController extends Controller
 {
@@ -18,6 +20,27 @@ class PesertaController extends Controller
 
         // return $post;
         return view('peserta.index', compact('post'));
+    }
+
+    public function getPesertaall()
+    {
+        // $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
+        $peserta = Peserta::with('perusahaan')->get();
+
+        $jabatan = Auth::user()->jabatan;
+        if ($jabatan == 'Sales'|| $jabatan == 'Adm Sales' || $jabatan == 'GM'|| $jabatan == 'SPV Sales' || $jabatan == 'Instruktur'|| $jabatan == 'Education Manager' || $jabatan == 'Accounting' || $jabatan == 'Customer Care') {
+            return response()->json([
+                'success' => true,
+                'message' => 'List Registrasi',
+                'data' => $peserta,
+            ]);
+        }else{
+            return response()->json([
+                'success' => true,
+                'message' => 'List Registrasi',
+                'data' => '',
+            ]);
+        }
     }
 
     /**

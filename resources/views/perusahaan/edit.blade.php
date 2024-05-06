@@ -8,7 +8,7 @@
                 <div class="card-body" id="card">
                 <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                 <h5 class="card-title text-center mb-4">{{ __('Edit Peusahaan') }}</h5>
-                    <form method="POST" action="{{ route('perusahaan.update', $perusahaans->id) }}">
+                    <form method="POST" action="{{ route('perusahaan.update', $perusahaans->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row mb-3">
@@ -48,10 +48,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="karyawan_key" class="col-md-4 col-form-label text-md-start">{{ __('ID Karyawan') }}</label>
+                            <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
-                                <input id="karyawan_key" type="text" placeholder="Masukan karyawan_key" class="form-control @error('karyawan_key') is-invalid @enderror" name="karyawan_key" value="{{ old('karyawan_key', $perusahaans->karyawan_key) }}" autocomplete="karyawan_key" autofocus>
-                                @error('karyawan_key')
+                                <input id="sales_key" type="text" placeholder="Masukan sales_key" class="form-control @error('sales_key') is-invalid @enderror" name="sales_key" value="{{ old('sales_key', $perusahaans->sales_key) }}" autocomplete="sales_key" autofocus>
+                                @error('sales_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -111,7 +111,7 @@
 
         $('#materitable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['copy', 'csv', 'excel', 'pdf', 'print'],
+            "buttons": ['excel', 'pdf'],
             "ajax": {
                 "url": "{{ route('getMateri') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -132,9 +132,9 @@
                     "data": null,
                     "render": function(data, type, row) {
                         var actions = "";
-                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD'];
+                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD', 'GM'];
                         var userRole = '{{ auth()->user()->jabatan }}';
-                        console.log(row.silabus);
+                        // console.log(row.silabus);
                         if (allowedRoles.includes(userRole)) {
                             actions += '<div class="dropdown">';
                             actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';

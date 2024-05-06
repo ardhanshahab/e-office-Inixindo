@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card p-0">
                     <div class="card-body">
                         <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                         <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
@@ -78,7 +78,7 @@
                                                                 width="20px"> Edit RKM</a></div>
                                                 @endif
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>ID RKM</p>
+                                                    <p>ID RKM</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -87,7 +87,7 @@
                                                     <p>{{ $post->id }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Materi</p>
+                                                    <p>Materi</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -96,7 +96,7 @@
                                                     <p>{{ $post->materi->nama_materi }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Harga Jual Nett</p>
+                                                    <p>Harga Jual Nett</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -105,16 +105,16 @@
                                                     <p>{{ 'Rp ' . number_format($post->harga_jual, 0, ',', '.') }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Pax</p>
+                                                    <p>Pax</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
-                                                    <p>:</p>
+                                                    <p>:</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7">
                                                     <p>{{ $post->pax }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Tanggal Awal</p>
+                                                    <p>Tanggal Awal</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -124,7 +124,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Tanggal Akhir</p>
+                                                    <p>Tanggal Akhir</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -140,7 +140,7 @@
                                                     $hari = $sama + 1;
                                                 @endphp
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Total Hari</p>
+                                                    <p>Total Hari</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -149,7 +149,7 @@
                                                     <p>{{ $hari }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Perusahaan</p>
+                                                    <p>Perusahaan</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -158,7 +158,7 @@
                                                     <p>{{ $post->perusahaan->nama_perusahaan }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Nama Sales</p>
+                                                    <p>Nama Sales</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -167,7 +167,7 @@
                                                     <p>{{ $post->sales->nama_lengkap }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Instruktur 1</p>
+                                                    <p>Instruktur 1</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -176,7 +176,7 @@
                                                     <p>{{ $post->instruktur_key }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Instruktur 2</p>
+                                                    <p>Instruktur 2</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -185,7 +185,7 @@
                                                     <p>{{ $post->instruktur_key2 }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Asisten</p>
+                                                    <p>Asisten</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -194,7 +194,7 @@
                                                     <p>{{ $post->asisten_key }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Metode Kelas</p>
+                                                    <p>Metode Kelas</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -203,7 +203,7 @@
                                                     <p>{{ $post->metode_kelas }}</p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
-                                                    <p>Ruang</p>
+                                                    <p>Ruang</p><p id="titikdua"> :</p>
                                                 </div>
                                                 <div class="col-md-1 col-sm-1 col-xs-1">
                                                     <p>:</p>
@@ -217,7 +217,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-7 p-0">
                                 @php
                                     $startsAt = \Carbon\Carbon::parse(
                                         request('starts_at', $ids->tanggal_awal),
@@ -235,110 +235,111 @@
                                     // dd($range);
                                     // echo $range;
                                 @endphp
-
-                                <table class="table text-center" id="tabel">
-                                    <thead>
-                                        <tr>
-                                            @foreach ($daysOfWeek as $day)
-                                                <th>{{ $day }}</th>
+                                <div class="table-resposive">
+                                    <table class="table text-center" id="tabel">
+                                        <thead>
+                                            <tr>
+                                                @foreach ($daysOfWeek as $day)
+                                                    <th>{{ $day }}</th>
+                                                @endforeach
+                                                <th style="background-color: rgba(255, 0, 0, 0.5);">Sabtu</th>
+                                                <th style="background-color: rgba(255, 0, 0, 0.5);">Minggu</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @if ($hariAwal == 'Senin' && $hariAkhir == 'Selasa')
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Rabu')
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Kamis')
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Jumat')
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Rabu')
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Kamis')
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Jumat')
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Kamis')
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Jumat')
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Kamis' && $hariAkhir == 'Jumat')
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th>v</th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @else
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);">Error</th>
+                                                @endif
+                                            </tr>
+                                            {{-- <tr>
+                                            @foreach ($range as $date)
+                                                <th>v</th>
                                             @endforeach
-                                            <th style="background-color: rgba(255, 0, 0, 0.5);">Sabtu</th>
-                                            <th style="background-color: rgba(255, 0, 0, 0.5);">Minggu</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            @if ($hariAwal == 'Senin' && $hariAkhir == 'Selasa')
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Rabu')
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Kamis')
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Jumat')
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Rabu')
-                                                <th></th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Kamis')
-                                                <th></th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Jumat')
-                                                <th></th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Kamis')
-                                                <th></th>
-                                                <th></th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Jumat')
-                                                <th></th>
-                                                <th></th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @elseif ($hariAwal == 'Kamis' && $hariAkhir == 'Jumat')
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th>v</th>
-                                                <th>v</th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
-                                            @else
-                                                <th style="background-color: rgba(255, 0, 0, 0.5);">Error</th>
-                                            @endif
-                                        </tr>
-                                        {{-- <tr>
-                                        @foreach ($range as $date)
-                                            <th>v</th>
-                                        @endforeach
-                                    </tr> --}}
-                                    </tbody>
-                                </table>
+                                        </tr> --}}
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 <div class="container">
                                     <div class="row">
@@ -393,7 +394,16 @@
                 </div>
             </div>
             <style>
+                 @media screen and (min-width: 769px) {
+                /* CSS untuk layar web */
+                #titikdua {
+                    display: none; /* Menyembunyikan titikdua pada layar web */
+                }
+            }
                 @media screen and (max-width: 768px) {
+                    #titikdua {
+                        display: flex; /* Menampilkan titikdua */
+                    }
                     .card {
                         padding: 15px;
                         max-width: 100%;
@@ -403,7 +413,11 @@
                         margin-bottom: 10px;
                     }
 
-                    /* .col-xs-4, */
+                    .col-xs-4, .col-sm-4{
+                        margin :0 !important;
+                        display: flex;
+                    }
+
                     .col-xs-1 {
                         display: none;
                     }

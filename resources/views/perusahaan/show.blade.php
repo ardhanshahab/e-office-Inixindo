@@ -129,9 +129,9 @@
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
                                         @if (!$post->foto_npwp)
-                                        <p>Tidak Ada</p>
+                                            <p>Tidak Ada</p>
                                         @else
-                                        <a href="#" class="btn click-primary">Lihat Foto</a>
+                                            <a href="{{ asset('storage/npwp/' . $post->foto_npwp) }}" class="btn click-primary" target="_blank">Lihat Foto</a>
                                         @endif
                                     </div>
                                 </div>

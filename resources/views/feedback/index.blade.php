@@ -23,13 +23,14 @@
                 @endif
             </div>
             <div class="card">
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <h4 class="card-title mt-3 text-center">&nbsp;Data Feedback</h4>
                     <table id="datafeedback" class="display" style="width:100%">
                         <thead>
                             <tr>
                                 <th scope="col">RKM</th>
                                 <th>Instruktur</th>
+                                <th >id</th>
                                 <th>Tanggal</th>
                                 <th>Materi</th>
                                 <th>Pelayanan</th>
@@ -110,10 +111,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
         $(document).ready(function(){
+            var idInstruktur = "{{ auth()->user()->id_instruktur }}";
+            var idSales = "{{ auth()->user()->id_sales }}";
             $('#datafeedback').DataTable({
                 'rowsGroup': [0,1],
                 "dom": 'Bfrtip',
-                "buttons": ['copy', 'csv', 'excel', 'pdf', 'print'],
+                "buttons": ['excel', 'pdf'],
                 "ajax": {
                     "url": "{{ route('getFeedbacks') }}", // URL API untuk mengambil data
                     "type": "GET",
@@ -127,6 +130,10 @@
                 "columns": [
                     {"data": "nama_materi"},
                     {"data": "instruktur_key"},
+                    {
+                        "data": "sales_key",
+                        "visible": false
+                    },
                     {
                     "data": null,
                         "render": function(data, type, row) {
@@ -145,19 +152,20 @@
                     "data": null,
                     "render": function(data, type, row) {
                         var actions = "";
-
                             actions += '<div class="dropdown">';
                             actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
                             actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                            actions += '<a class="dropdown-item" href="{{ url('/feedback') }}/' + row.id_rkm + '" data-toggle="tooltip" data-placement="top" title="Detail Feedback"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                            actions += '<a class="dropdown-item" href="{{ url('/feedback') }}/' + row.materi_key +  row.bulan + '" data-toggle="tooltip" data-placement="top" title="Detail Feedback"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                             actions += '</div>';
                             actions += '</div>';
-
-
                         return actions;
                     }
                 }
                 ],
+                "initComplete": function() {
+                            this.api().columns(1).search(idInstruktur).draw();
+                            this.api().columns(2).search(idSales).draw();
+                        }
 
             });
         });

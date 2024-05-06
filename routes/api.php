@@ -30,12 +30,11 @@ Route::get('getRKMByMonthNow', [App\Http\Controllers\Api\RKMController::class, '
 Route::get('getFeedbacks', [App\Http\Controllers\Api\apiController::class, 'getFeedbacks'])->name('getFeedbacks');
 Route::get('getMateri', [App\Http\Controllers\Api\apiController::class, 'getMateri'])->name('getMateri');
 Route::get('getPerusahaanall', [App\Http\Controllers\Api\apiController::class, 'getPerusahaanall'])->name('getPerusahaanall');
-Route::get('getRegistrasiall', [App\Http\Controllers\Api\apiController::class, 'getRegistrasiall'])->name('getRegistrasiall');
-Route::get('getPesertaall', [App\Http\Controllers\Api\apiController::class, 'getPesertaall'])->name('getPesertaall');
 Route::get('getUserall', [App\Http\Controllers\Api\apiController::class, 'getUserall'])->name('getUserall');
 Route::get('getJabatan', [App\Http\Controllers\Api\apiController::class, 'getJabatan'])->name('getJabatan');
 Route::get('getMateris', [App\Http\Controllers\Api\apiController::class, 'getMateris'])->name('getMateris');
 Route::get('getRegistrasi', [App\Http\Controllers\Api\apiController::class, 'getRegistrasi'])->name('getRegistrasi');
+// Route::get('getPerusahaanById', [App\Http\Controllers\Api\PerusahaanController::class, 'getPerusahaanById'])->name('getPerusahaanById');
 
 
 

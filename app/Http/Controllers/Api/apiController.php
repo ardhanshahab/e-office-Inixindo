@@ -11,6 +11,8 @@ use App\Models\Perusahaan;
 use App\Models\Peserta;
 use App\Models\Registrasi;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class apiController extends Controller
 {
@@ -18,14 +20,20 @@ class apiController extends Controller
     {
         $feedbacks = Nilaifeedback::with('rkm')->get();
 
-        $groupedFeedbacks = $feedbacks->groupBy('id_rkm');
+        // $groupedFeedbacks = $feedbacks->groupBy('id_rkm');
+        $groupedFeedbacks = $feedbacks->groupBy(function ($feedback) {
+            return $feedback->rkm->materi->nama_materi . '/' . $feedback->rkm->tanggal_awal;
+        });
 
         $averageFeedbacks = [];
 
-        foreach ($groupedFeedbacks as $id_rkm => $feedbackGroup) {
+        foreach ($groupedFeedbacks as $materi_key => $feedbackGroup) {
+            $materi_key = $feedbackGroup->first()->rkm->materi_key;
             $nama_materi = $feedbackGroup->first()->rkm->materi->nama_materi;
             $instruktur_key = $feedbackGroup->first()->rkm->instruktur_key;
-            $tanggal_awal = $feedbackGroup->first()->rkm->tanggal_awal;
+            $sales_key = $feedbackGroup->first()->rkm->sales_key;
+            $tanggal_awal = Carbon::parse($feedbackGroup->first()->rkm->tanggal_awal);
+            $bulan = $tanggal_awal->format('m');
             $tanggal_akhir = $feedbackGroup->first()->rkm->tanggal_akhir;
             $totalFeedbacks = $feedbackGroup->count();
             $totalM1 = $feedbackGroup->sum('M1');
@@ -72,8 +80,10 @@ class apiController extends Controller
 
             $averageFeedbacks[] = [
                 'nama_materi' => $nama_materi,
-                'id_rkm' => $id_rkm,
+                'materi_key' => $materi_key,
                 'instruktur_key' => $instruktur_key,
+                'bulan' => $bulan,
+                'sales_key' => $sales_key,
                 'tanggal_awal' => $tanggal_awal,
                 'tanggal_akhir' => $tanggal_akhir,
                 'averageM1' => $totalM1 / $totalFeedbacks,
@@ -149,6 +159,8 @@ class apiController extends Controller
         return response()->json($perusahaans);
     }
 
+
+
     public function getJabatan()
     {
         $materi = jabatan::all();
@@ -171,28 +183,6 @@ class apiController extends Controller
         ]);
     }
 
-    public function getRegistrasiall()
-    {
-        $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi', 'karyawan', 'sales')->get();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'List Registrasi',
-            'data' => $registrasi,
-        ]);
-    }
-
-    public function getPesertaall()
-    {
-        // $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi')->get();
-        $peserta = Peserta::with('perusahaan')->get();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'List Peserta',
-            'data' => $peserta,
-        ]);
-    }
 
     public function getUserall()
     {

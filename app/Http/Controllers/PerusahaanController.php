@@ -25,6 +25,16 @@ class PerusahaanController extends Controller
 
         return view('perusahaan.index', compact('perusahaans'));
     }
+    public function getPerusahaanById(){
+        $idSales = auth()->user()->id_sales; // Ambil idSales dari user yang sedang login
+        // dd($idSales);
+        $perusahaans = Perusahaan::where('sales_key', $idSales) // Sesuaikan dengan nama kolom yang sesuai di tabel Perusahaan
+                    ->where('nama_perusahaan', 'LIKE', '%'.request('q').'%')
+                    ->paginate(20);
+
+        return response()->json($perusahaans);
+    }
+
 
     /**
      * create
@@ -48,7 +58,7 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => 'required',
             'kategori_perusahaan' => 'nullable',
             'lokasi' => 'nullable',
-            'karyawan_key' => 'nullable',
+            'sales_key' => 'nullable',
             'status' => 'nullable',
             'npwp' => 'nullable',
             'alamat' => 'nullable',
@@ -69,7 +79,7 @@ class PerusahaanController extends Controller
             'nama_perusahaan' => $request->nama_perusahaan,
             'kategori_perusahaan' => $request->kategori_perusahaan,
             'lokasi' => $request->lokasi,
-            'karyawan_key' => $request->karyawan_key,
+            'sales_key' => $request->sales_key,
             'status' => $request->status,
             'npwp' => $request->npwp,
             'alamat' => $request->alamat,
@@ -89,12 +99,12 @@ class PerusahaanController extends Controller
      * @param  mixed $id
      * @return View
      */
-    public function show(string $id): View
+    public function show(string $id)
     {
         //get post by ID
         $post = Perusahaan::with('karyawan')->findOrFail($id);
         $peserta = Peserta::where('perusahaan_key', $id)->get();
-        //render view with post
+        // return $post;
         return view('perusahaan.show', compact('post', 'peserta'));
     }
 
@@ -108,9 +118,10 @@ class PerusahaanController extends Controller
     {
         //get post by ID
         $perusahaans = Perusahaan::findOrFail($id);
+        $sales = karyawan::where('jabatan', 'sales')->get();
 
         //render view with post
-        return view('perusahaan.edit', compact('perusahaans'));
+        return view('perusahaan.edit', compact('perusahaans', 'sales'));
     }
 
     /**
@@ -122,12 +133,13 @@ class PerusahaanController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+        // dd($request->all());
         //validate form
         $this->validate($request, [
             'nama_perusahaan' => 'required',
             'kategori_perusahaan' => 'nullable',
             'lokasi' => 'nullable',
-            'karyawan_key' => 'nullable',
+            'sales_key' => 'nullable',
             'status' => 'nullable',
             'npwp' => 'nullable',
             'alamat' => 'nullable',
@@ -152,7 +164,7 @@ class PerusahaanController extends Controller
                 'nama_perusahaan' => $request->nama_perusahaan,
                 'kategori_perusahaan' => $request->kategori_perusahaan,
                 'lokasi' => $request->lokasi,
-                'karyawan_key' => $request->karyawan_key,
+                'sales_key' => $request->sales_key,
                 'status' => $request->status,
                 'npwp' => $request->npwp,
                 'alamat' => $request->alamat,
@@ -166,7 +178,7 @@ class PerusahaanController extends Controller
                 'nama_perusahaan' => $request->nama_perusahaan,
                 'kategori_perusahaan' => $request->kategori_perusahaan,
                 'lokasi' => $request->lokasi,
-                'karyawan_key' => $request->karyawan_key,
+                'sales_key' => $request->sales_key,
                 'status' => $request->status,
                 'npwp' => $request->npwp,
                 'alamat' => $request->alamat,

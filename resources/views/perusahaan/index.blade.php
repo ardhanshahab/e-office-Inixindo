@@ -105,9 +105,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
     $(document).ready(function(){
+        var idSales = "{{ auth()->user()->id_sales }}";
+
         $('#perusahaantable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['copy', 'csv', 'excel', 'pdf', 'print'],
+            "buttons": ['excel', 'pdf'],
             "ajax": {
                 "url": "{{ route('getPerusahaanall') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -125,29 +127,73 @@
                     "data": null,
                     "render": function (data, type, row) {
                         // Tampilkan kode karyawan jika karyawan tidak null, atau teks 'Tidak Ada Sales' jika null
-                        return data.karyawan && data.karyawan.kode_karyawan ? data.karyawan.kode_karyawan : 'Tidak Ada Sales';
+                        return data.sales_key ? data.sales_key : 'Tidak Ada Sales';
                     }
                 },
-
                 {
-                "data": null,
-                "render": function(data, type, row) {
-                    var actions = "";
-                        actions += '<div class="dropdown">';
-                        actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
-                        actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
-                        actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
-                        actions += '@csrf';
-                        actions += '@method('DELETE')';
-                        actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
-                        actions += '</form>';
-                        actions += '</div>';
-                        actions += '</div>';
-                    return actions;
-                }
+                        "data": null,
+                        "render": function(data, type, row) {
+                            var actions = "";
+                            var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'GM', 'Sales', 'Adm Sales'];
+                            var userRole = '{{ auth()->user()->jabatan }}';
+                            var idSales = '{{ auth()->user()->id_sales }}';
+                            console.log(row.sales_key);
+                            if (allowedRoles.includes(userRole)) {
+                                actions += '<div class="dropdown">';
+                                actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                                actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                                    if (idSales === row.sales_key) {
+                                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                                        actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
+                                        actions += '@csrf';
+                                        actions += '@method('DELETE')';
+                                        actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
+                                        actions += '</form>';
+                                    } else if (userRole == 'SPV Sales') {
+                                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                                        actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
+                                        actions += '@csrf';
+                                        actions += '@method('DELETE')';
+                                        actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
+                                        actions += '</form>';
+                                    }else if(userRole == 'Accounting' || userRole == 'Education Manager' || userRole == 'GM' ){
+                                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                                        actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
+                                        actions += '@csrf';
+                                        actions += '@method('DELETE')';
+                                        actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
+                                        actions += '</form>';
+                                    }else {
+                                        actions += '';
+                                        // actions += '<a class="dropdown-item" disabled href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                                    }
+
+                                actions += '</div>';
+                                actions += '</div>';
+                            } else {
+                                actions += '<div class="dropdown">';
+                                actions += '<button class="btn dropdown-toggle" disabled type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                                actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                                actions += '<a class="dropdown-item" disabled href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                                actions += '<a class="dropdown-item" disabled href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                                actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
+                                actions += '@csrf';
+                                actions += '@method('DELETE')';
+                                actions += '<button type="submit" disabled class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
+                                actions += '</form>';
+                                actions += '</div>';
+                                actions += '</div>';
+                            }
+
+                            return actions;
+                        }
+                    }
+            ],
+            "initComplete": function() {
+                // this.api().columns(2).search(idSales).draw();
             }
-            ]
         });
     });
 </script>

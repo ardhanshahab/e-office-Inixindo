@@ -143,7 +143,7 @@ class RKMController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
+        // dd($request->all());
         $this->validate($request, [
             'sales_key' => 'required',
             'materi_key' => 'nullable',

@@ -30,17 +30,12 @@
                     <table class="table table-striped" id="registrasitable">
                         <thead>
                           <tr>
-                            <th scope="col">Materi Pelatihan</th>
-                            <th scope="col">Tanggal Pelatihan</th>
-                            <th scope="col">Instruktur</th>
-                            {{-- <th scope="col">No</th> --}}
                             <th scope="col">Nama Peserta</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Jenis Kelamin</th>
-                            <th scope="col">Nomor Handphone</th>
-                            <th scope="col">Alamat</th>
                             <th scope="col">Perusahaan/Instansi</th>
-                            <th scope="col">Tanggal Lahir</th>
+                            <th scope="col">Materi Pelatihan</th>
+                            <th scope="col">Periode Pelatihan</th>
+                            <th scope="col">Instruktur</th>
+                            <th scope="col">Sales</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -114,10 +109,14 @@
 <script>
     $(document).ready(function(){
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
+        if(idInstruktur == 'AD'){
+            var idInstruktur = "";
+        }
+        var idSales = "{{ auth()->user()->id_sales }}";
 
         $('#registrasitable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['copy', 'csv', 'excel', 'pdf', 'print'],
+            "buttons": ['excel', 'pdf'],
             "ajax": {
                 "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -129,40 +128,23 @@
                 }
             },
             "columns": [
-                {"data": "materi.nama_materi"},
-                {
-                    "data": "rkm.tanggal_awal",
-                    "render": function(data) {
-                        return moment(data).format('DD MMMM YYYY');
-                    }
-                },
-                {"data": "id_instruktur"},
-                // {
-                //     "data": null,
-                //     "render": function (data, type, row, meta) {
-                //         return meta.row + 1; // Nomor urut dimulai dari 1, bukan dari 0
-                //     }
-                // },
                 {"data": "peserta.nama"},
-                {"data": "peserta.email"},
+                {"data": "peserta.perusahaan.nama_perusahaan"},
+
+                {"data": "materi.nama_materi"},
                 {
                     "data": null,
                     "render": function(data) {
-                        return data.peserta.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
+                        return moment(data.rkm.tanggal_awal).format('DD MMMM YYYY')+  ' s/d ' + moment(data.rkm.tanggal_akhir).format('DD MMMM YYYY');
                     }
                 },
-                {"data": "peserta.no_hp"},
-                {"data": "peserta.alamat"},
-                {"data": "peserta.perusahaan.nama_perusahaan"},
-                {
-                    "data": "peserta.tanggal_lahir",
-                    "render": function(data) {
-                        return moment(data).format('DD MMMM YYYY');
-                    }
-                },
+                {"data": "id_instruktur"},
+                {"data": "id_sales"},
+
             ],
             "initComplete": function() {
-                this.api().columns(2).search(idInstruktur).draw();
+                this.api().columns(4).search(idInstruktur).draw();
+                this.api().columns(5).search(idSales).draw();
             }
         });
     });

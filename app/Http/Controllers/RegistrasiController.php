@@ -20,6 +20,26 @@ class RegistrasiController extends Controller
         return view('registrasi.index');
     }
 
+    public function getRegistrasiall()
+    {
+
+        $registrasi = Registrasi::with('rkm', 'peserta.perusahaan', 'materi', 'karyawan', 'sales')->get();
+        $jabatan = Auth::user()->jabatan;
+        if ($jabatan == 'Sales'|| $jabatan == 'Adm Sales' || $jabatan == 'GM'|| $jabatan == 'SPV Sales' || $jabatan == 'Instruktur'|| $jabatan == 'Education Manager' || $jabatan == 'Accounting' || $jabatan == 'Customer Care') {
+            return response()->json([
+                'success' => true,
+                'message' => 'List Registrasi',
+                'data' => $registrasi,
+            ]);
+        }else{
+            return response()->json([
+                'success' => true,
+                'message' => 'List Registrasi',
+                'data' => '',
+            ]);
+        }
+    }
+
     /**
      * create
      *

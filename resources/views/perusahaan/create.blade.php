@@ -8,7 +8,7 @@
                 <div class="card-body" id="card">
                     <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                 <h5 class="card-title text-center mb-4">{{ __('Perusahaan Baru') }}</h5>
-                    <form method="POST" action="{{ route('perusahaan.store') }}">
+                    <form method="POST" action="{{ route('perusahaan.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <label for="nama_perusahaan" class="col-md-4 col-form-label text-md-start">{{ __('Nama Perusahaan') }}</label>
@@ -47,10 +47,22 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="karyawan_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Karyawan') }}</label>
+                            <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
-                                <input id="karyawan_key" type="text" placeholder="Masukan Nama Karyawan" class="form-control @error('karyawan_key') is-invalid @enderror" name="karyawan_key" value="{{ old('karyawan_key') }}" autocomplete="karyawan_key" autofocus>
-                                @error('karyawan_key')
+                                @if (auth()->user()->jabatan == 'SPV Sales')
+                                <select class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
+                                    <option value="">Pilih Sales</option>
+                                    @foreach ($sales as $salesis)
+                                       <option value="{{ $salesis->kode_karyawan }}">{{ $salesis->kode_karyawan }} - {{ $salesis->nama_lengkap }}</option>
+                                    @endforeach
+                                </select>
+                                @else
+                                <select disabled class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
+                                    <option value="{{ auth()->user()->id_sales }}" >{{ auth()->user()->id_sales }}</option>
+                                </select>
+                                @endif
+                                <input type="hidden" name="sales_key" value="{{auth()->user()->id_sales}}"/>
+                                @error('sales_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

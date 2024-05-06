@@ -62,3 +62,6 @@ Route::group(['middleware'=>'Admin'],function(){
     Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('user.register');
 });
 
+Route::get('getPerusahaanById', [App\Http\Controllers\PerusahaanController::class, 'getPerusahaanById'])->name('getPerusahaanById');
+Route::get('getRegistrasiall', [App\Http\Controllers\RegistrasiController::class, 'getRegistrasiall'])->name('getRegistrasiall');
+Route::get('getPesertaall', [App\Http\Controllers\PesertaController::class, 'getPesertaall'])->name('getPesertaall');

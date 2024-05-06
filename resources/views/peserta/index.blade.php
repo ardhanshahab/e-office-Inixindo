@@ -135,8 +135,11 @@
 <script>
     $(document).ready(function(){
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
+        if(idInstruktur == 'AD'){
+            var idInstruktur = "";
+        }
         var idSales = "{{ auth()->user()->id_sales }}";
-        console.log(idSales);
+        // console.log(idSales);
         if(idInstruktur || idSales){
             $('#peserta').show();
             $('#pesertaall').hide();
@@ -146,7 +149,7 @@
         }
         $('#pesertaalltable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['copy', 'csv', 'excel', 'pdf', 'print'],
+            "buttons": ['excel', 'pdf'],
                 "ajax": {
                     "url": "{{ route('getPesertaall') }}", // URL API untuk mengambil data
                     "type": "GET",
@@ -181,7 +184,7 @@
             });
         $('#pesertatable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['copy', 'csv', 'excel', 'pdf', 'print'],
+            "buttons": ['excel', 'pdf'],
                 "ajax": {
                     "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                     "type": "GET",
