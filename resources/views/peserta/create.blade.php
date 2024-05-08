@@ -124,7 +124,7 @@
                 placeholder: "Pilih Perusahaan",
                 allowClear: true,
                 ajax: {
-                    url: '{{route('getPerusahaan')}}',
+                    url: '{{route('getPerusahaanById')}}',
                     processResults: function({data}){
                         console.log(data)
                         return{

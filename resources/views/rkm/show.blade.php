@@ -6,13 +6,13 @@
             <div class="col-md-12">
                 <div class="card p-0">
                     <div class="card-body">
-                        <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+                        <a href="/rkm" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                         <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                         <div class="row">
                             <div class="col-md-5">
                                 @if (auth()->user()->jabatan == 'Education Manager')
                                     <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1"
-                                            href="{{ route('editInstruktur', $ids->materi_key) }}">Tambah/Edit Instruktur RKM
+                                            href="{{ route('editInstruktur', $ids->materi_key) }}">Assign Instruktur dan Kelas
                                         </a></div>
                                 @endif
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -56,7 +56,7 @@
                                                         </button>
                                                         </form>
                                                     </div>
-                                                @elseif (auth()->user()->jabatan == 'Customer Care')
+                                                @elseif (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service')
                                                 <div class="col-md-8 col-sm-8 col-xs-8">
                                                     <p>
                                                     <h5> </h5>
@@ -355,8 +355,14 @@
                                                                     $kode_karyawan == $rkms->instruktur_key2 ||
                                                                     $kode_karyawan == $rkms->asisten_key ||
                                                                     auth()->user()->jabatan == 'SPV Sales' ||
+                                                                    auth()->user()->jabatan == 'Adm Sales' ||
                                                                     auth()->user()->jabatan == 'Accounting' ||
-                                                                    auth()->user()->jabatan == 'Education Manager'))
+                                                                    auth()->user()->jabatan == 'Education Manager'||
+                                                                    auth()->user()->jabatan == 'Customer Service'||
+                                                                    auth()->user()->jabatan == 'Customer Care'||
+                                                                    auth()->user()->jabatan == 'Technical Support'
+
+                                                                    ))
                                                             @php $formGenerated = true; @endphp
                                                             <div class="row">
                                                                 <form method="POST"

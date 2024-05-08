@@ -64,26 +64,6 @@
                                     @foreach ($jabatan as $jabatans)
                                         <option value="{{ $jabatans->nama_jabatan }}" @if ($users->jabatan == $jabatans->nama_jabatan) selected @endif>{{ $jabatans->nama_jabatan }}</option>
                                     @endforeach
-                                    {{-- <option @if ($users->jabatan == "Komisaris") selected @endif value="Komisaris">Komisaris</option>
-                                    <option @if ($users->jabatan == "Direktur Utama") selected @endif value="Direktur Utama">Direktur Utama</option>
-                                    <option @if ($users->jabatan == "Direktur") selected @endif value="Direktur">Direktur</option>
-                                    <option @if ($users->jabatan == "Education Manager") selected @endif value="Education Manager">Education Manager</option>
-                                    <option @if ($users->jabatan == "Instruktur") selected @endif value="Instruktur">Instruktur</option>
-                                    <option @if ($users->jabatan == "Technical Support") selected @endif value="Technical Support">Technical Support</option>
-                                    <option @if ($users->jabatan == "General Manager") selected @endif value="General Manager">General Manager</option>
-                                    <option @if ($users->jabatan == "SPV Sales") selected @endif value="SPV Sales">SPV Sales</option>
-                                    <option @if ($users->jabatan == "Admin Sales") selected @endif value="Admin Sales">Admin Sales</option>
-                                    <option @if ($users->jabatan == "Sales") selected @endif value="Sales">Sales</option>
-                                    <option @if ($users->jabatan == "Tim Digital") selected @endif value="Tim Digital">Tim Digital</option>
-                                    <option @if ($users->jabatan == "Accounting") selected @endif value="Accounting">Accounting</option>
-                                    <option @if ($users->jabatan == "Finance & Accounting") selected @endif value="Finance & Accounting">Finance & Accounting</option>
-                                    <option @if ($users->jabatan == "HRD") selected @endif value="HRD">HRD</option>
-                                    <option @if ($users->jabatan == "Admin Holding") selected @endif value="Admin Holding">Admin Holding</option>
-                                    <option @if ($users->jabatan == "Customer Care") selected @endif value="Customer Care">Customer Care</option>
-                                    <option @if ($users->jabatan == "Customer Service") selected @endif value="Customer Service">Customer Service</option>
-                                    <option @if ($users->jabatan == "Programmer") selected @endif value="Programmer">Programmer</option>
-                                    <option @if ($users->jabatan == "Driver") selected @endif value="Driver">Driver</option>
-                                    <option @if ($users->jabatan == "Office Boy") selected @endif value="Office Boy">Office Boy</option> --}}
                                 </select>
                                 @error('jabatan')
                             <span class="invalid-feedback" role="alert">

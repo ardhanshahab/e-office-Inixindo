@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager')
+                @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager'|| auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Adm Sales')
                     <a href="{{ route('materi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Materi</a>
                 @endif
             </div>
@@ -33,9 +33,7 @@
                                 <th scope="col">Kode Materi</th>
                                 <th scope="col">Kategori Materi</th>
                                 <th scope="col">Vendor</th>
-                                {{-- @if ( auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
                                     <th scope="col">Aksi</th>
-                                {{-- @endif --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -107,8 +105,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
+    function showAlert() {
+            alert("Silabus tidak ada");
+        }
     $(document).ready(function(){
-
         $('#materitable').DataTable({
             "dom": 'Bfrtip',
             "buttons": ['excel', 'pdf'],
@@ -119,7 +119,9 @@
                     $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                 },
                 "complete": function () {
-                    $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                 }
             },
             "columns": [
@@ -132,16 +134,26 @@
                     "data": null,
                     "render": function(data, type, row) {
                         var actions = "";
-                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD', 'GM'];
+                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD', 'GM', 'Adm Sales'];
                         var userRole = '{{ auth()->user()->jabatan }}';
-                        // console.log(row.silabus);
-                        if (allowedRoles.includes(userRole)) {
+                        if (userRole === 'HRD' || userRole === 'Direktur Utama' || userRole === 'Direktur' ) {
+                            actions += '<div class="dropdown">';
+                            actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                            actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                            if (row.silabus === null) {
+                                actions += '<a onclick="showAlert()" class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Lihat Silabus"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Lihat Silabus</a>';
+                            } else {
+                                actions += '<a class="dropdown-item" href="{{ url('/storage') }}/' + row.silabus + '" data-toggle="tooltip" data-placement="top" title="Lihat Silabus"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Lihat Silabus</a>';
+                            }
+                            actions += '</div>';
+                            actions += '</div>';
+                        }else if (allowedRoles.includes(userRole)) {
                             actions += '<div class="dropdown">';
                             actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
                             actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
                             actions += '<a class="dropdown-item" href="{{ url('/materi') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
                             if( data.silabus === null){
-                                actions += '<a disabled class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Lihat Silabus"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Lihat Silabus</a>';
+                                actions += '<a onclick="showAlert()" class="dropdown-item" href="#" data-toggle="tooltip" data-placement="top" title="Lihat Silabus"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Lihat Silabus</a>';
                             }else{
                                 actions += '<a class="dropdown-item" href="{{ url('/storage') }}/' + row.silabus + '" data-toggle="tooltip" data-placement="top" title="Lihat Silabus"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Lihat Silabus</a>';
                             }

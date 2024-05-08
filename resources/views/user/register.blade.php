@@ -30,25 +30,26 @@
                                     @foreach ($jabatan as $jabatans)
                                     <option value="{{ $jabatans->nama_jabatan }}">{{ $jabatans->nama_jabatan }}</option>
                                     @endforeach
-                                    {{-- <option value="Direktur Utama">Direktur Utama</option>
-                                    <option value="Direktur">Direktur</option>
-                                    <option value="Education Manager">Education Manager</option>
-                                    <option value="Instruktur">Instruktur</option>
-                                    <option value="Technical Support">Technical Support</option>
-                                    <option value="General Manager">General Manager</option>
-                                    <option value="SPV Sales">SPV Sales</option>
-                                    <option value="Admin Sales">Admin Sales</option>
-                                    <option value="Sales">Sales</option>
-                                    <option value="Tim Digital">Tim Digital</option>
-                                    <option value="Accounting">Accounting</option>
-                                    <option value="Finance & Accounting">Finance & Accounting</option>
-                                    <option value="HRD">HRD</option>
-                                    <option value="Admin Holding">Admin Holding</option>
-                                    <option value="Customer Care">Customer Care</option>
-                                    <option value="Programmer">Programmer</option>
-                                    <option value="Office Boy">Office Boy</option> --}}
                                 </select>
                                 @error('jabatan')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="divisi" class="col-md-4 col-form-label text-md-start">{{ __('Divisi') }}</label>
+                            <div class="col-md-6">
+                                <select class="form-select @error('divisi') is-invalid @enderror" name="divisi" value="{{ old('divisi'   ) }}" required autocomplete="divisi">
+                                    <option selected>Pilih Divisi</option>
+                                    <option value="Direksi">Direksi</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Sales & Marketing">Sales & Marketing</option>
+                                    <option value="Office">Office</option>
+                                    </select>
+                                @error('divisi')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -60,7 +61,7 @@
                             <div class="row mb-3" id="">
                                 <label for="kode_karyawan" class="col-md-4 col-form-label text-md-start">{{ __('Kode Karyawan') }}</label>
                                 <div class="col-md-6">
-                                    <input id="kode_karyawan" type="text" placeholder="Masukan Kode Karyawan" class="form-control @error('kode_karyawan') is-invalid @enderror" name="kode_karyawan" value="{{ old('kode_karyawan') }}" required autocomplete="kode_karyawan">
+                                    <input id="kode_karyawan" type="text" placeholder="Masukan Kode Karyawan" class="form-control @error('kode_karyawan') is-invalid @enderror" name="kode_karyawan" value="{{ old('kode_karyawan') }}" autocomplete="kode_karyawan">
                                     @error('kode_karyawan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -137,7 +138,7 @@
         var selectedJabatan = this.value;
         var kodeKaryawanRow = document.getElementById('kode_karyawan_row');
 
-        if (selectedJabatan === 'Instruktur' || selectedJabatan === 'Sales' || selectedJabatan === 'Admin Sales' || selectedJabatan === 'SPV Sales' || selectedJabatan === 'Education Manager') {
+        if (selectedJabatan === 'Instruktur' || selectedJabatan === 'Sales' || selectedJabatan === 'Adm Sales' || selectedJabatan === 'SPV Sales' || selectedJabatan === 'Education Manager') {
             kodeKaryawanRow.style.display = 'block';
         } else {
             kodeKaryawanRow.style.display = 'none';

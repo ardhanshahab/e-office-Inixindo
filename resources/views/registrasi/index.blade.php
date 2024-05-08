@@ -19,7 +19,7 @@
         {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Sales')
+                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Customer Service')
                     <a href="{{ route('registrasi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah registrasi"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Registrasi Peserta</a>
                 @endif
             </div>
@@ -104,15 +104,15 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 <script>
     $(document).ready(function(){
         var idInstruktur = "{{ auth()->user()->id_instruktur }}";
+        var idSales = "{{ auth()->user()->id_sales }}";
+
         if(idInstruktur == 'AD'){
             var idInstruktur = "";
         }
-        var idSales = "{{ auth()->user()->id_sales }}";
 
         $('#registrasitable').DataTable({
             "dom": 'Bfrtip',
@@ -124,7 +124,9 @@
                     $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                 },
                 "complete": function () {
-                    $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                 }
             },
             "columns": [
@@ -135,6 +137,7 @@
                 {
                     "data": null,
                     "render": function(data) {
+                        moment.locale('id')
                         return moment(data.rkm.tanggal_awal).format('DD MMMM YYYY')+  ' s/d ' + moment(data.rkm.tanggal_akhir).format('DD MMMM YYYY');
                     }
                 },

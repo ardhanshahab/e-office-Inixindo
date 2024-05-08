@@ -7,11 +7,12 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="d-flex justify-content-center mt-4">
-                            <img src="https://inixindobdg.co.id/images/logoinix.png" class="mx-2" style="width:50px;">
+                            <img src="https://inixindobdg.co.id/images/logoinix.png" class="img-fluid mx-2 mb-4" style="max-width:70px; max-height:70px;">
                             <h1 class="text-center mx-2">INIXINDO BANDUNG</h1>
                         </div>
                         <h5 class="text-center">"Continous Learning, Keep Up to date" </h5>
                     </div>
+
                 </div>
                 {{-- <hr> --}}
             </div>
@@ -88,6 +89,56 @@
             </div>
         </div>
     </div>
-    <style>
-    </style>
+<style>
+    /* CSS untuk handphone
+    @media (max-width: 767.98px) {
+        .container {
+            margin-top: 20px;
+        }
+        .img-fluid {
+            max-width: 40px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .col-form-label {
+            text-align: center !important;
+        }
+        .input-group-text {
+            width: 40px;
+        }
+        .form-control {
+            max-width: 260px;
+        }
+        .btn-primary {
+            max-width: 320px;
+        }
+    }
+
+
+    @media (min-width: 768px) and (max-width: 991.98px) {
+        .container {
+            margin-top: 50px;
+        }
+        .img-fluid {
+            max-width: 50px;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .col-form-label {
+            text-align: right !important;
+        }
+        .input-group-text {
+            width: 50px;
+        }
+        .form-control {
+            max-width: 300px;
+        }
+        .btn-primary {
+            max-width: 360px;
+        }
+    } */
+
+</style>
 @endsection

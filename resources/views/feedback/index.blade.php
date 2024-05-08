@@ -18,7 +18,7 @@
 </div>
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Customer Care' )
+                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' )
                     <a href="{{ route('nilaifeedback.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah Perusahaan"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Isi Feedback</a>
                 @endif
             </div>
@@ -30,7 +30,7 @@
                             <tr>
                                 <th scope="col">RKM</th>
                                 <th>Instruktur</th>
-                                <th >id</th>
+                                <th >Sales</th>
                                 <th>Tanggal</th>
                                 <th>Materi</th>
                                 <th>Pelayanan</th>
@@ -43,7 +43,6 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-
                 </div>
             </div>
         </div>
@@ -108,11 +107,13 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/ashl1/datatables-rowsgroup@fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script><script>
         $(document).ready(function(){
             var idInstruktur = "{{ auth()->user()->id_instruktur }}";
             var idSales = "{{ auth()->user()->id_sales }}";
+            if(idInstruktur == 'AD'){
+            var idInstruktur = "";
+        }
             $('#datafeedback').DataTable({
                 'rowsGroup': [0,1],
                 "dom": 'Bfrtip',
@@ -124,7 +125,9 @@
                         $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                     },
                     "complete": function () {
-                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                        setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                     }
                 },
                 "columns": [
@@ -132,11 +135,12 @@
                     {"data": "instruktur_key"},
                     {
                         "data": "sales_key",
-                        "visible": false
+                        "visible": true
                     },
                     {
                     "data": null,
                         "render": function(data, type, row) {
+                            moment.locale('id')
                             var tanggalAwal = moment(data.tanggal_awal).format('DD MMMM YYYY');
                             var tanggalAkhir = moment(data.tanggal_akhir).format('DD MMMM YYYY');
                             return tanggalAwal + ' s/d ' + tanggalAkhir;

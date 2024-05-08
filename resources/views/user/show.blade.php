@@ -5,29 +5,31 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <a href="/user" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+
+            @if (auth()->user()->jabatan == "HRD" || auth()->user()->username == $users->username)
             <div class="d-flex justify-content-end">
                 <a href="/karyawan/{{ $users->id }}/edit" class="btn btn-md click-primary mx-1">
                     <img src="{{ asset('icon/edit.svg') }}" class="mr-1" width="25px">
-                    <span>Edit Profile</span>
+                    Edit Profile
                 </a>
-                @if (auth()->user()->jabatan != "HRD")
-                    <a href="/user/{{ $users->id }}/password" class="btn btn-md click-warning mx-1">
-                        <img src="{{ asset('icon/lock.svg') }}" class="mr-1" width="25px">
-                        <span>Ganti Password</span>
-                    </a>
-                @endif
+                <a href="/user/{{ $users->id }}/password" class="btn btn-md click-warning mx-1">
+                    <img src="{{ asset('icon/lock.svg') }}" class="mr-1" width="25px">
+                    Ganti Password
+                </a>
             </div>
-            <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+        @endif
 
+            {{-- {{ $users }} --}}
             <div class="card-group m-1">
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card m-2 align-self-center">
                             <div class="card-body text-center" id="card">
-                                @if ($users->karyawan->foto)
-                                    <div class="" style="max-width: 500px; max-height:500px">
-                                        <img src="{{ asset('storage/posts/'.$users->karyawan->foto) }}" class="rounded" style="width:200px;height:auto  ;">
-                                    </div>
+                                @if ($users->karyawan && $users->karyawan->foto)
+                                <div class="" style="max-width: 500px; max-height:500px">
+                                    <img src="{{ asset('storage/posts/'.$users->karyawan->foto) }}" class="rounded" style="width:200px;height:auto;">
+                                </div>
                                 @endif
                                 <div class="m-4 row cardname text-center">
                                     <p style="text-transform: capitalize;">{{ $users->karyawan->nama_lengkap }}</p>
@@ -92,10 +94,10 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-md-5 col-sm-5 col-xs-5"><p>Nomor HP</p></div>
                                             <div class="col-md-6 col-sm-6 col-xs-6"><p>{{ $users->karyawan->notelp }}</p></div>
-                                        </div>
+                                        </div> --}}
                                 </div>
                             </div>
                             @if ($users->karyawan->rekening_bca || $users->karyawan->rekening_maybank)
@@ -226,7 +228,7 @@
             padding:       5px 10px;
             color:         #ffffff;
             display:       inline-block;
-            font:          normal bold 18px/1 "Open Sans", sans-serif;
+            font:          normal bold 14px/1 "Open Sans", sans-serif;
             text-align:    center;
             transition:    color 0.1s linear, background-color 0.2s linear;
         }
@@ -241,7 +243,7 @@
             padding:       5px 10px;
             color:         #000000;
             display:       inline-block;
-            font:          normal bold 18px/1 "Open Sans", sans-serif;
+            font:          normal bold 14px/1 "Open Sans", sans-serif;
             text-align:    center;
             transition:    color 0.1s linear, background-color 0.2s linear; /
         }

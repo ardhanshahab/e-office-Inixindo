@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('jabatan');
             $table->enum('status_akun', ['0', '1']);
             $table->string('password');
-            $table->string('karyawan_id');
-            $table->string('id_instruktur');
-            $table->string('id_sales');
+            $table->string('karyawan_id')->nullable();
+            $table->string('id_instruktur')->nullable();
+            $table->string('id_sales')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

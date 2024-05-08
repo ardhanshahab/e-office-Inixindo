@@ -11,64 +11,6 @@ class feedbackController extends Controller
 {
     public function index()
     {
-        // $feedbacks = Nilaifeedback::with('rkm')->get();
-
-        //     $groupedFeedbacks = $feedbacks->groupBy('id_rkm');
-        //     $transformedFeedbacks = $groupedFeedbacks->map(function ($groupedFeedback) {
-        //     $firstFeedback = $groupedFeedback->first();
-
-        //     return [
-        //         'id_rkm' => $firstFeedback->id_rkm,
-        //         'nama_materi' => $firstFeedback->rkm->materi->nama_materi,
-        //         'feedbacks' => $groupedFeedback->map(function ($feedback) {
-        //             return [
-        //                 'id' => $feedback->id,
-        //                 'email' => $feedback->email,
-        //                 'materi' => round(($feedback->M1 + $feedback->M2 + $feedback->M3 + $feedback->M4) / 4, 1),
-        //                 'pelayanan' => round(($feedback->P1 + $feedback->P2 + $feedback->P3 + $feedback->P4 + $feedback->P5 + $feedback->P6 + $feedback->P7) / 7, 1),
-        //                 'fasilitas' => round(($feedback->F1 + $feedback->F2 + $feedback->F3 + $feedback->F4 + $feedback->F5) / 5, 1),
-        //                 'instruktur' => round(($feedback->I1 + $feedback->I2 + $feedback->I3 + $feedback->I4 + $feedback->I5 + $feedback->I6 + $feedback->I7 + $feedback->I8) / 8, 1),
-        //                 'instruktur2' => round(($feedback->I1b + $feedback->I2b + $feedback->I3b + $feedback->I4b + $feedback->I5b + $feedback->I6b + $feedback->I7b + $feedback->I8b) / 8, 1),
-        //                 'asisten' => round(($feedback->I1as + $feedback->I2as + $feedback->I3as + $feedback->I4as + $feedback->I5as + $feedback->I6as + $feedback->I7as + $feedback->I8as) / 8, 1),
-        //                 'umum1' => $feedback->U1,
-        //                 'umum2' => $feedback->U2,
-        //             ];
-        //         })
-        //     ];
-        // });
-        // $feedbacks = Nilaifeedback::with('regist', 'rkm')->get();
-
-        // $transformedFeedbacks = $feedbacks->map(function ($feedback) {
-        //     return [
-        //         'id_regist' => $feedback->id_regist,
-        //         'id_rkm' => $feedback->id_rkm,
-        //         'email' => $feedback->email,
-        //         'materi' => round(($feedback->M1 + $feedback->M2 + $feedback->M3 + $feedback->M4) / 4, 1),
-        //         'pelayanan' => round(($feedback->P1 + $feedback->P2 + $feedback->P3 + $feedback->P4 + $feedback->P5 + $feedback->P6 + $feedback->P7) / 7, 1),
-        //         'fasilitas' => round(($feedback->F1 + $feedback->F2 + $feedback->F3 + $feedback->F4 + $feedback->F5) / 5, 1),
-        //         'instruktur' => round(($feedback->I1 + $feedback->I2 + $feedback->I3 + $feedback->I4 + $feedback->I5 + $feedback->I6 + $feedback->I7 + $feedback->I8) / 8, 1),
-        //         'instruktur2' => round(($feedback->I1b + $feedback->I2b + $feedback->I3b + $feedback->I4b + $feedback->I5b + $feedback->I6b + $feedback->I7b + $feedback->I8b) / 8, 1),
-        //         'asisten' => round(($feedback->I1as + $feedback->I2as + $feedback->I3as + $feedback->I4as + $feedback->I5as + $feedback->I6as + $feedback->I7as + $feedback->I8as) / 8, 1),
-        //         'umum1' => $feedback->U1,
-        //         'umum2' => $feedback->U2,
-        //         'regist' => [
-        //             'id' => $feedback->regist->id,
-        //             'nama' => $feedback->regist->peserta->nama, // contoh atribut yang ingin Anda tambahkan dari relasi regist
-        //             // tambahkan atribut lainnya yang Anda perlukan
-        //         ],
-        //         'rkm' => [
-        //             'id' => $feedback->rkm->id,
-        //             'nama_materi' => $feedback->rkm->materi->nama_materi, // contoh atribut yang ingin Anda tambahkan dari relasi rkm
-        //             // tambahkan atribut lainnya yang Anda perlukan
-        //         ],
-        //     ];
-        // });
-
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'List Feedbacks',
-        //     'data' => $feedbacks
-        // ]);
 
         return view('feedback.index');
     }
@@ -128,25 +70,39 @@ class feedbackController extends Controller
             })
             ->get();
 
-        $transformedFeedbacks = $feedbacks->map(function ($feedback) {
-            return [
-                'id_regist' => $feedback->id_regist,
-                'id_rkm' => $feedback->id_rkm,
-                'email' => $feedback->email,
-                'nama_perusahaan' => $feedback->rkm->perusahaan->nama_perusahaan,
-                'materi' => round(($feedback->M1 + $feedback->M2 + $feedback->M3 + $feedback->M4) / 4, 1),
-                'pelayanan' => round(($feedback->P1 + $feedback->P2 + $feedback->P3 + $feedback->P4 + $feedback->P5 + $feedback->P6 + $feedback->P7) / 7, 1),
-                'fasilitas' => round(($feedback->F1 + $feedback->F2 + $feedback->F3 + $feedback->F4 + $feedback->F5) / 5, 1),
-                'instruktur' => round(($feedback->I1 + $feedback->I2 + $feedback->I3 + $feedback->I4 + $feedback->I5 + $feedback->I6 + $feedback->I7 + $feedback->I8) / 8, 1),
-                'instruktur2' => round(($feedback->I1b + $feedback->I2b + $feedback->I3b + $feedback->I4b + $feedback->I5b + $feedback->I6b + $feedback->I7b + $feedback->I8b) / 8, 1),
-                'asisten' => round(($feedback->I1as + $feedback->I2as + $feedback->I3as + $feedback->I4as + $feedback->I5as + $feedback->I6as + $feedback->I7as + $feedback->I8as) / 8, 1),
-            ];
-        });
+            $transformedFeedbacks = $feedbacks->map(function ($feedback) {
+                return [
+                    'id_regist' => $feedback->id_regist,
+                    'id_rkm' => $feedback->id_rkm,
+                    'nama_materi' => $feedback->rkm->materi->nama_materi,
+                    'sales_key' => $feedback->rkm->sales_key,
+                    'instruktur_key' => $feedback->rkm->instruktur_key,
+                    'instruktur_key2' => $feedback->rkm->instruktur_key2,
+                    'asisten_key' => $feedback->rkm->asisten_key,
+                    'tanggal_awal' => $feedback->rkm->tanggal_awal,
+                    'tanggal_akhir' => $feedback->rkm->tanggal_akhir,
+                    'email' => $feedback->email,
+                    'nama_perusahaan' => $feedback->rkm->perusahaan->nama_perusahaan,
+                    'materi' => round(($feedback->M1 + $feedback->M2 + $feedback->M3 + $feedback->M4) / 4, 1),
+                    'pelayanan' => round(($feedback->P1 + $feedback->P2 + $feedback->P3 + $feedback->P4 + $feedback->P5 + $feedback->P6 + $feedback->P7) / 7, 1),
+                    'fasilitas' => round(($feedback->F1 + $feedback->F2 + $feedback->F3 + $feedback->F4 + $feedback->F5) / 5, 1),
+                    'instruktur' => round(($feedback->I1 + $feedback->I2 + $feedback->I3 + $feedback->I4 + $feedback->I5 + $feedback->I6 + $feedback->I7 + $feedback->I8) / 8, 1),
+                    'instruktur2' => round(($feedback->I1b + $feedback->I2b + $feedback->I3b + $feedback->I4b + $feedback->I5b + $feedback->I6b + $feedback->I7b + $feedback->I8b) / 8, 1),
+                    'asisten' => round(($feedback->I1as + $feedback->I2as + $feedback->I3as + $feedback->I4as + $feedback->I5as + $feedback->I6as + $feedback->I7as + $feedback->I8as) / 8, 1),
+                    'umum1' => $feedback->U1,
+                    'umum2' => $feedback->U2,
+                ];
+            })->groupBy('nama_perusahaan')->map(function($groupedFeedbacks, $nama_perusahaan) {
+                return [
+                    'nama_perusahaan' => $nama_perusahaan,
+                    'data' => $groupedFeedbacks
+                ];
+            });
 
-        return $transformedFeedbacks;
-// $post =  $transformedGroupedFeedbacks;
-            // $feedbacks =  $grou  pedFeedbacks;
+
+            $post =  $transformedFeedbacks;
             // return $post;
+            // return $feedbacks;
 
         return view('feedback.show', compact('post', 'feedbacks'));
     }

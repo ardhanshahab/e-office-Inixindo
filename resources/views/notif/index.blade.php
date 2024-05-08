@@ -113,12 +113,15 @@
             "columns": [
                 {"data": "id"},
                 {"data": "nama_jabatan"},
-                {
+                if(userRole == 'Direktur' || userRole == 'Direktur Utama'){
+                    {
                     "data": null,
-                    "render": function(data, type, row) {
-                        if (userRole === 'Direktur' || userRole === 'Direktur Utama') {
-                            return "";
-                        } else {
+                    "visible": false
+                    }
+                }else{
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
                             var actions = "";
                                 actions += '<div class="dropdown">';
                                 actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
@@ -132,12 +135,12 @@
                                 actions += '</form>';
                                 actions += '</div>';
                                 actions += '</div>';
-                            return actions;
+                                return actions;
+
                         }
                     }
                 }
             ]
-
         });
     });
 </script>

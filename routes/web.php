@@ -53,6 +53,8 @@ Route::resource('/registrasi', \App\Http\Controllers\RegistrasiController::class
 Route::resource('/feedback', \App\Http\Controllers\feedbackController::class);
 Route::resource('/jabatan', \App\Http\Controllers\jabatanController::class);
 Route::resource('/nilaifeedback', \App\Http\Controllers\nilaifeedbackController::class);
+Route::resource('/notif', \App\Http\Controllers\notifController::class);
+
 Route::get('/rkmEditInstruktur/{id}', [App\Http\Controllers\RKMController::class, 'editInstruktur'])->name('editInstruktur');
 Route::put('/rkmUpdateInstruktur', [App\Http\Controllers\RKMController::class, 'updateInstruktur'])->name('updateInstruktur');
 Route::get('/rkmEdit', [App\Http\Controllers\RKMController::class, 'editRKM'])->name('rkmEdit');

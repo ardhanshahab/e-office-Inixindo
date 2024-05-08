@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
                 @if ( auth()->user()->jabatan == 'HRD' )
-                    <a href="/user/register" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/user-plus.svg') }}" class="" width="30px"> Tambah User</a>
+                    <a href="/user/register" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/user-plus.svg') }}" class="" width="30px"> Tambah Karyawan</a>
                 @endif
             </div>
             <div class="card m-4">
@@ -106,8 +106,8 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 <script>
     $(document).ready(function(){
         $('#usertable').DataTable({
@@ -148,7 +148,13 @@
                         actions += '</form>';
                         actions += '</div>';
                         actions += '</div>';
-                    } else {
+                    }else if(userRole == 'Direktur Utama' || userRole == 'Direktur'){
+                        actions += '<div class="dropdown">';
+                        actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
+                        actions += '<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+                        actions += '<a class="dropdown-item" href="{{ url('/profile') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
+                        actions += '</div>';
+                    }else {
                         actions += '<div class="dropdown">';
                         actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
                         actions += '</div>';

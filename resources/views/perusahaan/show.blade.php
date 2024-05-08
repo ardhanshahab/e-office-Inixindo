@@ -153,7 +153,7 @@
                                                     <th scope="row">{{ $loop->iteration }}</th>
                                                     <td>{{ $pesertas->nama }}</td>
                                                     <td>{{ $pesertas->email }}</td>
-                                                    <td><a href="#" class="btn click-primary my-2 list-materi-btn" data-id="{{ $pesertas->id }}">List Materi</a></td>
+                                                    <td><a href="#" class="btn click-primary my-2 list-materi-btn" data-id="{{ $pesertas->id }}" data-name="{{ $pesertas->nama }}">List Materi</a></td>
                                                     {{-- <td><a href="#" class="btn click-primary my-2">List Materi</a></td> --}}
                                                 </tr>
                                                 @endforeach
@@ -163,7 +163,10 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">List Materi</h5>
+                                        <div class="d-flex">
+                                            <h5 class="card-title">Histori Pelatihan - &nbsp;</h5>
+                                            <h5 id="nama_peserta"></h5>
+                                        </div>
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -310,6 +313,9 @@
         $(document).ready(function () {
             $(".list-materi-btn").click(function () {
                 var idPeserta = $(this).data("id");
+                var namaPeserta = $(this).data("name");
+                console.log(namaPeserta);
+                $("#nama_peserta").text(namaPeserta)
                 $.ajax({
                 url: "/api/registrasi/list/" + idPeserta,
                 type: "GET",

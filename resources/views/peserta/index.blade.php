@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager')
+                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager')
                     <a href="{{ route('peserta.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah peserta"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Peserta</a>
                 @endif
             </div>
@@ -28,7 +28,6 @@
                     <table class="table table-striped" id="pesertatable">
                         <thead>
                           <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Email</th>
                             <th scope="col">id</th>
@@ -52,7 +51,6 @@
                     <table class="table table-striped" id="pesertaalltable">
                         <thead>
                           <tr>
-                            <th scope="col">No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Email</th>
                             <th scope="col">Jenis Kelamin</th>
@@ -68,7 +66,29 @@
                     </table>
                 </div>
             </div>
+            <div class="card m-4" id="pesertaSales">
+                <div class="card-body table-responsive">
+                    <h3 class="card-title text-center my-1">{{ __('Data Peserta') }}</h3>
+                    <table class="table table-striped" id="pesertatableSales">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">id</th>
+                            <th scope="col">id</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Nomor Handphone</th>
+                            <th scope="col">Alamat</th>
+                            <th scope="col">Perusahaan/Instansi</th>
+                            <th scope="col">Tanggal Lahir</th>
+                          </tr>
+                        </thead>
+                        <tbody>
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -130,7 +150,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -140,12 +160,20 @@
         }
         var idSales = "{{ auth()->user()->id_sales }}";
         // console.log(idSales);
-        if(idInstruktur || idSales){
+        if(idInstruktur){
             $('#peserta').show();
             $('#pesertaall').hide();
-        }else{
+            $('#pesertaSales').hide();
+        }else if(idSales){
+            $('#peserta').hide();
+            $('#pesertaall').hide();
+            $('#pesertaSales').show();
+        }
+        else{
            $('#peserta').hide();
            $('#pesertaall').show();
+           $('#pesertaSales').hide();
+
         }
         $('#pesertaalltable').DataTable({
             "dom": 'Bfrtip',
@@ -161,7 +189,6 @@
                     }
                 },
                 "columns": [
-                    {"data": "id"},
                     {"data": "nama"},
                     {"data": "email"},
                     {
@@ -181,7 +208,7 @@
                     },
 
                 ],
-            });
+        });
         $('#pesertatable').DataTable({
             "dom": 'Bfrtip',
             "buttons": ['excel', 'pdf'],
@@ -192,11 +219,12 @@
                         $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                     },
                     "complete": function () {
-                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                        setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                     }
                 },
                 "columns": [
-                    {"data": "id"},
                     {"data": "peserta.nama"},
                     {"data": "peserta.email"},
                     {
@@ -219,16 +247,63 @@
                     {
                         "data": "peserta.tanggal_lahir",
                         "render": function(data) {
+                            moment.locale('id')
                             return moment(data).format('DD MMMM YYYY');
                         }
                     },
 
                 ],
                 "initComplete": function() {
-                            this.api().columns(3).search(idInstruktur).draw();
-                            this.api().columns(4).search(idSales).draw();
+                            this.api().columns(2).search(idInstruktur).draw();
+                            this.api().columns(3).search(idSales).draw();
                         }
-            });
+        });
+        $('#pesertatableSales').DataTable({
+            "dom": 'Bfrtip',
+            "buttons": ['excel', 'pdf'],
+                "ajax": {
+                    "url": "{{ route('getPesertaall') }}", // URL API untuk mengambil data
+                    "type": "GET",
+                    "beforeSend": function () {
+                        $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
+                    },
+                    "complete": function () {
+                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    }
+                },
+                "columns": [
+                    {"data": "nama"},
+                    {"data": "email"},
+                    {
+                        "data": "id",
+                        "visible": false
+                    },
+                    {
+                        "data": "perusahaan.sales_key",
+                        "visible": false
+                    },
+                    {
+                        "data": null,
+                        "render": function(data) {
+                            return data.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan';
+                        }
+                    },
+                    {"data": "no_hp"},
+                    {"data": "alamat"},
+                    {"data": "perusahaan.nama_perusahaan"},
+                    {
+                        "data": "tanggal_lahir",
+                        "render": function(data) {
+                            return moment(data).format('DD MMMM YYYY');
+                        }
+                    },
+
+                ],
+                "initComplete": function() {
+                            // this.api().columns(2).search(idInstruktur).draw();
+                            this.api().columns(3).search(idSales).draw();
+                        }
+        });
     });
 </script>
 @endpush

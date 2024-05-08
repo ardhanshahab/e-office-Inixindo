@@ -16,9 +16,8 @@
     </div>
 </div>
     <div class="row justify-content-center">
-        {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-12 d-flex my-2 justify-content-end">
-             @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Admin Sales' || auth()->user()->jabatan == 'Finance & Accounting' )
+             @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Finance & Accounting' )
             <a class="btn click-primary mx-1" href="{{ route('rkm.create') }}">Tambah RKM</a>
             @endif
         </div>
@@ -118,6 +117,8 @@
 
 @push('js')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+
 <script>
     function getDataRKM() {
         var tahun = document.getElementById('tahun').value;
@@ -136,7 +137,6 @@
                 $('#loadingModal').modal('show');
             },
             complete: function () {
-                $('#loadingModal').modal('hide');
             },
             success: function(response) {
                 console.log(response);
@@ -146,10 +146,11 @@
                 response.data.forEach(function(monthData) {
                     monthData.weeksData.forEach(function(weekData) {
                         console.log(weekData);
-                        html += '<div class="card my-2">';
+                        html += '<div class="card my-1">';
                         html += '<div class="card-body table-responsive">';
                         html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
-                        html += '<p class="card-title my-1">Periode : ' + weekData.start + ' - ' + weekData.end + '</p>';
+                        moment.locale('id');
+                        html += '<p class="card-title my-1">Periode : ' + moment(weekData.start).format('DD MMMM YYYY') + ' - ' + moment(weekData.end).format('DD MMMM YYYY') + '</p>';
                         html += '<table class="table table-responsive table-striped">';
                         html += '<thead>';
                         html += '<tr>';
@@ -162,7 +163,7 @@
                         html += '<th scope="col">Event</th>';
                         html += '<th scope="col">Ruang</th>';
                         html += '<th scope="col">Pax</th>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Accounting' || jabatan == 'Customer Care') {
+                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Accounting' || jabatan == 'Customer Care' || jabatan == 'Customer Service' || jabatan == 'Technical Support' || jabatan === 'Direktur Utama' || jabatan === 'Direktur') {
                             html += '<th scope="col">Aksi</th>';
                         }
                         html += '</tr>';
@@ -205,7 +206,7 @@
                                 html += '<td>' + rkm.event + '</td>';
                                 html += '<td>' + rkm.ruang + '</td>';
                                 html += '<td>' + rkm.total_pax + '</td>';
-                                if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Accounting' || jabatan == 'Customer Care') {
+                                if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Accounting' || jabatan == 'Customer Care' || jabatan == 'Customer Service' || jabatan == 'Technical Support'|| jabatan === 'Direktur Utama' || jabatan === 'Direktur' ) {
                                     html += '<td>';
                                     html += '<div class="btn-group dropup">';
                                     html += '<button type="button" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
@@ -227,10 +228,10 @@
                         html += '</div>';
                     });
                 });
-
-                $('#content').html(html);
-                // Hide loading modal
+                setTimeout(() => {
                 $('#loadingModal').modal('hide');
+                $('#content').html(html);
+                }, 1000);
             }
         });
     }

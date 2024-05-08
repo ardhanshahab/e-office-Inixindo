@@ -43,7 +43,8 @@ class PerusahaanController extends Controller
      */
     public function create(): View
     {
-        return view('perusahaan.create');
+        $sales = karyawan::where('jabatan', 'sales')->get();
+        return view('perusahaan.create', compact('sales'));
     }
 
     /**
@@ -54,6 +55,7 @@ class PerusahaanController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->all());
         $this->validate($request, [
             'nama_perusahaan' => 'required',
             'kategori_perusahaan' => 'nullable',

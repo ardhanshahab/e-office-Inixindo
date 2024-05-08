@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\RKM;
 use App\Models\Registrasi;
+use App\Models\notif;
 use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
@@ -54,6 +55,15 @@ class HomeController extends Controller
             $karyawanaktif = User::where('status_akun', '1')->count();
             // return $kelasmingguini;
             $pesertaaktif = Registrasi::all()->count();
+
+            $startDate = Carbon::now()->startOfWeek(); // Mengambil tanggal awal minggu ini
+            $endDate = Carbon::now()->endOfWeek(); // Mengambil tanggal akhir minggu ini
+            $notifikasi = notif::with('users')
+            ->whereBetween('tanggal_awal', [$startDate, $endDate])
+            ->whereBetween('tanggal_akhir', [$startDate, $endDate])
+            ->get();
+
+
             return view('newhome', compact(
                 'totalkaryawan',
                 'karyawanaktif',
@@ -61,7 +71,8 @@ class HomeController extends Controller
                 'pesertaanda',
                 'runningclass',
                 'kelasmingguini',
-                'pesertaaktif'
+                'pesertaaktif',
+                'notifikasi'
                 ));
 
     }

@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('isi_pax');
             $table->date('tanggal_awal');
             $table->date('tanggal_akhir');
-            $table->string('metode_kelas');
-            $table->string('event');
-            $table->string('ruang');
+            $table->string('metode_kelas')->nullable();
+            $table->string('event')->nullable();
+            $table->string('ruang')->nullable();
             $table->string('instruktur_key')->nullable();
             $table->string('instruktur_key2')->nullable();
             $table->string('asisten_key')->nullable();

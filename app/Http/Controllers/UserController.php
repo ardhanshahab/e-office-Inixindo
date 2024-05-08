@@ -30,34 +30,40 @@ class UserController extends Controller
 
     public function regist(Request $request)
     {
+        // dd($request->all());
 
         $data = $request->validate([
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255'],
             'jabatan' => ['required', 'string', 'max:255'],
-            'status_akun' => ['required', 'string', 'max:255'],
+            'divisi' => ['required', 'string', 'max:255'],
+            'status_akun' => ['nullable', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'karyawan_id' => ['required', 'string'],
             'kode_karyawan' => ['nullable', 'string'],
         ]);
-        dd($data);
 
-
+        // dd($request->status_akun);
         try {
-            DB::beginTransaction();
+            $id_instruktur = $request->jabatan == 'Instruktur' ? $request->kode_karyawan : null;
+            $id_sales = $request->jabatan == 'Sales' ? $request->kode_karyawan : null;
 
             User::create([
-                'username' => $data['username'],
-                'jabatan' => $data['jabatan'],
-                'status_akun' => $data['status_akun'],
-                'karyawan_id' => $data['karyawan_id'],
-                'password' => Hash::make($data['password']),
+                'username' => $request->username,
+                'jabatan' => $request->jabatan,
+                'status_akun' => '1',
+                'karyawan_id' => $request->karyawan_id,
+                'password' => Hash::make($request->password),
+                'id_instruktur' => $id_instruktur,
+                'id_sales' => $id_sales,
             ]);
 
             Karyawan::create([
-                'nama_lengkap' => $data['nama_lengkap'],
-                'status_aktif' => $data['status_akun'],
-                'jabatan' => $data['jabatan'],
+                'nama_lengkap' => $request->nama_lengkap,
+                'status_aktif' => '1',
+                'jabatan' => $request->jabatan,
+                'divisi' => $request->divisi,
+                'kode_karyawan' => $request->kode_karyawan,
             ]);
 
             DB::commit();
@@ -67,6 +73,7 @@ class UserController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', 'Gagal menambahkan akun karyawan. Silakan coba lagi. Error: ' . $e->getMessage());
         }
+
 
     }
 
@@ -114,8 +121,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         $users = User::findOrFail($id);
+        $karyawan = karyawan::findOrFail($id);
         // dd($users);
         $users->delete();
+        $karyawan->delete();
         return redirect('/user')->with('success', 'User Berhasil Dihapus');
     }
 

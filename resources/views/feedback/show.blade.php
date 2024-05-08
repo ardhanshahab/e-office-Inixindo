@@ -5,13 +5,13 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            {{ $post }}
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
+                    <a href="/feedback" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                     <h5 class="card-title">Detail Feedbacks</h5>
-                    @foreach ($post as $feedback)
-                    {{ $post }}
+                    {{-- {{ $post }} --}}
+                        @foreach($post as $group)
+                        <div class="row">
                             <div class="col-lg-5 col-md-12 col-sm-12">
                                 <div class="row">
                                     <div class="col-md-4 col-sm-4 col-xs-4">
@@ -21,7 +21,7 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['nama_materi'] }}</p>
+                                        <p>{{ $group['data'][0]['nama_materi'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -32,7 +32,8 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['tanggal_awal'] }} s/d {{ $feedback['rkm']['tanggal_akhir'] }}</p>
+                                        <p>{{ \Carbon\Carbon::parse($group['data'][0]['tanggal_awal'])->translatedFormat('d F Y') }} s/d {{ \Carbon\Carbon::parse($group['data'][0]['tanggal_akhir'])->translatedFormat('d F Y') }}</p>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -43,7 +44,7 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['instruktur_key'] }}</p>
+                                        <p>{{ $group['data'][0]['instruktur_key'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -54,7 +55,7 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['instruktur_key2'] }}</p>
+                                        <p>{{ $group['data'][0]['instruktur_key2'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -65,7 +66,7 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['asisten_key'] }}</p>
+                                        <p>{{ $group['data'][0]['asisten_key'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -76,7 +77,7 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['nama_perusahaan'] }}</p>
+                                        <p>{{ $group['nama_perusahaan'] }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -87,49 +88,47 @@
                                         <p>:</p>
                                     </div>
                                     <div class="col-md-7 col-sm-7 col-xs-7">
-                                        <p>{{ $feedback['rkm']['sales_key'] }}</p>
+                                        <p>{{ $group['data'][0]['sales_key'] }}</p>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-
-                    <div class="col-lg-7 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <table class="table table-striped table-auto table-responsive">
-                                    <thead>
-                                        <th>Peserta</th>
-                                        <th>Materi</th>
-                                        <th>Pelayanan</th>
-                                        <th>Fasilitas</th>
-                                        <th>Instruktur</th>
-                                        <th>Instruktur2</th>
-                                        <th>Asisten</th>
-                                        <th>Umum 1</th>
-                                        <th>Umum 2</th>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($post as $feedbacks)
-                                            @foreach ($feedbacks as $feedback)
-                                                <tr>
-                                                    <td>{{ $feedback['regist']['nama'] }}</td>
-                                                    <td>{{ $feedback['materi'] }}</td>
-                                                    <td>{{ $feedback['pelayanan'] }}</td>
-                                                    <td>{{ $feedback['fasilitas'] }}</td>
-                                                    <td>{{ $feedback['instruktur'] }}</td>
-                                                    <td>{{ $feedback['instruktur2'] }}</td>
-                                                    <td>{{ $feedback['asisten'] }}</td>
-                                                    <td>{{ $feedback['umum1'] }}</td>
-                                                    <td>{{ $feedback['umum2'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                            <div class="col-lg-7 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-striped table-auto table-responsive">
+                                            <thead>
+                                                <th>Peserta</th>
+                                                <th>Materi</th>
+                                                <th>Pelayanan</th>
+                                                <th>Fasilitas</th>
+                                                <th>Instruktur</th>
+                                                <th>Instruktur2</th>
+                                                <th>Asisten</th>
+                                                <th>Umum 1</th>
+                                                <th>Umum 2</th>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($group['data'] as $feedback)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $feedback['materi'] }}</td>
+                                                            <td>{{ $feedback['pelayanan'] }}</td>
+                                                            <td>{{ $feedback['fasilitas'] }}</td>
+                                                            <td>{{ $feedback['instruktur'] }}</td>
+                                                            <td>{{ $feedback['instruktur2'] }}</td>
+                                                            <td>{{ $feedback['asisten'] }}</td>
+                                                            <td>{{ $feedback['umum1'] }}</td>
+                                                            <td>{{ $feedback['umum2'] }}</td>
+                                                        </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                        <hr>
+                    @endforeach
                 </div>
             </div>
         </div>

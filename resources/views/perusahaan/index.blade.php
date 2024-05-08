@@ -19,7 +19,7 @@
         <div class="col-md-12">
             {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting')
+                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Adm Sales')
                     <a href="{{ route('perusahaan.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah Perusahaan"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Perusahaan</a>
                 @endif
             </div>
@@ -31,11 +31,11 @@
                           <tr>
                             <th scope="col">No</th>
                             <th scope="col">Nama Perusahaan</th>
+                            <th scope="col">Kategori Perusahaan</th>
+                            <th scope="col">Wilayah</th>
                             <th scope="col">Sales</th>
-                            {{-- @if ( auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager' || auth()->user()->jabatan == 'SPV Sales') --}}
                             <th scope="col">Aksi</th>
-                            {{-- @endif --}}
-                          </tr>
+                        </tr>
                         </thead>
                         <tbody>
                         </tbody>
@@ -117,12 +117,16 @@
                     $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                 },
                 "complete": function () {
-                    $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                 }
             },
             "columns": [
                 {"data": "id"},
                 {"data": "nama_perusahaan"},
+                {"data": "kategori_perusahaan"},
+                {"data": "lokasi"},
                 {
                     "data": null,
                     "render": function (data, type, row) {
@@ -134,10 +138,11 @@
                         "data": null,
                         "render": function(data, type, row) {
                             var actions = "";
-                            var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'GM', 'Sales', 'Adm Sales'];
+                            var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'GM', 'Sales', 'Adm Sales', 'Customer Care', 'Customer Service', 'HRD', 'Finance &amp; Accounting', 'Direktur', 'Direktur Utama'];
                             var userRole = '{{ auth()->user()->jabatan }}';
+                            console.log(userRole);
                             var idSales = '{{ auth()->user()->id_sales }}';
-                            console.log(row.sales_key);
+                            // console.log(row.sales_key);
                             if (allowedRoles.includes(userRole)) {
                                 actions += '<div class="dropdown">';
                                 actions += '<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>';
@@ -150,7 +155,7 @@
                                         actions += '@method('DELETE')';
                                         actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
                                         actions += '</form>';
-                                    } else if (userRole == 'SPV Sales') {
+                                    } else if (userRole == 'SPV Sales' || userRole == 'Adm Sales') {
                                         actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
                                         actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                                         actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
@@ -165,9 +170,11 @@
                                         actions += '@method('DELETE')';
                                         actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
                                         actions += '</form>';
-                                    }else {
-                                        actions += '';
+                                    }else if(userRole == 'Customer Care' || userRole == 'Customer Service' || userRole == 'HRD' || userRole == 'Finance &amp; Accounting' || userRole === 'Direktur Utama' || userRole === 'Direktur' ){
+                                        actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                                         // actions += '<a class="dropdown-item" disabled href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
+                                    }else{
+                                        actions += '';
                                     }
 
                                 actions += '</div>';

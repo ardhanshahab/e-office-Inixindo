@@ -25,7 +25,25 @@
                         <div class="row mb-3">
                             <label for="kategori_materi" class="col-md-4 col-form-label text-md-start">{{ __('Kategori Materi') }}</label>
                             <div class="col-md-6">
-                                <input id="kategori_materi" type="text" placeholder="Masukan Kategori Materi" class="form-control @error('kategori_materi') is-invalid @enderror" name="kategori_materi" value="{{ old('kategori_materi') }}" autocomplete="kategori_materi" autofocus>
+                                <select class="form-select @error('kategori_materi') is-invalid @enderror" name="kategori_materi" value="{{ old('kategori_materi', ) }}" required autocomplete="kategori_materi">
+                                    <option selected>Pilih Kategori Materi</option>
+                                    <option value="Management">Management</option>
+                                    <option value="Security">Security</option>
+                                    <option value="Data Analist">Data Analist</option>
+                                    <option value="Data Engineer">Data Engineer</option>
+                                    <option value="Cloud">Cloud</option>
+                                    <option value="Data Center">Data Center</option>
+                                    <option value="Networking">Networking</option>
+                                    <option value="Server">Server</option>
+                                    <option value="Virtualization">Virtualization</option>
+                                    <option value="Hardware">Hardware</option>
+                                    <option value="GIS">GIS</option>
+                                    <option value="Multimedia">Multimedia</option>
+                                    <option value="Programming">Programming</option>
+                                    <option value="Software Engineer">Software Engineer</option>
+                                    <option value="Office">Office</option>
+                                    <option value="Non-IT">Non-IT</option>
+                                </select>
                                 @error('kategori_materi')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -49,7 +67,19 @@
                         <div class="row mb-3">
                             <label for="vendor" class="col-md-4 col-form-label text-md-start">{{ __('Vendor') }}</label>
                             <div class="col-md-6">
-                                <input id="vendor" type="text" placeholder="Masukan Vendor Materi" class="form-control @error('vendor') is-invalid @enderror" name="vendor" value="{{ old('vendor') }}" autocomplete="vendor" autofocus>
+                                <select class="form-select @error('kategori_materi') is-invalid @enderror" name="kategori_materi" value="{{ old('kategori_materi', ) }}" required autocomplete="kategori_materi">
+                                    <option selected>Pilih Vendor</option>
+                                    <option value="AWS">AWS</option>
+                                    <option value="Cisco">Cisco</option>
+                                    <option value="EC-Council">EC-Council</option>
+                                    <option value="EPI">EPI</option>
+                                    <option value="Google">Google</option>
+                                    <option value="ISACA">ISACA</option>
+                                    <option value="LSP">LSP</option>
+                                    <option value="Microsoft">Microsoft</option>
+                                    <option value="Mikrotik">Mikrotik</option>
+                                    <option value="Regular">Regular</option>
+                                </select>
                                 @error('vendor')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

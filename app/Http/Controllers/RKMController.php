@@ -154,7 +154,7 @@ class RKMController extends Controller
             'tanggal_akhir' => 'nullable',
             'metode_kelas' => 'nullable',
             'event' => 'nullable',
-            'ruang' => 'nullable',
+            // 'ruang' => 'nullable',
             'status' => 'nullable',
         ]);
 
@@ -168,7 +168,7 @@ class RKMController extends Controller
             'tanggal_akhir' => $request->tanggal_akhir,
             'metode_kelas' => $request->metode_kelas,
             'event' => $request->event,
-            'ruang' => $request->ruang,
+            // 'ruang' => $request->ruang,
             'status' => $request->status,
             'isi_pax' => $request->pax,
         ]);
@@ -266,13 +266,16 @@ class RKMController extends Controller
         // return $rkm;
 
         return view('rkm.editinstruktur', compact('rkm', 'karyawan', 'ids'));
-        }
+    }
     public function updateInstruktur(Request $request)
     {
+
+        // dd($request->all());
         $this->validate($request, [
             'instruktur_key' => 'required',
             'instruktur_key2' => 'required',
             'asisten_key' => 'nullable',
+            'ruang' => 'nullable',
         ]);
 
         $ids = $request->ids;
@@ -283,6 +286,7 @@ class RKMController extends Controller
                 'instruktur_key' => $request->instruktur_key,
                 'instruktur_key2' => $request->instruktur_key2,
                 'asisten_key' => $request->asisten_key,
+                'ruang' => $request->ruang,
             ]);
         }
 
@@ -314,7 +318,6 @@ class RKMController extends Controller
         ]);
 
         $post = RKM::findOrFail($id);
-
 
             $post->update([
                 'sales_key' => $request->sales_key,

@@ -102,7 +102,24 @@
                             </div>
                         </div>
 
-
+                        <div class="row mb-3">
+                            <label for="ruang" class="col-md-4 col-form-label text-md-start">{{ __('Ruang') }}</label>
+                            <div class="col-md-6">
+                                <select class="form-select @error('ruang') is-invalid @enderror" name="ruang" value="{{ old('ruang', $rkm->ruang) }}" autocomplete="ruang">
+                                    <option value="">Pilih Ruang</option>
+                                    <option value="1" @if ($rkm->ruang == "1") selected @endif>1</option>
+                                    <option value="2" @if ($rkm->ruang == "2") selected @endif>2</option>
+                                    <option value="3" @if ($rkm->ruang == "3") selected @endif>3</option>
+                                    <option value="4" @if ($rkm->ruang == "4") selected @endif>4</option>
+                                    <option value="ADOC" @if ($rkm->ruang == "ADOC") selected @endif>ADOC</option>
+                                </select>
+                                @error('ruang')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

@@ -2,9 +2,46 @@
 
 @section('content')
 <div class="container-fluid" style="background: ">
-    <h5 style="text-transform: capitalize; color:#000;">Selamat Datang, {{ auth()->user()->username }}</h5>
     <div class="row justify-content-between">
         <div class="container d-flex justify-content-around my-4">
+            <!-- Modal Pemberitahuan -->
+            <div class="modal fade" id="modalPemberitahuan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="col-md-12 d-flex justify-content-between">
+                                <h5 class="modal-title" id="exampleModalLabel">Notifikasi</h5>
+                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting')
+                                    <a href="{{ route('notif.create') }}" class="btn btn-sm btn-custom mx-4"><img src="{{ asset('icon/plus.svg') }}" class="" width="20px"></a>
+                                @endif
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            {{-- {{ $notifikasi }} --}}
+                            @foreach ($notifikasi->sortByDesc('created_at') as $notif)
+                            <div class="card-body" id="notif">
+                                <table>
+                                    <tr>
+                                      <td style="width:80%"><div class="card-title" style="text-transform: capitalize">Pengumuman <strong>{{ $notif->tipe_notifikasi }}</strong> Dari {{ $notif->id_user }} <b>{{ $notif->users->jabatan }}</b>
+                                        <p> {{ $notif->isi_notifikasi }} </p>
+                                        <p class="m-0">{{ \Carbon\Carbon::parse($notif->created_at)->translatedFormat('d F Y \J\a\m H:i:s') }}</p></div></td>
+                                      <td style="width:20%">
+                                        {{-- <a href="#" class="btn btn-primary">View</a> --}}
+                                        <a href="#" class="btn btn-danger" id="dismiss-notification">Tutup</a>
+                                      </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <hr class="m-0" id="hr">
+                            @endforeach
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-custom" data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @if (auth()->user()->jabatan == 'Instruktur' || auth()->user()->jabatan == 'Education Manager')
             <div class="mx-1" id="hero1">
                 <h5 class="card-title text-center">Kelas anda minggu ini</h5>
@@ -79,7 +116,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting')
+                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Direktur' || auth()->user()->jabatan == 'Direktur Utama')
                                 <div class="col-sm-6 my-1">
                                     <div class="card"  id="card-hover">
                                         <div class="card-body d-flex">
@@ -94,6 +131,21 @@
                                     </div>
                                 </div>
                                 @endif
+                                <div class="col-sm-6 my-1">
+                                    <div class="card"  id="card-hover">
+                                        <div class="card-body d-flex">
+                                            <div class="col-md-2">
+                                                <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
+                                            </div>
+                                            <div class="col-md-10" style="margin-left: 10px">
+                                                <a href="#" class="link stretched-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalPemberitahuan">
+                                                    <h5 class="card-title">Notifikasi</h5>
+                                                </a>
+                                                <p class="card-text">Pemberitahuan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -219,8 +271,6 @@
         </div>
     </div>
 </div>
-
-
 <style>
     @media screen and (max-width: 768px) {
         a {
@@ -229,14 +279,52 @@
         }
 
     }
-    body.dark-theme #hero1 {
-            color: #ffffff
+    #notif{
+        padding: 0.5rem;
+        table{
+            width: 100%;
+            tr{
+            display:flex;
+            td{
+                a.btn{
+                font-size: 0.8rem;
+                padding: 3px;
+                }
+            }
+            td:nth-child(2){
+                text-align:right;
+                justify-content: space-around;
+            }
+            }
         }
 
-    body.light-theme #hero1 {
-            color: #000000
         }
+    .btn-custom {
+        background-color: #182F51;
+        color: white;
+    }
+    .btn-custom:hover {
+        background-color: #355C7C;
+        color: white;
+    }
 
 
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+$('#modalPemberitahuan').on('click', '.btn-danger', function(e) {
+  e.preventDefault();
+  $(this).closest('.card-body').hide();
+
+  // Periksa apakah masih ada notifikasi yang tersisa
+  if ($('#modalPemberitahuan .card-body:visible').length === 0) {
+    $('hr').hide();
+    $('#modalPemberitahuan .modal-body').append('<p>Tidak ada notifikasi</p>');
+  }
+});
+
+
+</script>
 @endsection

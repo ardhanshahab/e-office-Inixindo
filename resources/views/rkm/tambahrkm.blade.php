@@ -12,7 +12,7 @@
                         <div class="row mb-3">
                             <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
-                                @if (auth()->user()->jabatan == 'SPV Sales')
+                                @if (auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Adm Sales' )
                                 <select class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
                                     <option value="">Pilih Sales</option>
                                     @foreach ($sales as $salesis)
@@ -56,7 +56,7 @@
                         <div class="row mb-3">
                             <label for="perusahaan_key" class="col-md-4 col-form-label text-md-start">{{ __('Perusahaan / Instansi') }}</label>
                             <div class="col-md-6">
-                                @if (auth()->user()->jabatan == 'SPV Sales')
+                                @if (auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Adm Sales' )
                                 <select style="height: 30px" class="form-select @error('perusahaan_key') is-invalid @enderror" name="perusahaan_key" id="perusahaan_key">
                                 </select>
                                 @else
@@ -122,7 +122,13 @@
                         <div class="row mb-3">
                             <label for="metode_kelas" class="col-md-4 col-form-label text-md-start">{{ __('Metode Kelas') }}</label>
                             <div class="col-md-6">
-                                <input id="metode_kelas" type="text" placeholder="Masukan Metode Kelas" class="form-control @error('metode_kelas') is-invalid @enderror" name="metode_kelas" value="{{ old('metode_kelas') }}" autocomplete="metode_kelas" autofocus>
+                                <select class="form-select @error('metode_kelas') is-invalid @enderror" name="metode_kelas" value="{{ old('metode_kelas', ) }}" required autocomplete="metode_kelas">
+                                    <option selected>Pilih Metode Kelas</option>
+                                    <option value="Inhouse Bandung">Inhouse Bandung</option>
+                                    <option value="Inhouse Luar Bandung">Inhouse Luar Bandung</option>
+                                    <option value="Offline">Offline</option>
+                                    <option value="Virtual">Virtual</option>
+                                </select>
                                 @error('metode_kelas')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -134,27 +140,14 @@
                         <div class="row mb-3">
                             <label for="event" class="col-md-4 col-form-label text-md-start">{{ __('Event') }}</label>
                             <div class="col-md-6">
-                                <input id="event" type="text" placeholder="Masukan Event" class="form-control @error('event') is-invalid @enderror" name="event" value="{{ old('event') }}" autocomplete="event" autofocus>
-                                @error('event')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="ruang" class="col-md-4 col-form-label text-md-start">{{ __('Ruang') }}</label>
-                            <div class="col-md-6">
-                                <select class="form-select @error('ruang') is-invalid @enderror" name="ruang" value="{{ old('ruang', ) }}" required autocomplete="ruang">
-                                    <option selected>Pilih Ruang</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="ADOC">ADOC</option>
+                                <select class="form-select @error('event') is-invalid @enderror" name="event" value="{{ old('event', ) }}" required autocomplete="event">
+                                    <option selected>Pilih Event</option>
+                                    <option value="Kelas">Kelas</option>
+                                    <option value="Workshop">Workshop</option>
+                                    <option value="Webinar">Webinar</option>
+                                    <option value="Narasumber">Narasumber</option>
                                 </select>
-                                @error('ruang')
+                                @error('event')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
