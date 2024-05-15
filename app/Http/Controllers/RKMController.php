@@ -100,17 +100,7 @@ class RKMController extends Controller
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
             ->where('materi_key', $materi_key)
             ->whereMonth('tanggal_awal', $bulan)
-            // ->whereIn('tanggal_awal', function ($query) use ($materi_key, $bulan) {
-            //     $query->select('tanggal_awal')
-            //         ->from('r_k_m_s')
-            //         ->where('materi_key', $materi_key)
-            //         ->whereMonth('tanggal_awal', $bulan) // Memastikan bulan sama dengan bulan saat ini
-            //         ->groupBy('tanggal_awal')
-            //         ->havingRaw('COUNT(tanggal_awal) >= 1');
-            // })
             ->get();
-
-
 
         // dd($rkm);
 
@@ -162,24 +152,9 @@ class RKMController extends Controller
         // return $id;
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
 
-        // $materiKey = $id;
-
-        // $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-        //     ->where('materi_key', $materiKey)
-        //     ->whereExists(function ($query) {
-        //         $query->select(DB::raw(1))
-        //               ->from('r_k_m_s as sub')
-        //               ->whereColumn('sub.materi_key', 'r_k_m_s.materi_key')
-        //               ->whereColumn('sub.tanggal_awal', 'r_k_m_s.tanggal_awal')
-        //               ->groupBy('sub.materi_key', 'sub.tanggal_awal')
-        //               ->havingRaw('COUNT(*) > 1');
-        //     })
-        //     // ->latest() // Orders by 'created_at' column by default
-        //     ->get();
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
           ->where('id', $id)
           ->firstOrFail();
-        // $ids = $rkm->pluck('id');
         // return $rkm;
 
         return view('rkm.editinstruktur', compact('rkm', 'karyawan'));
@@ -194,6 +169,7 @@ class RKMController extends Controller
             'asisten_key' => 'nullable',
             'ruang' => 'nullable',
         ]);
+
         $materiKey = $request->materi_key;
         $tanggalAwal = $request->tanggal_awal;
         $ids = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])

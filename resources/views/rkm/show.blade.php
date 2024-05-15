@@ -10,11 +10,6 @@
                         <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                         <div class="row">
                             <div class="col-md-5">
-                                @if (auth()->user()->jabatan == 'Education Manager')
-                                    <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1"
-                                            href="{{ route('editInstruktur', $ids->id) }}">Assign Instruktur dan Kelas
-                                        </a></div>
-                                @endif
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     @php
                                         $user = auth()->user();
@@ -66,11 +61,19 @@
                                                         href="{{ route('rkm.edit', $post->id) }}"><img
                                                             src="{{ asset('icon/edit.svg') }}" class="img-responsive"
                                                             width="20px"> Edit RKM</a></div>
+                                                @elseif (auth()->user()->jabatan == 'Education Manager')
+                                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                                    <a class="btn click-primary mx-1" href="{{ route('editInstruktur', $post->id) }}">Assign Instruktur dan Kelas
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"
+                                                        href="{{ route('rkm.edit', $post->id) }}"><img
+                                                            src="{{ asset('icon/edit.svg') }}" class="img-responsive"
+                                                            width="20px"> Edit RKM</a></div>
                                                 @else
                                                     <div class="col-md-8 col-sm-8 col-xs-8">
-                                                        <p>
-                                                        <h5> </h5>
-                                                        </p>
+                                                        {{-- <a class="btn click-primary mx-1" href="{{ route('editInstruktur', $post->id) }}">Assign Instruktur dan Kelas
+                                                        </a> --}}
                                                     </div>
                                                     <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"
                                                             href="{{ route('rkm.edit', $post->id) }}"><img

@@ -8,23 +8,45 @@
                 <div class="card-body" id="card">
                     <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a>
                     <h5 class="card-title text-center mb-4">{{ __('Tambah Instruktur') }}</h5>
-                <form method="POST" action="{{ route('updateInstruktur') }}">
+                    <form method="POST" action="{{ route('updateInstruktur') }}">
                         @csrf
                         @method('PUT')
 
                         <div class="row mb-3">
+                            {{-- {{ $rkm }} --}}
                             <label for="rkm_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama RKM') }}</label>
                             <div class="col-md-6">
-                                {{-- {{ $rkm }} --}}
-                                <input id="rkm_key" readonly type="text" class="form-control @error('rkm_key') is-invalid @enderror" name="nama_materi" value="{{ $rkm->materi->nama_materi }}" autocomplete="rkm_key" autofocus>
-                                @foreach ( $rkm as $id )
-                                <input id="rkm_id{{ $id }}" hidden type="text" class="form-control @error('rkm_id') is-invalid @enderror" name="materi_key" value="{{ $rkm->materi_key }}" autocomplete="rkm_id" autofocus>
-                                @endforeach
+                                <input id="nama_materi" readonly type="text" class="form-control @error('nama_materi') is-invalid @enderror" name="nama_materi" value="{{ $rkm->materi->nama_materi }}" autocomplete="nama_materi" autofocus>
                                 @error('rkm_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="id_rkm" class="col-md-4 col-form-label text-md-start">{{ __('ID RKM') }}</label>
+                            <div class="col-md-6">
+                                <input id="id_rkm" readonly type="text" class="form-control @error('id_rkm') is-invalid @enderror" name="id_rkm" value="{{ $rkm->id }}" autocomplete="id_rkm" autofocus>
+                                @error('id_rkm')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="materi_key" class="col-md-4 col-form-label text-md-start">{{ __('ID Materi') }}</label>
+                            <div class="col-md-6">
+                                <input id="materi_key" readonly type="text" class="form-control @error('materi_key') is-invalid @enderror" name="materi_key" value="{{ $rkm->materi_key }}" autocomplete="materi_key" autofocus>
+                                @error('materi_key')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                {{-- 15maret --}}
                             </div>
                         </div>
 
