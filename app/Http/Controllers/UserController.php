@@ -21,8 +21,11 @@ class UserController extends Controller
 
     public function create()
     {
-        $user = User::count();
+        // $user = Karyawan::latest()->first();
+        $user = User::max('id');
+
         $countuser = $user + 1;
+        // dd($user);
         $jabatan = jabatan::all();
 
         return view('user.register', compact('countuser', 'jabatan'));
@@ -48,17 +51,21 @@ class UserController extends Controller
             $id_instruktur = $request->jabatan == 'Instruktur' ? $request->kode_karyawan : null;
             $id_sales = $request->jabatan == 'Sales' ? $request->kode_karyawan : null;
 
+            // Gunakan ID dari users sebagai ID untuk karyawan
+            $karyawanId = User::max('id') + 1;
+
             User::create([
                 'username' => $request->username,
                 'jabatan' => $request->jabatan,
                 'status_akun' => '1',
-                'karyawan_id' => $request->karyawan_id,
+                'karyawan_id' => $karyawanId, // Gunakan ID dari users sebagai ID untuk karyawan
                 'password' => Hash::make($request->password),
                 'id_instruktur' => $id_instruktur,
                 'id_sales' => $id_sales,
             ]);
 
             Karyawan::create([
+                'id' => $karyawanId, // Gunakan ID dari users sebagai ID untuk karyawan
                 'nama_lengkap' => $request->nama_lengkap,
                 'status_aktif' => '1',
                 'jabatan' => $request->jabatan,
@@ -67,6 +74,7 @@ class UserController extends Controller
             ]);
 
             DB::commit();
+
 
             return redirect()->route('user.index')->with('success', 'Akun Karyawan telah Ditambahkan');
         } catch (\Exception $e) {
@@ -121,7 +129,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $users = User::findOrFail($id);
-        $karyawan = karyawan::findOrFail($id);
+        $karyawan = karyawan::findOrFail($users->karyawan_id);
         // dd($users);
         $users->delete();
         $karyawan->delete();

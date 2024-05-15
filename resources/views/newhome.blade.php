@@ -10,11 +10,11 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <div class="col-md-12 d-flex justify-content-between">
-                                <h5 class="modal-title" id="exampleModalLabel">Notifikasi</h5>
-                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting')
+                                <h5 class="modal-title" id="exampleModalLabel">Pengumuman</h5>
+                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Office Manager')
                                     <a href="{{ route('notif.create') }}" class="btn btn-sm btn-custom mx-4"><img src="{{ asset('icon/plus.svg') }}" class="" width="20px"></a>
                                 @endif
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                             </div>
                         </div>
                         <div class="modal-body">
@@ -60,7 +60,7 @@
                 <h4 class="text-center">{{ $pesertaanda }}</h4>
             </div>
         @endif
-        @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting')
+        @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Office Manager')
             <div class="mx-1" id="hero1">
                 <h5 class="card-title text-center">Total Karyawan</h5>
                 <h4 class="text-center">{{ $totalkaryawan }}</h4>
@@ -79,35 +79,33 @@
 
     <div class="row justify-content-between">
         <div class="col-md-6">
+            {{-- input tabs --}}
             <div class="row">
                 {{-- karyawan --}}
-                <div class="col-md-12 my-1">
+                <div class="col-md-12 mt-1">
                     {{-- content --}}
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
                             <h5 class="text-center card-title">Karyawan</h5>
-                                <div class="col-sm-6 my-1">
+                            <div class="row">
+                                <div class="col-sm-6 mt-2">
                                     <div class="card" id="card-hover">
                                         <div class="card-body d-flex">
                                             <div class="col-md-2">
                                                 <img src="{{ asset('icon/credit-card.svg') }}" class="img-responsive" width="30px">
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px">
-                                                {{-- <h5 class="card-title">Profil Saya</h5> --}}
                                                 <a href="/profile/{{ auth()->user()->id }}" class="link stretched-link text-decoration-none"><h5 class="card-title">Profil Saya</h5></a>
                                                 <p class="card-text">Profil saya sebagai karyawan INIXINDO Bandung.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-6 my-1">
+                                <div class="col-sm-6 mt-2">
                                     <div class="card"  id="card-hover">
                                         <div class="card-body d-flex">
                                             <div class="col-md-2">
                                                 <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
-
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px">
                                                 <a href="/user" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Karyawan</h5></a>
@@ -116,12 +114,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Direktur' || auth()->user()->jabatan == 'Direktur Utama')
-                                <div class="col-sm-6 my-1">
+                                @if (auth()->user()->jabatan == 'HRD' || auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Direktur' || auth()->user()->jabatan == 'Direktur Utama')
+                                <div class="col-sm-6 mt-2">
                                     <div class="card"  id="card-hover">
                                         <div class="card-body d-flex">
                                             <div class="col-md-2">
-                                                <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
+                                                <img src="{{ asset('icon/award.svg') }}" class="img-responsive" width="30px">
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px">
                                                 <a href="/jabatan" class="link stretched-link text-decoration-none"><h5 class="card-title">Jabatan</h5></a>
@@ -131,15 +129,15 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="col-sm-6 my-1">
+                                <div class="col-sm-6 mt-2">
                                     <div class="card"  id="card-hover">
                                         <div class="card-body d-flex">
                                             <div class="col-md-2">
-                                                <img src="{{ asset('icon/users.svg') }}" class="img-responsive" width="30px">
+                                                <img src="{{ asset('icon/bell.svg') }}" class="img-responsive" width="30px">
                                             </div>
                                             <div class="col-md-10" style="margin-left: 10px">
                                                 <a href="#" class="link stretched-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalPemberitahuan">
-                                                    <h5 class="card-title">Notifikasi</h5>
+                                                    <h5 class="card-title">Pengumuman</h5>
                                                 </a>
                                                 <p class="card-text">Pemberitahuan.</p>
                                             </div>
@@ -152,72 +150,104 @@
                 </div>
                 {{-- end karyawan --}}
                 {{-- peserta --}}
-                <div class="col-md-12 my-1">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                            <h5 class="text-center">Peserta</h5>
-                                <div class="col-sm-6">
-                                    <div class="card" id="card-hover">
-                                        <div class="card-body d-flex">
-                                            <div class="col-md-2">
-                                                <img src="{{ asset('icon/table.svg') }}" class="img-responsive" width="30px">
+                @if ( auth()->user()->jabatan == 'Customer Care' ||
+                    auth()->user()->jabatan == 'Adm Sales' ||
+                    auth()->user()->jabatan == 'GM' ||
+                    auth()->user()->jabatan == 'SPV Sales' ||
+                    auth()->user()->jabatan == 'Sales' ||
+                    auth()->user()->jabatan == 'Komisaris' ||
+                    auth()->user()->jabatan == 'Direktur' ||
+                    auth()->user()->jabatan == 'Direktur Utama' ||
+                    auth()->user()->jabatan == 'Education Manager' ||
+                    auth()->user()->jabatan == 'Instruktur' ||
+                    auth()->user()->jabatan == 'Technical Support' ||
+                    auth()->user()->jabatan == 'Finance & Accounting' ||
+                    auth()->user()->jabatan == 'Customer Service' ||
+                    auth()->user()->jabatan == 'Customer Care' ||
+                    auth()->user()->jabatan == 'HRD' ||
+                    auth()->user()->jabatan == 'Office Manager' ||
+                    auth()->user()->jabatan == 'Admin Holding' )
+                    <div class="col-md-12 mt-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-center card-title">Peserta</h5>
+                                <div class="row">
+                                    <div class="col-sm-6 mt-2">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/table.svg') }}" class="img-responsive" width="30px">
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px">
+                                                    <a href="/peserta" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Peserta</h5></a>
+                                                    <p class="card-text">Data Peserta yang mengikuti kelas.</p>
+                                                </div>
                                             </div>
-                                            <div class="col-md-10" style="margin-left: 10px">
-                                                <a href="/peserta" class="link stretched-link text-decoration-none"><h5 class="card-title">Data Peserta</h5></a>
-                                                <p class="card-text">Data Peserta yang mengikuti kelas.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 mt-2">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="30px">
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px" id="">
+                                                    <a href="/registrasi" class="link stretched-link text-decoration-none"><h5 class="card-title">Registrasi</h5></a>
+                                                    <p class="card-text">Registrasi peserta kelas.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 mt-2">
+                                        <div class="card" id="card-hover">
+                                            <div class="card-body d-flex">
+                                                <div class="col-md-2">
+                                                    <img src="{{ asset('icon/briefcase.svg') }}" class="img-responsive" width="30px">
+                                                </div>
+                                                <div class="col-md-10" style="margin-left: 10px">
+                                                    <a href="/perusahaan" class="link stretched-link text-decoration-none"><h5 class="card-title">Perusahaan</h5></a>
+                                                    <p class="card-text">Data Perusahaan.</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-6">
-                                    <div class="card" id="card-hover">
-                                        <div class="card-body d-flex">
-                                            <div class="col-md-2">
-                                                <img src="{{ asset('icon/user-check.svg') }}" class="img-responsive" width="30px">
-                                            </div>
-                                            <div class="col-md-10" style="margin-left: 10px" id="">
-                                                <a href="/registrasi" class="link stretched-link text-decoration-none"><h5 class="card-title">Registrasi</h5></a>
-                                                <p class="card-text">Registrasi peserta kelas.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 mt-2">
-                                    <div class="card" id="card-hover">
-                                        <div class="card-body d-flex">
-                                            <div class="col-md-2">
-                                                <img src="{{ asset('icon/briefcase.svg') }}" class="img-responsive" width="30px">
-
-                                            </div>
-                                            <div class="col-md-10" style="margin-left: 10px">
-                                                <a href="/perusahaan" class="link stretched-link text-decoration-none"><h5 class="card-title">Perusahaan</h5></a>
-                                                <p class="card-text">Data Perusahaan.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
-
-                </div>
+                @endif
                 {{-- end peserta --}}
-
             </div>
+            {{-- endinput tabs --}}
+
         </div>
-        <div class="col-md-6">
-            <div class="row">
-                {{-- RKM --}}
-                    <div class="col-md-12 my-1">
+        @if ( auth()->user()->jabatan == 'Customer Care' ||
+                auth()->user()->jabatan == 'Adm Sales' ||
+                auth()->user()->jabatan == 'GM' ||
+                auth()->user()->jabatan == 'SPV Sales' ||
+                auth()->user()->jabatan == 'Sales' ||
+                auth()->user()->jabatan == 'Komisaris' ||
+                auth()->user()->jabatan == 'Direktur' ||
+                auth()->user()->jabatan == 'Direktur Utama' ||
+                auth()->user()->jabatan == 'Education Manager' ||
+                auth()->user()->jabatan == 'Instruktur' ||
+                auth()->user()->jabatan == 'Technical Support' ||
+                auth()->user()->jabatan == 'Finance & Accounting' ||
+                auth()->user()->jabatan == 'Customer Service' ||
+                auth()->user()->jabatan == 'Customer Care' ||
+                auth()->user()->jabatan == 'HRD' ||
+                auth()->user()->jabatan == 'Office Manager' ||
+                auth()->user()->jabatan == 'Admin Holding' )
+            <div class="col-md-6">
+                {{-- input tabs --}}
+                <div class="row">
+                    {{-- RKM --}}
+                    <div class="col-md-12 mt-1">
                         <div class="card">
                             <div class="card-body">
+                                <h5 class="text-center card-title">Rencana Kelas Mingguan</h5>
                                 <div class="row">
-                                <h5 class="text-center">Rencana Kelas Mingguan</h5>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 mt-2">
                                         <div class="card" id="card-hover">
                                             <div class="card-body d-flex">
                                                 <div class="col-md-2">
@@ -230,13 +260,11 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 mt-2">
                                         <div class="card" id="card-hover">
                                             <div class="card-body d-flex">
                                                 <div class="col-md-2">
                                                     <img src="{{ asset('icon/book-open.svg') }}" class="img-responsive" width="30px">
-
                                                 </div>
                                                 <div class="col-md-10" style="margin-left: 10px">
                                                     <a href="/materi" class="link stretched-link text-decoration-none"><h5 class="card-title">Materi</h5></a>
@@ -245,13 +273,11 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-6 mt-2">
                                         <div class="card" id="card-hover">
                                             <div class="card-body d-flex">
                                                 <div class="col-md-2">
                                                     <img src="{{ asset('icon/file-text.svg') }}" class="img-responsive" width="30px">
-
                                                 </div>
                                                 <div class="col-md-10" style="margin-left: 10px">
                                                     <a href="/feedback" class="link stretched-link text-decoration-none"><h5 class="card-title">Feedback</h5></a>
@@ -260,16 +286,19 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     {{-- end RKM --}}
+                </div>
+                {{-- endinput tabs --}}
+
             </div>
-        </div>
+        @endif
+            {{-- col-6 akhir --}}
     </div>
+
 </div>
 <style>
     @media screen and (max-width: 768px) {
@@ -313,7 +342,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-
+$(document).ready(function() {
+        $('#modalPemberitahuan').modal('show');
+    });
 $('#modalPemberitahuan').on('click', '.btn-danger', function(e) {
   e.preventDefault();
   $(this).closest('.card-body').hide();

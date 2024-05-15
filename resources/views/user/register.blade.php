@@ -57,7 +57,7 @@
                             </div>
                         </div>
 
-                        <div id="kode_karyawan_row" style="display: none">
+                        <div id="kode_karyawan_row">
                             <div class="row mb-3" id="">
                                 <label for="kode_karyawan" class="col-md-4 col-form-label text-md-start">{{ __('Kode Karyawan') }}</label>
                                 <div class="col-md-6">
@@ -119,7 +119,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <input id="karyawan_id" type="text" hidden   class="form-control @error('karyawan_id') is-invalid @enderror" name="karyawan_id"  value="{{ $countuser }}" required autocomplete="karyawan_id">
+                        <input id="karyawan_id" type="hidden" class="form-control @error('karyawan_id') is-invalid @enderror" name="karyawan_id"  value="{{ $countuser }}" required autocomplete="karyawan_id">
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn click-primary">
@@ -134,15 +134,15 @@
     </div>
 </div>
 <script>
-    document.getElementById('jabatan').addEventListener('change', function() {
-        var selectedJabatan = this.value;
-        var kodeKaryawanRow = document.getElementById('kode_karyawan_row');
+    // document.getElementById('jabatan').addEventListener('change', function() {
+    //     var selectedJabatan = this.value;
+    //     var kodeKaryawanRow = document.getElementById('kode_karyawan_row');
 
-        if (selectedJabatan === 'Instruktur' || selectedJabatan === 'Sales' || selectedJabatan === 'Adm Sales' || selectedJabatan === 'SPV Sales' || selectedJabatan === 'Education Manager') {
-            kodeKaryawanRow.style.display = 'block';
-        } else {
-            kodeKaryawanRow.style.display = 'none';
-        }
-    });
+    //     if (selectedJabatan === 'Instruktur' || selectedJabatan === 'Sales' || selectedJabatan === 'Adm Sales' || selectedJabatan === 'SPV Sales' || selectedJabatan === 'Education Manager') {
+    //         kodeKaryawanRow.style.display = 'block';
+    //     } else {
+    //         kodeKaryawanRow.style.display = 'none';
+    //     }
+    // });
 </script>
 @endsection

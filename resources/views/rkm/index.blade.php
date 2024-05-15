@@ -139,13 +139,15 @@
             complete: function () {
             },
             success: function(response) {
-                console.log(response);
+                // console.log(response);
                 var html = ''; // Define html as an empty string here
                 var count = 1;
-                var jabatan = localStorage.getItem('jabatan');
+                var jabatan = "{{ auth()->user()->jabatan }}";
                 response.data.forEach(function(monthData) {
                     monthData.weeksData.forEach(function(weekData) {
                         console.log(weekData);
+                        var bulanKosong = moment(weekData.start).format('M')
+                        console.log(bulanKosong);
                         html += '<div class="card my-1">';
                         html += '<div class="card-body table-responsive">';
                         html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
@@ -163,7 +165,7 @@
                         html += '<th scope="col">Event</th>';
                         html += '<th scope="col">Ruang</th>';
                         html += '<th scope="col">Pax</th>';
-                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Accounting' || jabatan == 'Customer Care' || jabatan == 'Customer Service' || jabatan == 'Technical Support' || jabatan === 'Direktur Utama' || jabatan === 'Direktur') {
+                        if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Direktur' || jabatan == 'Office Manager' || jabatan == 'Customer Care' || jabatan == 'Customer Service' || jabatan == 'Admin Holding' || jabatan == 'Technical Support' || jabatan === 'Direktur Utama' || jabatan === 'Direktur') {
                             html += '<th scope="col">Aksi</th>';
                         }
                         html += '</tr>';
@@ -206,14 +208,14 @@
                                 html += '<td>' + rkm.event + '</td>';
                                 html += '<td>' + rkm.ruang + '</td>';
                                 html += '<td>' + rkm.total_pax + '</td>';
-                                if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Accounting' || jabatan == 'Customer Care' || jabatan == 'Customer Service' || jabatan == 'Technical Support'|| jabatan === 'Direktur Utama' || jabatan === 'Direktur' ) {
+                                if (jabatan == 'SPV Sales' || jabatan == 'GM' || jabatan == 'Sales' || jabatan == 'Adm Sales' || jabatan == 'Education Manager' || jabatan == 'Instruktur' || jabatan == 'Office Manager' || jabatan == 'Customer Care' || jabatan == 'Customer Service' || jabatan == 'Admin Holding' || jabatan == 'Technical Support'|| jabatan === 'Direktur Utama' || jabatan === 'Direktur' ) {
                                     html += '<td>';
                                     html += '<div class="btn-group dropup">';
                                     html += '<button type="button" class="btn dropdown-toggle " data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                                     html += 'Actions';
                                     html += '</button>';
                                     html += '<div class="dropdown-menu">';
-                                    html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + 'ixb' + bulan + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
+                                    html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + 'ixb' + bulanKosong + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
                                     // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
                                     html += '</div>';
                                     html += '</div>';

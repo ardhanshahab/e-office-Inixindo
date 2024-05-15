@@ -110,9 +110,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 <script>
     $(document).ready(function(){
+        var tableIndex = 1;
         $('#usertable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": [ 'excel', 'pdf'],
+            "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke Excel
+                            },
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data User',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data User ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+            ],
             "ajax": {
                 "url": "{{ route('getUserall') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -120,11 +152,18 @@
                     $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                 },
                 "complete": function () {
-                    $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                    // Tambahkan kode untuk menutup modal setelah 1 detik
+                    setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                 }
             },
             "columns": [
-                {"data": "id"},
+                {   "data": null,
+                    "render": function (data){
+                        return tableIndex++
+                    }
+                },
                 {"data": "karyawan.nip"},
                 {"data": "karyawan.nama_lengkap"},
                 {"data": "karyawan.jabatan"},
@@ -133,7 +172,7 @@
                 "data": null,
                 "render": function(data, type, row) {
                     var actions = "";
-                    var allowedRoles = ['Accounting', 'HRD'];
+                    var allowedRoles = ['Office Manager', 'HRD'];
                     var userRole = '{{ auth()->user()->jabatan }}';
 
                     if (allowedRoles.includes(userRole)) {
@@ -165,14 +204,15 @@
             }
             ],
             "createdRow": function(row, data, dataIndex) {
-        $("td", row).each(function() {
-            if ($(this).html() === "" || $(this).html() === null || $(this).html() === "null") {
-                $(this).html("-");
+                $("td", row).each(function() {
+                    if ($(this).html() === "" || $(this).html() === null || $(this).html() === "null") {
+                        $(this).html("-");
+                    }
+                });
             }
         });
-    }
-        });
     });
+
 </script>
 @endpush
 @endsection

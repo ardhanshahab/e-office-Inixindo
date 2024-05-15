@@ -18,105 +18,7 @@ class RKMController extends Controller
 {
     public function index()
     {
-        // $startDate = CarbonImmutable::create(2020, 1, 1);
-        // $endDate = CarbonImmutable::create(2030, 12, 31);
-        // $now = CarbonImmutable::now()->locale('id_ID');
 
-        // $monthRanges = [];
-        // $date = $startDate;
-
-        // while ($date->month <= $endDate->month && $date->year <= $endDate->year) {
-        //     $startOfMonth = $date->startOfMonth();
-        //     $endOfMonth = $date->endOfMonth();
-
-        //     $weekRanges = [];
-        //     $startOfWeek = $startOfMonth->startOfWeek();
-        //     while ($startOfWeek->lte($endOfMonth)) {
-        //         $endOfWeek = $startOfWeek->copy()->endOfWeek();
-        //         $weekRanges[] = ['start' => $startOfWeek->format('Y-m-d'), 'end' => $endOfWeek->format('Y-m-d')];
-        //         $startOfWeek = $startOfWeek->addWeek();
-        //     }
-
-        //     $monthRanges[] = ['month' => $startOfMonth->translatedFormat('F-Y'), 'weeks' => $weekRanges];
-
-        //     $date = $date->addMonth();
-        // }
-
-        // $years = [];
-        // $date = CarbonImmutable::create(2010, 1, 1); // Start from January 1, 2010
-
-        // while ($date->year <= 2030) { // Until the year 2030
-        //     $years[] = $date->year;
-        //     $date = $date->addYear(); // Add one year
-        // }
-
-        // $months = [];
-        // for ($i = 1; $i <= 12; $i++) {
-        //     $months[] = $now->month($i)->translatedFormat('F');
-        // }
-
-        // $weekRanges = [];
-        // $date = $now->startOfMonth();
-
-        // while ($date->lte($endOfMonth) && $date->month == $now->month) {
-        //     $startOfWeek = $date->startOfWeek()->format('Y-m-d');
-        //     $endOfWeek = $date->endOfWeek()->format('Y-m-d');
-        //     $weekRanges[] = ['start' => $startOfWeek, 'end' => $endOfWeek];
-
-        //     $date = $date->addWeek();
-        // }
-
-        // $rkmsByWeek = [];
-        // foreach ($weekRanges as $weekRange) {
-        //     $rows = RKM::with(['materi'])
-        //     ->join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
-        //     ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
-        //     ->whereBetween('tanggal_akhir', [$weekRange['start'], $weekRange['end']])
-        //     ->select(
-        //         'r_k_m_s.materi_key',
-        //         'r_k_m_s.ruang',
-        //         'r_k_m_s.metode_kelas',
-        //         'r_k_m_s.event',
-        //         'r_k_m_s.tanggal_awal',
-        //         DB::raw('GROUP_CONCAT(r_k_m_s.instruktur_key SEPARATOR ", ") AS instruktur_all'),
-        //         DB::raw('GROUP_CONCAT(r_k_m_s.perusahaan_key SEPARATOR ", ") AS perusahaan_all'),
-        //         DB::raw('GROUP_CONCAT(r_k_m_s.sales_key SEPARATOR ", ") AS sales_all'),
-        //         DB::raw('GROUP_CONCAT(DISTINCT r_k_m_s.status ORDER BY r_k_m_s.status SEPARATOR ", ") AS status_all'),
-        //         DB::raw('SUM(r_k_m_s.pax) AS total_pax')
-        //     )
-        //     ->groupBy('r_k_m_s.materi_key', 'r_k_m_s.ruang', 'r_k_m_s.metode_kelas', 'r_k_m_s.event', 'r_k_m_s.tanggal_awal')
-        //     ->get();
-
-        //         foreach ($rows as $row) {
-        //             if ($row->instruktur_all == null){
-        //                 $sales_ids = explode(', ', $row->sales_all);
-        //                 $perusahaan_ids = explode(', ', $row->perusahaan_all);
-        //                 $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
-        //                 $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
-
-        //             }else{
-        //                 $sales_ids = explode(', ', $row->sales_all);
-        //                 $perusahaan_ids = explode(', ', $row->perusahaan_all);
-        //                 $instruktur_ids = explode(', ', $row->instruktur_all);
-        //                 $row->instruktur = Karyawan::whereIn('kode_karyawan', $instruktur_ids)->get();
-        //                 $row->sales = Karyawan::whereIn('kode_karyawan', $sales_ids)->get();
-        //                 $row->perusahaan = Perusahaan::whereIn('id', $perusahaan_ids)->get();
-        //             }
-        //             $statuses = RKM::join('materis', 'r_k_m_s.materi_key', '=', 'materis.id')
-        //             ->whereBetween('tanggal_awal', [$weekRange['start'], $weekRange['end']])
-        //             ->whereBetween('tanggal_akhir', [$weekRange['start'], $weekRange['end']])
-        //             ->select('r_k_m_s.status')
-        //             ->distinct()
-        //             ->orderBy('r_k_m_s.status')
-        //             ->get();
-        //     }
-        //     $rkmsByWeek[] = ['weekRange' => $weekRange, 'rkms' => $rows];
-        // }
-
-        // $json = $monthRanges;
-        // return $monthRanges;
-
-        // return view('rkm.index', compact('monthRanges', 'now', 'years', 'months', 'rkmsByWeek'));
         return view('rkm.index');
 
     }
@@ -154,9 +56,13 @@ class RKMController extends Controller
             'tanggal_akhir' => 'nullable',
             'metode_kelas' => 'nullable',
             'event' => 'nullable',
+            'exam' => 'nullable',
+            'authorize' => 'nullable',
             // 'ruang' => 'nullable',
             'status' => 'nullable',
         ]);
+        $exam = $request->exam ? '1' : '0';
+        $authorize = $request->authorize ? '1' : '0';
 
         RKM::create([
             'sales_key' => $request->sales_key,
@@ -168,7 +74,8 @@ class RKMController extends Controller
             'tanggal_akhir' => $request->tanggal_akhir,
             'metode_kelas' => $request->metode_kelas,
             'event' => $request->event,
-            // 'ruang' => $request->ruang,
+            'exam' => $exam,
+            'authorize' => $authorize,
             'status' => $request->status,
             'isi_pax' => $request->pax,
         ]);
@@ -192,29 +99,30 @@ class RKMController extends Controller
 
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
             ->where('materi_key', $materi_key)
-            ->whereIn('tanggal_awal', function ($query) use ($materi_key, $bulan) {
-                $query->select('tanggal_awal')
-                    ->from('r_k_m_s')
-                    ->where('materi_key', $materi_key)
-                    ->whereMonth('tanggal_awal', $bulan) // Memastikan bulan sama dengan bulan saat ini
-                    ->groupBy('tanggal_awal')
-                    ->havingRaw('COUNT(tanggal_awal) >= 1');
-                })
+            ->whereMonth('tanggal_awal', $bulan)
+            // ->whereIn('tanggal_awal', function ($query) use ($materi_key, $bulan) {
+            //     $query->select('tanggal_awal')
+            //         ->from('r_k_m_s')
+            //         ->where('materi_key', $materi_key)
+            //         ->whereMonth('tanggal_awal', $bulan) // Memastikan bulan sama dengan bulan saat ini
+            //         ->groupBy('tanggal_awal')
+            //         ->havingRaw('COUNT(tanggal_awal) >= 1');
+            // })
             ->get();
+
+
 
         // dd($rkm);
 
-            // return $rkm;
             $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'comments'])->where('materi_key', $materi_key)->get();
             $ids = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $materi_key)->firstOrFail();
+
 
             $comments = collect();
             foreach ($datas as $data) {
                 $comments = $comments->merge($data->comments);
             }
-
-
-        return view('rkm.show', compact('rkm', 'ids', 'comments'));
+        return view('rkm.show', compact('rkm', 'comments', 'ids'));
     }
 
     public function edit(string $id)
@@ -251,21 +159,30 @@ class RKMController extends Controller
 
     public function editInstruktur($id)
     {
+        // return $id;
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
 
-        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
-            ->where('materi_key', $id)
-            ->firstOrFail();
+        // $materiKey = $id;
 
-        $allRKM = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-            ->select('id')
-            ->where('materi_key', $id)
-            ->get();
-
-        $ids = $allRKM->pluck('id');
+        // $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+        //     ->where('materi_key', $materiKey)
+        //     ->whereExists(function ($query) {
+        //         $query->select(DB::raw(1))
+        //               ->from('r_k_m_s as sub')
+        //               ->whereColumn('sub.materi_key', 'r_k_m_s.materi_key')
+        //               ->whereColumn('sub.tanggal_awal', 'r_k_m_s.tanggal_awal')
+        //               ->groupBy('sub.materi_key', 'sub.tanggal_awal')
+        //               ->havingRaw('COUNT(*) > 1');
+        //     })
+        //     // ->latest() // Orders by 'created_at' column by default
+        //     ->get();
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+          ->where('id', $id)
+          ->firstOrFail();
+        // $ids = $rkm->pluck('id');
         // return $rkm;
 
-        return view('rkm.editinstruktur', compact('rkm', 'karyawan', 'ids'));
+        return view('rkm.editinstruktur', compact('rkm', 'karyawan'));
     }
     public function updateInstruktur(Request $request)
     {
@@ -273,15 +190,21 @@ class RKMController extends Controller
         // dd($request->all());
         $this->validate($request, [
             'instruktur_key' => 'required',
-            'instruktur_key2' => 'required',
+            'instruktur_key2' => 'nullable',
             'asisten_key' => 'nullable',
             'ruang' => 'nullable',
         ]);
+        $materiKey = $request->materi_key;
+        $tanggalAwal = $request->tanggal_awal;
+        $ids = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
+        ->where('materi_key', $materiKey)
+        ->where('tanggal_awal', $tanggalAwal)
+        ->get();
+        // return $ids;
+        // $ids = $request->ids;
 
-        $ids = $request->ids;
-
-        foreach ($ids as $id) {
-            $rkm = RKM::findOrFail($id);
+        foreach ($ids as $rkm) {
+            $rkm = RKM::findOrFail($rkm->id);
             $rkm->update([
                 'instruktur_key' => $request->instruktur_key,
                 'instruktur_key2' => $request->instruktur_key2,
@@ -302,9 +225,8 @@ class RKMController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        // dd($request->all());
-        //validate form
-       $this->validate($request, [
+        // Validate form
+        $this->validate($request, [
             'sales_key' => 'required',
             'materi_key' => 'nullable',
             'harga_jual' => 'nullable',
@@ -314,28 +236,35 @@ class RKMController extends Controller
             'metode_kelas' => 'nullable',
             'event' => 'nullable',
             'ruang' => 'nullable',
+            'exam' => 'nullable',
+            'authorize' => 'nullable',
             'status' => 'nullable',
         ]);
 
         $post = RKM::findOrFail($id);
 
-            $post->update([
-                'sales_key' => $request->sales_key,
-                'materi_key' => $request->materi_key,
-                'harga_jual' => $request->harga_jual,
-                'pax' => $request->pax,
-                'tanggal_awal' => $request->tanggal_awal,
-                'tanggal_akhir' => $request->tanggal_akhir,
-                'metode_kelas' => $request->metode_kelas,
-                'event' => $request->event,
-                'ruang' => $request->ruang,
-                'status' => $request->status,
-                'isi_pax' => $request->pax,
+        $exam = $request->exam ? '1' : '0';
+        $authorize = $request->authorize ? '1' : '0';
 
-            ]);
+        $post->update([
+            'sales_key' => $request->sales_key,
+            'materi_key' => $request->materi_key,
+            'harga_jual' => $request->harga_jual,
+            'pax' => $request->pax,
+            'tanggal_awal' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
+            'metode_kelas' => $request->metode_kelas,
+            'event' => $request->event,
+            'ruang' => $request->ruang,
+            'exam' => $exam,
+            'authorize' => $authorize,
+            'status' => $request->status,
+            'isi_pax' => $request->pax,
+        ]);
 
         return redirect()->route('rkm.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
+
 
     /**
      * destroy

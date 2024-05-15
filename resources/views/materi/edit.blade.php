@@ -79,6 +79,7 @@
                                     <option value="LSP" @if ($materis->vendor == "LSP") selected @endif>LSP</option>
                                     <option value="Microsoft" @if ($materis->vendor == "Microsoft") selected @endif>Microsoft</option>
                                     <option value="Mikrotik" @if ($materis->vendor == "Mikrotik") selected @endif>Mikrotik</option>
+                                    <option value="CompTIA" @if ($materis->vendor == "CompTIA") selected @endif>CompTIA</option>
                                     <option value="Regular" @if ($materis->vendor == "Regular") selected @endif>Regular</option>
                                 </select>
                                 @error('vendor')

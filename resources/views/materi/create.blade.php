@@ -25,7 +25,7 @@
                         <div class="row mb-3">
                             <label for="kategori_materi" class="col-md-4 col-form-label text-md-start">{{ __('Kategori Materi') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('kategori_materi') is-invalid @enderror" name="kategori_materi" value="{{ old('kategori_materi', ) }}" required autocomplete="kategori_materi">
+                                <select class="form-select @error('kategori_materi') is-invalid @enderror" name="kategori_materi" value="{{ old('kategori_materi', ) }}" autocomplete="kategori_materi">
                                     <option selected>Pilih Kategori Materi</option>
                                     <option value="Management">Management</option>
                                     <option value="Security">Security</option>
@@ -67,7 +67,7 @@
                         <div class="row mb-3">
                             <label for="vendor" class="col-md-4 col-form-label text-md-start">{{ __('Vendor') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('kategori_materi') is-invalid @enderror" name="kategori_materi" value="{{ old('kategori_materi', ) }}" required autocomplete="kategori_materi">
+                                <select class="form-select @error('vendor') is-invalid @enderror" name="vendor" value="{{ old('vendor', ) }}" autocomplete="vendor">
                                     <option selected>Pilih Vendor</option>
                                     <option value="AWS">AWS</option>
                                     <option value="Cisco">Cisco</option>
@@ -78,6 +78,7 @@
                                     <option value="LSP">LSP</option>
                                     <option value="Microsoft">Microsoft</option>
                                     <option value="Mikrotik">Mikrotik</option>
+                                    <option value="CompTIA">CompTIA</option>
                                     <option value="Regular">Regular</option>
                                 </select>
                                 @error('vendor')

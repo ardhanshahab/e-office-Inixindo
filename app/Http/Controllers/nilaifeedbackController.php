@@ -25,7 +25,8 @@ class nilaifeedbackController extends Controller
     public function create()
     {
         $month = Carbon::now()->month;
-        $post = RKM::whereMonth('tanggal_awal', $month)->get();
+        // $post = RKM::whereMonth('tanggal_awal', $month)->get();
+        $post = RKM::get();
         $materi = Feedback::where('kategori_feedback', 'Materi')->get();
         $pelayanan = Feedback::where('kategori_feedback', 'Pelayanan')->get();
         $fasilitas = Feedback::where('kategori_feedback', 'Fasilitas Laboratium')->get();

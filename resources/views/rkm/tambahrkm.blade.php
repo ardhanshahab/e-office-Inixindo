@@ -30,8 +30,8 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                @endif
                                 <input type="hidden" name="sales_key" value="{{auth()->user()->id_sales}}"/>
+                                @endif
                                 @error('sales_key')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -112,6 +112,30 @@
                             <div class="col-md-6">
                                 <input id="tanggal_akhir" type="date" placeholder="tanggal_akhir" class="form-control @error('tanggal_akhir') is-invalid @enderror" name="tanggal_akhir" value="{{ old('tanggal_akhir') }}" autocomplete="tanggal_akhir" autofocus>
                                 @error('tanggal_akhir')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="exam" class="col-md-4 col-form-label text-md-start">{{ __('Exam') }}</label>
+                            <div class="col-md-6">
+                                <input type="checkbox" class="form-checkbox" name="exam" id="exam" value="1">
+                                @error('exam')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="authorize" class="col-md-4 col-form-label text-md-start">{{ __('Authorize') }}</label>
+                            <div class="col-md-6">
+                                <input type="checkbox" class="form-checkbox" name="authorize" id="authorize" value="1">
+                                @error('authorize')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -70,7 +70,7 @@
                         <div class="row mb-3">
                             <label for="harga_jual" class="col-md-4 col-form-label text-md-start">{{ __('Harga Jual') }}</label>
                             <div class="col-md-6">
-                                @if (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service')
+                                @if (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' || auth()->user()->jabatan == 'Admin Holding')
                                 <input disabled id="harga_jual" type="number" placeholder="Harga Jual" class="form-control @error('harga_jual') is-invalid @enderror" name="harga_jual" value="{{ old('harga_jual', $post->harga_jual) }}" autocomplete="harga_jual" autofocus>
                                 <input type="hidden" name="harga_jual"  value="{{$post->harga_jual}}"/>
                                 @else
@@ -87,7 +87,7 @@
                         <div class="row mb-3">
                             <label for="pax" class="col-md-4 col-form-label text-md-start">{{ __('PAX') }}</label>
                             <div class="col-md-6">
-                                @if (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service')
+                                @if (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' || auth()->user()->jabatan == 'Admin Holding')
                                 <input id="pax" disabled type="text" placeholder="PAX" class="form-control @error('pax') is-invalid @enderror" name="pax" value="{{ old('pax', $post->pax) }}" autocomplete="pax" autofocus>
                                 <input type="hidden" name="pax"  value="{{$post->pax}}"/>
                                 @else
@@ -124,6 +124,31 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <label for="exam" class="col-md-4 col-form-label text-md-start">{{ __('Exam') }}</label>
+                            <div class="col-md-6">
+                                <input type="checkbox" class="form-checkbox" name="exam" id="exam" value="1" {{ $post->exam == 1 ? 'checked' : '' }}>
+                                @error('exam')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="authorize" class="col-md-4 col-form-label text-md-start">{{ __('Authorize') }}</label>
+                            <div class="col-md-6">
+                                <input type="checkbox" class="form-checkbox" name="authorize" id="authorize" value="1" {{ $post->authorize == 1 ? 'checked' : '' }}>
+                                @error('authorize')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
 
                         <div class="row mb-3">
                             <label for="metode_kelas" class="col-md-4 col-form-label text-md-start">{{ __('Metode Kelas') }}</label>
@@ -181,7 +206,7 @@
                         <div class="row mb-3">
                             <label for="status" class="col-md-4 col-form-label text-md-start">{{ __('Status') }}</label>
                             <div class="col-md-6">
-                                @if (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service')
+                                @if (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' || auth()->user()->jabatan == 'Admin Holding')
                                 <select disabled class="form-select @error('status') is-invalid @enderror" name="status" required autocomplete="status">
                                     <option {{ $post->status == null ? 'selected' : '' }} >Pilih Status</option>
                                     <option value="0" {{ $post->status == "0" ? 'selected' : '' }}>Merah</option>

@@ -19,7 +19,7 @@
         {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Customer Service')
+                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Customer Service' || auth()->user()->jabatan == 'Admin Holding')
                     <a href="{{ route('registrasi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah registrasi"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Registrasi Peserta</a>
                 @endif
             </div>
@@ -116,7 +116,38 @@
 
         $('#registrasitable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['excel', 'pdf'],
+            "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4, 5 ] // Kolom yang akan diekspor ke Excel
+                            },
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                 columns: [0, 1, 2, 3, 4, 5] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Registrasi',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data User ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+            ],
             "ajax": {
                 "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                 "type": "GET",

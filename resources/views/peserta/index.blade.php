@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager')
+                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager')
                     <a href="{{ route('peserta.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah peserta"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Peserta</a>
                 @endif
             </div>
@@ -177,7 +177,38 @@
         }
         $('#pesertaalltable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['excel', 'pdf'],
+            "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke Excel
+                            },
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data User',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data User ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+            ],
                 "ajax": {
                     "url": "{{ route('getPesertaall') }}", // URL API untuk mengambil data
                     "type": "GET",
@@ -185,7 +216,9 @@
                         $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                     },
                     "complete": function () {
-                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                        setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                     }
                 },
                 "columns": [
@@ -201,7 +234,7 @@
                     {"data": "alamat"},
                     {"data": "perusahaan.nama_perusahaan"},
                     {
-                        "data": "peserta.tanggal_lahir",
+                        "data": "tanggal_lahir",
                         "render": function(data) {
                             return moment(data).format('DD MMMM YYYY');
                         }
@@ -211,7 +244,39 @@
         });
         $('#pesertatable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['excel', 'pdf'],
+           "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke Excel
+                            },
+
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Peserta',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data Peserta ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+                    ],
                 "ajax": {
                     "url": "{{ route('getRegistrasiall') }}", // URL API untuk mengambil data
                     "type": "GET",
@@ -260,7 +325,54 @@
         });
         $('#pesertatableSales').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['excel', 'pdf'],
+           "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke Excel
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Peserta',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data Peserta ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Peserta',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data Peserta ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+                    ],
                 "ajax": {
                     "url": "{{ route('getPesertaall') }}", // URL API untuk mengambil data
                     "type": "GET",
@@ -268,7 +380,9 @@
                         $('#loadingModal').modal('show'); // Tampilkan modal saat memulai proses
                     },
                     "complete": function () {
-                        $('#loadingModal').modal('hide'); // Sembunyikan modal saat proses selesai
+                        setTimeout(() => {
+                        $('#loadingModal').modal('hide');
+                    }, 1000);
                     }
                 },
                 "columns": [

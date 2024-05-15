@@ -18,7 +18,7 @@
 </div>
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' )
+                @if ( auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' || auth()->user()->jabatan == 'Admin Holding' )
                     <a href="{{ route('nilaifeedback.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah Perusahaan"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Isi Feedback</a>
                 @endif
             </div>
@@ -117,7 +117,38 @@
             $('#datafeedback').DataTable({
                 'rowsGroup': [0,1],
                 "dom": 'Bfrtip',
-                "buttons": ['excel', 'pdf'],
+                "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ] // Kolom yang akan diekspor ke Excel
+                            },
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 0, 2, 3, 4, 5, 6, 7, 8, 9 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*', '*', '*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Feedback',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data Feedback ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+            ],
                 "ajax": {
                     "url": "{{ route('getFeedbacks') }}", // URL API untuk mengambil data
                     "type": "GET",

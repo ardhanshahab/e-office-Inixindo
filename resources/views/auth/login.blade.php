@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-4">
-        <div class="row align-self-center justify-content-center" style="margin-top: 100px">
+        <div class="row align-self-center justify-content-center">
             <div class="col-md-6">
                 <div class="container">
                     <div class="row justify-content-center">
@@ -87,6 +87,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row align-self-center justify-content-center my-4">
+            <img src="{{ asset('icon/logo_e-officeb.svg') }}" class="img-responsive" style="width: 400px; color:black">
+
+            <h5 class="text-center">"Welcome to Inixindo Bandung Electronic Office" </h5>
         </div>
     </div>
 <style>

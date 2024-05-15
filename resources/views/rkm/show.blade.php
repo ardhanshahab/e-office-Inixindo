@@ -12,7 +12,7 @@
                             <div class="col-md-5">
                                 @if (auth()->user()->jabatan == 'Education Manager')
                                     <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1"
-                                            href="{{ route('editInstruktur', $ids->materi_key) }}">Assign Instruktur dan Kelas
+                                            href="{{ route('editInstruktur', $ids->id) }}">Assign Instruktur dan Kelas
                                         </a></div>
                                 @endif
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -56,7 +56,7 @@
                                                         </button>
                                                         </form>
                                                     </div>
-                                                @elseif (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service')
+                                                @elseif (auth()->user()->jabatan == 'Customer Care' || auth()->user()->jabatan == 'Customer Service' || auth()->user()->jabatan == 'Admin Holding' || auth()->user()->jabatan == 'SPV Sales' )
                                                 <div class="col-md-8 col-sm-8 col-xs-8">
                                                     <p>
                                                     <h5> </h5>
@@ -192,6 +192,32 @@
                                                 </div>
                                                 <div class="col-md-7 col-sm-7 col-xs-7">
                                                     <p>{{ $post->asisten_key }}</p>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <p>Exam</p><p id="titikdua"> :</p>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                    <p>:</p>
+                                                </div>
+                                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                                    @if($post->exam == 0)
+                                                        <p>Tidak Aktif</p>
+                                                    @else
+                                                        <p>Aktif</p>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
+                                                    <p>Authorize</p><p id="titikdua"> :</p>
+                                                </div>
+                                                <div class="col-md-1 col-sm-1 col-xs-1">
+                                                    <p>:</p>
+                                                </div>
+                                                <div class="col-md-7 col-sm-7 col-xs-7">
+                                                    @if($post->authorize == 0)
+                                                        <p>Tidak Aktif</p>
+                                                    @else
+                                                        <p>Aktif</p>
+                                                    @endif
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                                     <p>Metode Kelas</p><p id="titikdua"> :</p>
@@ -356,9 +382,10 @@
                                                                     $kode_karyawan == $rkms->asisten_key ||
                                                                     auth()->user()->jabatan == 'SPV Sales' ||
                                                                     auth()->user()->jabatan == 'Adm Sales' ||
-                                                                    auth()->user()->jabatan == 'Accounting' ||
+                                                                    auth()->user()->jabatan == 'Office Manager' ||
                                                                     auth()->user()->jabatan == 'Education Manager'||
                                                                     auth()->user()->jabatan == 'Customer Service'||
+                                                                    auth()->user()->jabatan == 'Admin Holding'||
                                                                     auth()->user()->jabatan == 'Customer Care'||
                                                                     auth()->user()->jabatan == 'Technical Support'
 

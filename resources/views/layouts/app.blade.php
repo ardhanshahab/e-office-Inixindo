@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>INIXOffice</title>
+    <title>INIXCOFFEE</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('icon/logoinix.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('icon/logoinix.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('icon/logoinix.png')}}">
@@ -19,20 +19,8 @@
     {{-- <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css"> --}}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
-        body.dark-theme {
-            background-color: #333;
-            color: #fff;
-        }
-
-        body.light-theme {
-            background-color: #fff;
-            color: #333;
-        }
-        body.light-theme p {
-            color: #333;
-        }
-        body.dark-theme p {
-            color: #fff;
+        body {
+            overflow: hidden;
         }
 
         .link {
@@ -204,25 +192,25 @@
         }
 
         #bgsvg{
-            /* background:
-            url(https://source.unsplash.com/E8Ufcyxz514/2400x1823)
-            center / cover no-repeat fixed;
-             */
-            /* background-image: linear-gradient(to right top, #182f51, #1f416e, #26538c, #2b66ab, #307acc, #5579d1, #7377d3, #8e74d3, #a85cad, #b04983, #a93d5c, #983a3a); */
-            background-image: url('/css/background inix office-02.svg');
-            background-position: center;
-            background-size: cover;
-            background-repeat:no-repeat;
+        background-image: url('/css/background inix office-02.svg');
+        background-size: cover;
+        background-attachment:scroll;
+        height: 100vh;
+        overflow-y: scroll;
+    }
 
-
-        }
 
         @media (max-width: 576px) {
+            body{
+                overflow-y: auto;
+            }
         #bgsvg{
-            background-image: url('/css/background inix office-02.svg') repeat;
+            background-image: url('/css/background inix office-02.svg') repeat-y;
+            overflow-y: scroll;
+
         }
         .navbar-nav {
-            flex-direction: column;
+            flex-direction: row;
             padding-top: 10px;
         }
 
@@ -246,9 +234,40 @@
             margin-right: 0;
         }
     }
+        @media (min-width: 577px) and (max-width: 991px) {
+        #bgsvg {
+            background-image: url('/css/background inix office-02.svg') repeat-y;
+        }
+
+        .navbar-nav {
+            flex-direction: column;
+            padding-top: 10px;
+        }
+
+        #auth {
+            display: none;
+        }
+
+        .nav-item {
+            text-align: center;
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .navbar-brand {
+            text-align: center;
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .navbar-brand img {
+            margin-right: 0;
+        }
+    }
+
     </style>
 </head>
-<body class="{{ Auth::user()->theme === 'dark' ? 'dark-theme' : '' }}">
+<body>
     <div id="app">
         @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show m-0" role="alert">
@@ -264,41 +283,46 @@
         @endif
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
-                <!-- Tombol Home -->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/home') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Home"><img src="{{ asset('icon/home.svg') }}" class="img-responsive" width="30px"></a>
-                    </li>
-                    <li class="nav-item order-0 order-md-1" style="margin-left: 10px" id="auth">
-                        <h6 class="nav-link mt-1" style="text-transform: capitalize; color:#fff; margin:0px; padding:8px;">Selamat Datang {{ auth()->user()->username }}, Anda Login Sebagai {{ auth()->user()->jabatan }}</h6>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav me-auto" style="margin-left: 100px"> <!-- Tambah class mx-auto -->
-                    <li class="nav-item text-left">
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            <img src="{{ asset('icon/logoinix.png') }}" class="img-responsive" style="width: 40px;">
-                            <span class="ms-2">INIXoffice</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav navbar-right">
-                    <li class="nav-item mx-1">
-                        <a class="nav-link" href="{{ route('logout') }} "data-bs-toggle="tooltip" data-bs-placement="top" title="Logout"
-                            onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin?')) { document.getElementById('logout-form').submit(); }">
-                            <img src="{{ asset('icon/power.svg') }}" class="img-responsive" width="30px">
-                        </a>
-                        <form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
+                <div class="col-md-4 col-sm-4 col-xs-4 d-flex justify-content-start" id="navbarkiri">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/home') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+                                <img src="{{ asset('icon/home.svg') }}" class="img-responsive" width="30px">
+                            </a>
+                        </li>
+                        <li class="nav-item order-0 order-md-1" style="margin-left: 10px" id="auth">
+                            <h6 class="nav-link mt-1" style="text-transform: capitalize; color:#fff; margin:0px; padding:8px;">
+                                Selamat Datang {{ auth()->user()->username }}, Anda Login Sebagai {{ auth()->user()->jabatan }}
+                            </h6>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4 d-flex justify-content-center"  id="navbartengah">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item text-left">
+                            <a class="navbar-brand" href="{{ url('/') }}">
+                                <img src="{{ asset('icon/logo_e-officew.svg') }}" class="img-responsive" style="width: 400px;">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4 d-flex justify-content-end" id="navbarkanan">
+                    <ul class="navbar-nav">
+                        <li class="nav-item mx-1">
+                            <a class="nav-link" href="{{ route('logout') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout"
+                                onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin?')) { document.getElementById('logout-form').submit(); }">
+                                <img src="{{ asset('icon/power.svg') }}" class="img-responsive" width="30px">
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
-
-        <main class="py-2" style="height: 100vh" id="bgsvg">
+        <main class="py-2" style="height: 90vh" id="bgsvg">
             @yield('content')
         </main>
 

@@ -29,8 +29,8 @@ class PesertaController extends Controller
 
         $jabatan = Auth::user()->jabatan;
         if ($jabatan == 'Sales'|| $jabatan == 'Adm Sales' || $jabatan == 'GM'|| $jabatan == 'SPV Sales'
-        || $jabatan == 'Instruktur'|| $jabatan == 'Education Manager' || $jabatan == 'Accounting'
-        || $jabatan == 'Customer Care' || $jabatan == 'Customer Service' || $jabatan == 'Finance & Accounting'
+        || $jabatan == 'Instruktur'|| $jabatan == 'Education Manager' || $jabatan == 'Office Manager'
+        || $jabatan == 'Customer Care' || $jabatan == 'Customer Service' || $jabatan == 'Admin Holding' || $jabatan == 'Finance & Accounting'
         || $jabatan == 'HRD' || $jabatan == 'Programmer' || $jabatan == 'Direktur Utama' || $jabatan == 'Direktur') {
             return response()->json([
                 'success' => true,

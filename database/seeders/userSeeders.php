@@ -16,34 +16,14 @@ class userSeeders extends Seeder
      */
     public function run(): void
     {
-    // $faker = Faker::create('id_ID');
 
-    // for($i = 1; $i <= 50; $i++){
-
-    // DB::table('users')->insert([
-    //         'name' => $faker->name,
-    //         'role' => 'pegawai',
-    //         'nip' => $faker->randomNumber,
-    //         'alamat' => $faker->address,
-    //         'jabatan' => $faker->jobTitle,
-    //         'divisi' => 'education',
-    //         'tempat_lahir' => $faker->city,
-    //         'tanggal_lahir' => $faker->date,
-    //         'email' => $faker->safeEmail,
-    //         'email_verified_at' => now(),
-    //         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-    //         'remember_token' => Str::random(10),
-    //         ]);
-
-    DB::table('users')->insert([
-        'username' => 'admin',
-        'jabatan' => 'HRD',
-        'status_akun' => '1',
-        'karyawan_id' => '1',
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
-        ]);
-
-        // }
+        DB::table('users')->insert([
+            'username' => 'aulira',
+            'jabatan' => 'HRD',
+            'status_akun' => '1',
+            'karyawan_id' => '1',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            ]);
     }
 }

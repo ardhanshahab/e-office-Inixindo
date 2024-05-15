@@ -19,7 +19,7 @@
         <div class="col-md-12">
             {{-- <a href="{{ url()->previous() }}" class="btn click-primary my-2"><img src="{{ asset('icon/arrow-left.svg') }}" class="img-responsive" width="20px"> Back</a> --}}
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Adm Sales')
+                @if ( auth()->user()->jabatan == 'Sales' || auth()->user()->jabatan == 'Adm Sales' || auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Adm Sales')
                     <a href="{{ route('perusahaan.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah Perusahaan"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Perusahaan</a>
                 @endif
             </div>
@@ -106,10 +106,42 @@
 <script>
     $(document).ready(function(){
         var idSales = "{{ auth()->user()->id_sales }}";
+        var tableIndex = 1;
 
         $('#perusahaantable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['excel', 'pdf'],
+            "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke Excel
+                            },
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Perusahaan',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data Perusahaan ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+            ],
             "ajax": {
                 "url": "{{ route('getPerusahaanall') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -123,7 +155,11 @@
                 }
             },
             "columns": [
-                {"data": "id"},
+                {   "data": null,
+                    "render": function (data){
+                        return tableIndex++
+                    }
+                },
                 {"data": "nama_perusahaan"},
                 {"data": "kategori_perusahaan"},
                 {"data": "lokasi"},
@@ -138,7 +174,7 @@
                         "data": null,
                         "render": function(data, type, row) {
                             var actions = "";
-                            var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'GM', 'Sales', 'Adm Sales', 'Customer Care', 'Customer Service', 'HRD', 'Finance &amp; Accounting', 'Direktur', 'Direktur Utama'];
+                            var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'GM', 'Sales', 'Adm Sales', 'Customer Care', 'Customer Service', 'Admin Holding',  'HRD', 'Finance &amp; Accounting', 'Direktur', 'Direktur Utama'];
                             var userRole = '{{ auth()->user()->jabatan }}';
                             console.log(userRole);
                             var idSales = '{{ auth()->user()->id_sales }}';
@@ -163,14 +199,14 @@
                                         actions += '@method('DELETE')';
                                         actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
                                         actions += '</form>';
-                                    }else if(userRole == 'Accounting' || userRole == 'Education Manager' || userRole == 'GM' ){
+                                    }else if(userRole == 'Office Manager' || userRole == 'Education Manager' || userRole == 'GM' ){
                                         actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                                         actions += '<form onsubmit="return confirm(\'Apakah Anda Yakin ?\');" action="{{ url('/perusahaan') }}/' + row.id + '" method="POST">';
                                         actions += '@csrf';
                                         actions += '@method('DELETE')';
                                         actions += '<button type="submit" class="dropdown-item"><img src="{{ asset('icon/trash-danger.svg') }}" class=""> Hapus</button>';
                                         actions += '</form>';
-                                    }else if(userRole == 'Customer Care' || userRole == 'Customer Service' || userRole == 'HRD' || userRole == 'Finance &amp; Accounting' || userRole === 'Direktur Utama' || userRole === 'Direktur' ){
+                                    }else if(userRole == 'Customer Care' || userRole == 'Customer Service' || userRole == 'HRD' || userRole == 'Admin Holding' || userRole == 'Finance &amp; Accounting' || userRole === 'Direktur Utama' || userRole === 'Direktur' ){
                                         actions += '<a class="dropdown-item" href="{{ url('/perusahaan') }}/' + row.id + '" data-toggle="tooltip" data-placement="top" title="Detail User"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail</a>';
                                         // actions += '<a class="dropdown-item" disabled href="{{ url('/perusahaan') }}/' + row.id + '/edit" data-toggle="tooltip" data-placement="top" title="Edit Peserta"><img src="{{ asset('icon/edit-warning.svg') }}" class=""> Edit</a>';
                                     }else{

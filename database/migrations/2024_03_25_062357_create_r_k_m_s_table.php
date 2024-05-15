@@ -27,7 +27,9 @@ return new class extends Migration
             $table->string('instruktur_key')->nullable();
             $table->string('instruktur_key2')->nullable();
             $table->string('asisten_key')->nullable();
-            $table->enum('status', ['0', '1', '2']);
+            $table->enum('status', ['0', '1', '2']);//0 merah 1 biru 2 hitam
+            $table->enum('exam', ['0', '1']);//0 tidak aktif 1 aktif
+            $table->enum('authorize', ['0', '1']);//0 tidak aktif 1 aktif
             $table->timestamps();
         });
     }

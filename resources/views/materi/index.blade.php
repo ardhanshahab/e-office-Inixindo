@@ -18,7 +18,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="d-flex justify-content-end">
-                @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Accounting' || auth()->user()->jabatan == 'Education Manager'|| auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Adm Sales')
+                @if ( auth()->user()->jabatan == 'GM' || auth()->user()->jabatan == 'Office Manager' || auth()->user()->jabatan == 'Education Manager'|| auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Adm Sales')
                     <a href="{{ route('materi.create') }}" class="btn btn-md click-primary mx-4" data-toggle="tooltip" data-placement="top" title="Tambah User"><img src="{{ asset('icon/plus.svg') }}" class="" width="30px"> Data Materi</a>
                 @endif
             </div>
@@ -109,9 +109,42 @@
             alert("Silabus tidak ada");
         }
     $(document).ready(function(){
+        var tableIndex = 1;
+
         $('#materitable').DataTable({
             "dom": 'Bfrtip',
-            "buttons": ['excel', 'pdf'],
+            "buttons": [
+                        {
+                            extend: 'excel',
+                            text: 'Export to Excel',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke Excel
+                            },
+                        },
+                        {
+                            extend: 'pdf',
+                            text: 'Export to PDF',
+                            exportOptions: {
+                                columns: [ 1, 2, 3, 4 ] // Kolom yang akan diekspor ke PDF
+                            },
+                            customize: function(doc) {
+                                doc.content[1].table.widths = ['*', '*', '*', '*']; // Menyesuaikan lebar kolom
+                                doc.content.splice(0, 1, {
+                                    text: 'Inixindo E-Office Data Materi',
+                                    fontSize: 12,
+                                    alignment: 'center',
+                                    margin: [0, 0, 0, 12] // Margin dari header
+                                });
+                                doc['footer'] = function(currentPage, pageCount) {
+                                    return {
+                                        text: 'Data Materi ' + currentPage.toString() + ' of ' + pageCount,
+                                        alignment: 'center',
+                                        margin: [0, 0, 0, 12] // Margin dari footer
+                                    };
+                                };
+                            }
+                        }
+            ],
             "ajax": {
                 "url": "{{ route('getMateri') }}", // URL API untuk mengambil data
                 "type": "GET",
@@ -125,7 +158,11 @@
                 }
             },
             "columns": [
-                {"data": "id"},
+                {   "data": null,
+                    "render": function (data){
+                        return tableIndex++
+                    }
+                },
                 {"data": "nama_materi"},
                 {"data": "kode_materi"},
                 {"data": "kategori_materi"},
@@ -134,7 +171,7 @@
                     "data": null,
                     "render": function(data, type, row) {
                         var actions = "";
-                        var allowedRoles = ['Accounting', 'Education Manager', 'SPV Sales', 'HRD', 'GM', 'Adm Sales'];
+                        var allowedRoles = ['Office Manager', 'Education Manager', 'SPV Sales', 'HRD', 'GM', 'Adm Sales'];
                         var userRole = '{{ auth()->user()->jabatan }}';
                         if (userRole === 'HRD' || userRole === 'Direktur Utama' || userRole === 'Direktur' ) {
                             actions += '<div class="dropdown">';

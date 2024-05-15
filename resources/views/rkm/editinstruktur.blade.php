@@ -15,9 +15,10 @@
                         <div class="row mb-3">
                             <label for="rkm_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama RKM') }}</label>
                             <div class="col-md-6">
-                                <input id="rkm_key" type="text" class="form-control @error('rkm_key') is-invalid @enderror" name="rkm_key" value="{{ $rkm->materi->nama_materi }}" disabled autocomplete="rkm_key" autofocus>
-                                @foreach ( $ids as $id )
-                                <input id="rkm_id{{ $id }}" hidden type="text" class="form-control @error('rkm_id') is-invalid @enderror" name="ids[]" value="{{ $id }}"  autocomplete="rkm_id" autofocus>
+                                {{-- {{ $rkm }} --}}
+                                <input id="rkm_key" readonly type="text" class="form-control @error('rkm_key') is-invalid @enderror" name="nama_materi" value="{{ $rkm->materi->nama_materi }}" autocomplete="rkm_key" autofocus>
+                                @foreach ( $rkm as $id )
+                                <input id="rkm_id{{ $id }}" hidden type="text" class="form-control @error('rkm_id') is-invalid @enderror" name="materi_key" value="{{ $rkm->materi_key }}" autocomplete="rkm_id" autofocus>
                                 @endforeach
                                 @error('rkm_key')
                                     <span class="invalid-feedback" role="alert">
@@ -30,7 +31,7 @@
                         <div class="row mb-3">
                             <label for="tanggal_awal" class="col-md-4 col-form-label text-md-start">{{ __('Tanggal Awal') }}</label>
                             <div class="col-md-6">
-                                <input id="tanggal_awal" type="date" placeholder="tanggal_awal" class="form-control @error('tanggal_awal') is-invalid @enderror" name="tanggal_awal" disabled value="{{ old('tanggal_awal', $rkm->tanggal_awal) }}" autocomplete="tanggal_awal" autofocus>
+                                <input id="tanggal_awal" type="date" placeholder="tanggal_awal" class="form-control @error('tanggal_awal') is-invalid @enderror" name="tanggal_awal" readonly value="{{ old('tanggal_awal', $rkm->tanggal_awal) }}" autocomplete="tanggal_awal" autofocus>
                                 @error('tanggal_awal')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -42,7 +43,7 @@
                         <div class="row mb-3">
                             <label for="tanggal_akhir" class="col-md-4 col-form-label text-md-start">{{ __('Tanggal Akhir') }}</label>
                             <div class="col-md-6">
-                                <input id="tanggal_akhir" type="date" placeholder="tanggal_akhir" class="form-control @error('tanggal_akhir') is-invalid @enderror" name="tanggal_akhir"  disabled value="{{ old('tanggal_akhir', $rkm->tanggal_akhir) }}" autocomplete="tanggal_akhir" autofocus>
+                                <input id="tanggal_akhir" type="date" placeholder="tanggal_akhir" class="form-control @error('tanggal_akhir') is-invalid @enderror" name="tanggal_akhir"  readonly value="{{ old('tanggal_akhir', $rkm->tanggal_akhir) }}" autocomplete="tanggal_akhir" autofocus>
                                 @error('tanggal_akhir')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

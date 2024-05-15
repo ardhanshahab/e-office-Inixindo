@@ -16,9 +16,9 @@ class karyawanSeeders extends Seeder
     {
         DB::table('karyawans')->insert([
             'foto' => null,
-            'nip' => '01000000',
-            'nama_lengkap' => 'Muhamad Ardhan Hadaina',
-            'divisi' => 'office',
+            'nip' => '0000000',
+            'nama_lengkap' => 'Aulira',
+            'divisi' => 'Office',
             'jabatan' => 'HRD',
             'status_aktif' => '1',
             'keterangan' => '',

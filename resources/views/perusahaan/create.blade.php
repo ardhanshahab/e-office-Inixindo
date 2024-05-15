@@ -25,7 +25,7 @@
                         <div class="row mb-3">
                             <label for="kategori_perusahaan" class="col-md-4 col-form-label text-md-start">{{ __('Kategori Perusahaan') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('kategori_perusahaan') is-invalid @enderror" name="kategori_perusahaan" required autocomplete="kategori_perusahaan  ">
+                                <select class="form-select @error('kategori_perusahaan') is-invalid @enderror" name="kategori_perusahaan" autocomplete="kategori_perusahaan  ">
                                     <option value="" selected>Pilih Kategori Perusahaan</option>
                                     <option value="Pemerintahan Daerah" >Pemerintahan Daerah</option>
                                     <option value="Kementerian" >Kementerian</option>
@@ -51,7 +51,7 @@
                         <div class="row mb-3">
                             <label for="lokasi" class="col-md-4 col-form-label text-md-start">{{ __('Wilayah') }}</label>
                             <div class="col-md-6">
-                                <select id="lokasi" class="form-select @error('lokasi') is-invalid @enderror" name="lokasi" required autocomplete="lokasi">
+                                <select id="lokasi" class="form-select @error('lokasi') is-invalid @enderror" name="lokasi"  autocomplete="lokasi">
                                     <option value="" selected>Pilih Wilayah</option>
                                     <option value="Nanggroe Aceh Darussalam" >Nanggroe Aceh Darussalam</option>
                                     <option value="Sumatera Utara" >Sumatera Utara</option>
@@ -104,14 +104,14 @@
                             <label for="sales_key" class="col-md-4 col-form-label text-md-start">{{ __('Nama Sales') }}</label>
                             <div class="col-md-6">
                                 @if (auth()->user()->jabatan == 'SPV Sales' || auth()->user()->jabatan == 'Adm Sales' )
-                                <select class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key  ">
+                                <select class="form-select @error('sales_key') is-invalid @enderror" name="sales_key"  autocomplete="sales_key  ">
                                     <option value="">Pilih Sales</option>
                                     @foreach ($sales as $salesis)
                                        <option value="{{ $salesis->kode_karyawan }}">{{ $salesis->kode_karyawan }} - {{ $salesis->nama_lengkap }}</option>
                                     @endforeach
                                 </select>
                                 @else
-                                <select disabled class="form-select @error('sales_key') is-invalid @enderror" name="sales_key" required autocomplete="sales_key">
+                                <select disabled class="form-select @error('sales_key') is-invalid @enderror" name="sales_key"  autocomplete="sales_key">
                                     <option value="{{ auth()->user()->id_sales }}" >{{ auth()->user()->id_sales }}</option>
                                 </select>
                                 <input type="hidden" name="sales_key" value="{{auth()->user()->id_sales}}"/>
@@ -127,7 +127,7 @@
                         <div class="row mb-3">
                             <label for="status" class="col-md-4 col-form-label text-md-start">{{ __('Status') }}</label>
                             <div class="col-md-6">
-                                <select class="form-select @error('status') is-invalid @enderror" name="status" required autocomplete="status">
+                                <select class="form-select @error('status') is-invalid @enderror" name="status"  autocomplete="status">
                                     <option value="" selected>Pilih Status</option>
                                     <option value="Q1" >Q1</option>
                                     <option value="Q2" >Q2</option>

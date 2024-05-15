@@ -24,6 +24,8 @@ class RKM extends Model
         'instruktur_key2',
         'asisten_key',
         'status',
+        'exam',
+        'authorize',
         'isi_pax'
     ];
 

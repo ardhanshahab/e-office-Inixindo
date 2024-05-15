@@ -35,11 +35,12 @@ class MateriController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // Validate form
+        // dd($request->all());
         $validatedData = $this->validate($request, [
             'nama_materi' => 'required',
-            'kode_materi' => 'required',
-            'kategori_materi' => 'required',
-            'vendor' => 'required',
+            'kode_materi' => 'nullable',
+            'kategori_materi' => 'nullable',
+            'vendor' => 'nullable',
             'silabus' => 'nullable|file|mimes:pdf|max:2048' // tambahkan validasi untuk file PDF
         ]);
 

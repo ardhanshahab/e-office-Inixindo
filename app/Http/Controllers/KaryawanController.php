@@ -44,6 +44,7 @@ class KaryawanController extends Controller
         $karyawan->update($request->all());
 
         $user->jabatan = $data['jabatan'];
+        $user->status_akun = $data['status_aktif'];
         $user->save();
 
         if (Auth::user()->role == "Admin") {
