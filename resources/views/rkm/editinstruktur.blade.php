@@ -134,6 +134,7 @@
                                     <option value="3" @if ($rkm->ruang == "3") selected @endif>3</option>
                                     <option value="4" @if ($rkm->ruang == "4") selected @endif>4</option>
                                     <option value="ADOC" @if ($rkm->ruang == "ADOC") selected @endif>ADOC</option>
+                                    <option value="Inhouse" @if ($rkm->ruang == "Inhouse") selected @endif>Inhouse</option>
                                 </select>
                                 @error('ruang')
                                     <span class="invalid-feedback" role="alert">

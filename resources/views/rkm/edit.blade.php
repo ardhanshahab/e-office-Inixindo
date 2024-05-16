@@ -194,6 +194,7 @@
                                     <option value="3" @if ($post->ruang == "3") selected @endif>3</option>
                                     <option value="4" @if ($post->ruang == "4") selected @endif>4</option>
                                     <option value="ADOC" @if ($post->ruang == "ADOC") selected @endif>ADOC</option>
+                                    <option value="Inhouse" @if ($post->ruang == "Inhouse") selected @endif>Inhouse</option>
                                 </select>
                                 @error('ruang')
                                     <span class="invalid-feedback" role="alert">
