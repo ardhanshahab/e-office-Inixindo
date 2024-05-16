@@ -16,6 +16,10 @@ use Carbon\CarbonImmutable;
 
 class RKMController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
 
@@ -30,7 +34,8 @@ class RKMController extends Controller
      */
     public function create(): View
     {
-        $sales = karyawan::where('jabatan', 'sales')->get();
+        // $sales = karyawan::where('jabatan', 'sales')->get();
+        $sales = Karyawan::whereIn('jabatan', ['Sales', 'SPV Sales'])->get();
         $instruktur = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
         $materi = Materi::get();
         $perusahaan = Perusahaan::get();
@@ -95,24 +100,28 @@ class RKMController extends Controller
     {
         $array = explode('ixb', $id);
         $materi_key = $array[0];
-        $bulan = $array[1];
-
+        $bulans = $array[1];
+        $tanggal_rkm = explode('ie', $bulans);
+        $tahun = $tanggal_rkm[1];
+        $bulan = str_pad($tanggal_rkm[2], 2, '0', STR_PAD_LEFT); // Menambahkan 0 di depan jika perlu
+        $hari = str_pad($tanggal_rkm[0], 2, '0', STR_PAD_LEFT); // Menambahkan 0 di depan jika perlu
+        $tanggal_awal = $tahun . '-' . $bulan . '-' . $hari;
+        $params = $id;
         $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
             ->where('materi_key', $materi_key)
-            ->whereMonth('tanggal_awal', $bulan)
+            ->where('tanggal_awal', $tanggal_awal)
             ->get();
-
-        // dd($rkm);
+            // return $tanggal_awal;
+            // dd($rkm);
 
             $datas = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'comments'])->where('materi_key', $materi_key)->get();
             $ids = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])->where('materi_key', $materi_key)->firstOrFail();
-
 
             $comments = collect();
             foreach ($datas as $data) {
                 $comments = $comments->merge($data->comments);
             }
-        return view('rkm.show', compact('rkm', 'comments', 'ids'));
+        return view('rkm.show', compact('rkm', 'comments', 'ids', 'params', 'materi_key'));
     }
 
     public function edit(string $id)
@@ -152,9 +161,19 @@ class RKMController extends Controller
         // return $id;
         $karyawan = Karyawan::whereIn('jabatan', ['Instruktur', 'Education Manager'])->get();
 
-        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan'])
-          ->where('id', $id)
-          ->firstOrFail();
+        $array = explode('ixb', $id);
+        $materi_key = $array[0];
+        $bulans = $array[1];
+        $tanggal_rkm = explode('ie', $bulans);
+        $tahun = $tanggal_rkm[1];
+        $bulan = str_pad($tanggal_rkm[2], 2, '0', STR_PAD_LEFT); // Menambahkan 0 di depan jika perlu
+        $hari = str_pad($tanggal_rkm[0], 2, '0', STR_PAD_LEFT); // Menambahkan 0 di depan jika perlu
+        $tanggal_awal = $tahun . '-' . $bulan . '-' . $hari;
+        $params = $id;
+        $rkm = RKM::with(['sales', 'materi', 'instruktur', 'perusahaan', 'instruktur2', 'asisten'])
+            ->where('materi_key', $materi_key)
+            ->where('tanggal_awal', $tanggal_awal)
+            ->firstOrFail();
         // return $rkm;
 
         return view('rkm.editinstruktur', compact('rkm', 'karyawan'));

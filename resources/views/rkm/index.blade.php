@@ -147,7 +147,7 @@
                     monthData.weeksData.forEach(function(weekData) {
                         console.log(weekData);
                         var bulanKosong = moment(weekData.start).format('M')
-                        console.log(bulanKosong);
+                        // console.log(bulanKosong);
                         html += '<div class="card my-1">';
                         html += '<div class="card-body table-responsive">';
                         html += '<h3 class="card-title my-1">Rencana Kelas Mingguan</h3>';
@@ -177,6 +177,10 @@
                             html += '</tr>';
                         } else {
                             weekData.data.forEach(function(rkm, index) {
+                                var tanggal = moment(rkm.tanggal_awal).format('D')
+                                var lanbu = moment(rkm.tanggal_awal).format('M')
+                                var hunta = moment(rkm.tanggal_awal).format('Y')
+                                console.log(tanggal,lanbu,hunta);
                                 if (rkm.status_all == '0') {
                                     html += '<tr style="background-color: rgba(255, 0, 0, 0.5);">';
                                 } else if (rkm.status_all == '1') {
@@ -215,8 +219,9 @@
                                     html += 'Actions';
                                     html += '</button>';
                                     html += '<div class="dropdown-menu">';
-                                    html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + 'ixb' + bulanKosong + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
-                                    // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy', { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
+                                    html += '<a class="dropdown-item" href="/rkm/' + rkm.materi_key + 'ixb' + tanggal + 'ie' + hunta +'ie' + lanbu + '" data-toggle="tooltip" data-placement="top" title="Detail RKM"><img src="{{ asset('icon/clipboard-primary.svg') }}" class=""> Detail RKM</a>';
+                                // console.log(tanggal,lanbu,hunta);
+                                    // html += '<a class="dropdown-item" href="/rkm/'+ route('rkm.destroy',  { materi_key: rkm.materi_key }) +'/delete" data-toggle="tooltip" data-placement="top" title="Hapus RKM">Hapus RKM</a>';
                                     html += '</div>';
                                     html += '</div>';
                                     html += '</td>';

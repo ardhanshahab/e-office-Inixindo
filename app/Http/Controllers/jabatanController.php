@@ -11,6 +11,10 @@ use App\Models\Materi;
 
 class jabatanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(): View
     {
         $materis = jabatan::latest()->paginate(5);

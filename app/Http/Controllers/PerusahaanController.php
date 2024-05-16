@@ -17,6 +17,10 @@ use generateWeeks;
 
 class PerusahaanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(): View
     {
         // $perusahaans = Perusahaan::latest()->paginate(25);

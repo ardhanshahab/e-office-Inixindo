@@ -10,7 +10,13 @@
                         <h5 class="card-title">Detail Rencana Kelas Mingguan</h5>
                         <div class="row">
                             <div class="col-md-5">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                @if (auth()->user()->jabatan == 'Education Manager')
+                                                <div class="col-md-8 col-sm-8 col-xs-8 my-2">
+                                                    <a class="btn click-primary mx-1" href="{{ route('editInstruktur', $params) }}">Assign Instruktur dan Kelas
+                                                    </a>
+                                                </div>
+                                @endif
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     @php
                                         $user = auth()->user();
                                         $karyawan = DB::table('users')
@@ -58,15 +64,6 @@
                                                     </p>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1"
-                                                        href="{{ route('rkm.edit', $post->id) }}"><img
-                                                            src="{{ asset('icon/edit.svg') }}" class="img-responsive"
-                                                            width="20px"> Edit RKM</a></div>
-                                                @elseif (auth()->user()->jabatan == 'Education Manager')
-                                                <div class="col-md-8 col-sm-8 col-xs-8">
-                                                    <a class="btn click-primary mx-1" href="{{ route('editInstruktur', $post->id) }}">Assign Instruktur dan Kelas
-                                                    </a>
-                                                </div>
-                                                <div class="col-md-4 col-sm-4 col-xs-4"><a class="btn click-primary mx-1 disabled"
                                                         href="{{ route('rkm.edit', $post->id) }}"><img
                                                             src="{{ asset('icon/edit.svg') }}" class="img-responsive"
                                                             width="20px"> Edit RKM</a></div>
@@ -357,8 +354,49 @@
                                                     <th>v</th>
                                                     <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
                                                     <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Senin' && $hariAkhir == 'Senin')
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Selasa' && $hariAkhir == 'Selasa')
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Rabu' && $hariAkhir == 'Rabu')
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Kamis' && $hariAkhir == 'Kamis')
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                @elseif ($hariAwal == 'Jumat' && $hariAkhir == 'Jumat')
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>v</th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);"></th>
+
                                                 @else
-                                                    <th style="background-color: rgba(255, 0, 0, 0.5);">Error</th>
+                                                    <th style="background-color: rgba(255, 0, 0, 0.5);">v</th>
                                                 @endif
                                             </tr>
                                             {{-- <tr>

@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Materi;
 class MateriController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(): View
     {
         $materis = Materi::latest()->paginate(5);

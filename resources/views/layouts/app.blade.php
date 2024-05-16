@@ -192,12 +192,26 @@
         }
 
         #bgsvg{
-        background-image: url('/css/background inix office-02.svg');
-        background-size: cover;
-        background-attachment:scroll;
-        height: 100vh;
-        overflow-y: scroll;
-    }
+            background-image: url('/css/background inix office-02.svg');
+            background-size: cover;
+            background-attachment:scroll;
+            height: 100vh;
+            overflow-y: scroll;
+        }
+
+        #logoinix {
+            width: 400px;
+        }
+
+        .alert-custom {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050; /* Memastikan alert berada di atas elemen lain */
+            width: 100%; /* Atau sesuaikan dengan lebar yang diinginkan */
+        }
+
 
 
         @media (max-width: 576px) {
@@ -233,6 +247,10 @@
         .navbar-brand img {
             margin-right: 0;
         }
+
+        #logoinix {
+            width: 300px;
+        }
     }
         @media (min-width: 577px) and (max-width: 991px) {
         #bgsvg {
@@ -263,6 +281,10 @@
         .navbar-brand img {
             margin-right: 0;
         }
+
+        #logoinix {
+            width: 300px;
+        }
     }
 
     </style>
@@ -270,17 +292,18 @@
 <body>
     <div id="app">
         @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show m-0" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+            <div class="alert alert-success alert-dismissible fade show m-0 alert-custom" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
         @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show m-0" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+            <div class="alert alert-danger alert-dismissible fade show m-0 alert-custom" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
+
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
                 <div class="col-md-4 col-sm-4 col-xs-4 d-flex justify-content-start" id="navbarkiri">
@@ -301,7 +324,7 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item text-left">
                             <a class="navbar-brand" href="{{ url('/') }}">
-                                <img src="{{ asset('icon/logo_e-officew.svg') }}" class="img-responsive" style="width: 400px;">
+                                <img src="{{ asset('icon/logo_e-officew.svg') }}" class="img-responsive" id="logoinix">
                             </a>
                         </li>
                     </ul>
